@@ -13,8 +13,9 @@ CREATE TABLE IF NOT EXISTS `nomeApp`.`utente` (
   `cognome` VARCHAR(100) NOT NULL,
   `dataNascita` DATE NOT NULL,
   `sesso` VARCHAR(1) NOT NULL,
-  `numeroTelefono` INT NOT NULL UNIQUE,
-  `email` VARCHAR(100) NOT NULL,
+  `prefissoTelefonico` VARCHAR(3) NOT NULL,
+  `numeroTelefono` varchar(10) NOT NULL UNIQUE,
+  `email` VARCHAR(100) NOT NULL UNIQUE,
   `username` VARCHAR(100) NOT NULL UNIQUE,
   `password` VARCHAR(512) NOT NULL,
   `cookie` BOOLEAN DEFAULT 0 NOT NULL,
@@ -38,6 +39,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `nomeApp`.`post` (
   `idPost` INT NOT NULL AUTO_INCREMENT,
   `testo` VARCHAR(2000) NOT NULL,
+  `immagine` VARCHAR(500), 
   `codUtente` INT NOT NULL,
   PRIMARY KEY (`idPost`),
   CONSTRAINT `fk_post_utente` FOREIGN KEY (`codUtente`) 
@@ -105,7 +107,7 @@ ENGINE = InnoDB;
 -- ---------------------------------------------------*/
 CREATE TABLE IF NOT EXISTS `nomeApp`.`messaggio` (
   `idMessaggio` INT NOT NULL AUTO_INCREMENT,
-  `testo` VARCHAR(500) NOT NULL,
+  `testo` VARCHAR(2000) NOT NULL,
   `immagine` VARCHAR(500),
   `altroFile` VARCHAR(500),
   `codChat` INT NOT NULL,
@@ -114,6 +116,20 @@ CREATE TABLE IF NOT EXISTS `nomeApp`.`messaggio` (
   CONSTRAINT `fk_messaggio_chat` FOREIGN KEY (`codChat`)
   REFERENCES `nomeApp`.`chat` (`idChat`),
   CONSTRAINT `fk_messaggio_utente` FOREIGN KEY (`codUtente`)
+  REFERENCES `nomeApp`.`utente` (`idUtente`)
+)
+ENGINE = InnoDB;
+
+/* -----------------------------------------------------
+-- Table `nomeApp`.`messaggio`
+-- ---------------------------------------------------*/
+CREATE TABLE IF NOT EXISTS `nomeApp`.`commento` (
+  `idCommento` INT NOT NULL AUTO_INCREMENT,
+  `testo` VARCHAR(1000) NOT NULL,
+  `dataCommento` DATE NOT NULL,
+  `codUtente` INT NOT NULL,
+  PRIMARY KEY (`idCommento`),
+  CONSTRAINT `fk_commento_utente` FOREIGN KEY (`codUtente`)
   REFERENCES `nomeApp`.`utente` (`idUtente`)
 )
 ENGINE = InnoDB;
