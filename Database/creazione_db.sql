@@ -50,7 +50,7 @@ ENGINE = InnoDB;
 /* -----------------------------------------------------
 -- Table `ShareHub`.`likeSave`
 -- ---------------------------------------------------*/
-CREATE TABLE IF NOT EXISTS `ShareHub`.`LikeSave` (
+CREATE TABLE IF NOT EXISTS `ShareHub`.`likeSave` (
   `codUtente` INT NOT NULL,
   `codPost` INT NOT NULL,
   `like` BOOLEAN DEFAULT 0 NOT NULL,
@@ -69,6 +69,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `ShareHub`.`impostazione` (
   `idImpostazione` INT NOT NULL AUTO_INCREMENT,
   `privato` BOOLEAN DEFAULT 0 NOT NULL,
+  `tema` BOOLEAN DEFAULT 0 NOT NULL,
   `codUtente` INT NOT NULL,
   PRIMARY KEY (`idImpostazione`),
   CONSTRAINT `fk_impostazione_utente` FOREIGN KEY (`codUtente`)
@@ -81,8 +82,8 @@ ENGINE = InnoDB;
 -- ---------------------------------------------------*/
 CREATE TABLE IF NOT EXISTS `ShareHub`.`chat` (
   `idChat` INT NOT NULL AUTO_INCREMENT,
-  `nomeChat` VARCHAR(50) NOT NULL,
-  `descrizioneChat` VARCHAR(500) NOT NULL,
+  `nomeChat` VARCHAR(50),
+  `descrizioneChat` VARCHAR(500),
   `immagineGruppo` VARCHAR(500),
   PRIMARY KEY (`idChat`)
 )
@@ -121,15 +122,18 @@ CREATE TABLE IF NOT EXISTS `ShareHub`.`messaggio` (
 ENGINE = InnoDB;
 
 /* -----------------------------------------------------
--- Table `ShareHub`.`messaggio`
+-- Table `ShareHub`.`commento`
 -- ---------------------------------------------------*/
 CREATE TABLE IF NOT EXISTS `ShareHub`.`commento` (
   `idCommento` INT NOT NULL AUTO_INCREMENT,
   `testo` VARCHAR(1000) NOT NULL,
   `dataCommento` DATE NOT NULL,
   `codUtente` INT NOT NULL,
+  `codPost` INT NOT NULL,
   PRIMARY KEY (`idCommento`),
   CONSTRAINT `fk_commento_utente` FOREIGN KEY (`codUtente`)
-  REFERENCES `ShareHub`.`utente` (`idUtente`)
+  REFERENCES `ShareHub`.`utente` (`idUtente`),
+  CONSTRAINT `fk_commento_post` FOREIGN KEY (`codPost`)
+  REFERENCES `ShareHub`.`post` (`idPost`)
 )
 ENGINE = InnoDB;
