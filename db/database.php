@@ -181,5 +181,20 @@ class DatabaseHelper{
       }
       return false;
     }
+
+    public function isEmailUnique($mail){
+      /*controlla se l'username inserito è già presente nel db*/
+      $query = "SELECT `utente`.`email`
+      FROM `utente`
+      WHERE `utente`.`email` = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('s', $mail);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if(mysqli_num_rows($result)==0){
+        return true;
+      }
+      return false;
+    }
 }
 ?>

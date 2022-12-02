@@ -61,7 +61,7 @@
           $templateParams["img"] = $dbh->getUserProfileImg($_SESSION["idUtente"]);
           foreach($templateParams["img"] as $img): 
           ?>
-          <img src="./upload/profile/<?php echo $img["immagineProfilo"]?>" alt="profilo"/>
+          <img src="<?php echo UPLOAD_DIR_PROFILE.$img["immagineProfilo"]?>" alt="profilo"/>
           <?php endforeach; ?>
         </a>
       </div>

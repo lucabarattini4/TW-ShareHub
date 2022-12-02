@@ -1,8 +1,5 @@
 <?php
     require_once 'bootstrap.php';
-    var_dump($_POST["testopost"]);
-    var_dump($_POST["descrizioneimmagine"]);
-    var_dump($_FILES["fileToUpload"]);
     
     //Inserisco
     $testoPost = htmlspecialchars($_POST["testopost"]);

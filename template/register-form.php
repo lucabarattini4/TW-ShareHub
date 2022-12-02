@@ -1,12 +1,33 @@
 <?php require_once 'bootstrap.php'; ?>
-<form action="#" method="POST">
+<form action="#" method="POST" enctype="multipart/form-data">
+  
   <?php
   
   if(isUserLoggedIn()){
       $templateParams["nome"] = "index.php";
       header("location: index.php");
   }
+
+  if(isset($_POST["username"])){
+    if($dbh->isUsernameUnique($_POST["username"]) && $dbh->isEmailUnique($_POST["email"]) && ($_POST["psw"] == $_POST["psw2"])){
+  
+      list($result, $msg) = uploadImage(UPLOAD_DIR_PROFILE, $_FILES["fileToUpload"]);
+        if($result != 0){
+          $imgPost = $msg;
+          $id = $dbh->registerUser($_POST["nome"], $_POST["cognome"], $_POST["datanascita"], $_POST["sesso"], $_POST["prefix"], $_POST["numero"], $_POST["email"], $_POST["username"], $_POST["psw"], $imgPost);
+          if($id!=false){
+            header("location: login.php");
+          }
+          else{
+            echo "Errore in inserimento!";
+          }
+        }
+  }
+  }
+
+
   ?>
+  
 
 <h2 class="d-flex justify-content-center pt-5">Register</h2>
     <ul>
@@ -37,6 +58,10 @@
       <li class="d-flex justify-content-center pt-5">
         <label for="email">Email:</label>
         <input type="text" placeholder="email" id="email" name="email" required/>
+      </li>
+      <li class="d-flex justify-content-center pt-5">
+        <label for="username">Username:</label>
+        <input type="text" placeholder="username" id="username" name="username" required/>
       </li>
       <li class="d-flex justify-content-center pt-5">
         <label for="psw">Password:</label>
