@@ -1,5 +1,5 @@
 /*dark-theme*/
-/*html { 
+/*html {
   filter: invert(100%) sepia(16%) saturate(2%) hue-rotate(115deg) brightness(103%) contrast(101%);
 }*/
 
@@ -26,33 +26,24 @@ a {
   width: 100%;
 }
 
-.menu { 
+header img {
   /*immagini menu*/
   width: 60%;
   height: auto;
 }
 
-.barra {
+footer img {
   width: 50%;
   height: auto;
 }
 
-.post {
-  padding-bottom: 170px;
-}
-
-.profileImg {
+article a > img, header img {
   border-radius: 50%;
 }
 
-/*dimensione logo centrale in header*/
-.logo { 
-  max-height: 10%;
-  max-width: 300px;
-}
-
-img, p {
-  /*dimensione di testo post e immagine*/
+article p, img {
+  /*dimensione di testo e immagine post*/
+  font-size: 18pt;
   width: 70%;
   height: auto;
 }
@@ -76,14 +67,47 @@ h2 {
   width: 100%;
 }
 
-.header, .container-nav { 
+body > div:nth-child(3), header > div {
   /*colore di sfondo di header e nav*/
   background-color: #00cc99;
 }
 
-.header {
+header > div {
   /*altezza header*/
   height: 20%;
+}
+
+article {
+  padding-bottom: 10%;
+  padding-top: 2%;
+}
+
+form ul {
+  list-style-type: none;
+  padding: 0px;
+}
+
+form > ul > li {
+  padding-bottom: 5%;
+}
+
+textarea {
+  width: 100%;
+  padding-bottom: 50%;
+}
+
+form > div div {
+  display: none; 
+  width: 100%;   
+  border: 1px dashed #333;  
+  margin-bottom: 20px;
+}
+
+form > div div img {  
+  width: 80%;
+  height: auto; 
+  display: block;
+  padding: 10% 0px;   
 }
 
 @media screen and (min-width: 768px) {
@@ -91,8 +115,8 @@ h2 {
   /*media query per quando lo schermo viene
   ingrandito quindi il menu orizzontale diventa
   verticale*/
-  
-  .container-nav{
+
+  body > div:nth-child(3) {
     /*container del nav*/
     width: 150px;
     margin: 0;
@@ -101,8 +125,8 @@ h2 {
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
   }
-  
-  .nav {
+
+  footer ul {
     /*nav*/
     width: 100%;
     height: 100%;
@@ -114,33 +138,31 @@ h2 {
     position: fixed;
     overflow: hidden;
   }
-  
-  .nav-item {
+
+  footer li {
     /*item del nav*/
     padding-top: 40px;
     padding-bottom: 40px;
     flex-direction: column;
   }
 
-  .barra {
+  footer img {
     width: 65%;
     height: auto;
   }
 
-  .menu {
+  header img {
     width: 30%;
     height: auto;
   }
 
 }
 
-
 @media screen and (max-width: 768px) {
 
-  img, p {
+  article p, img {
     width: 100%;
     height: auto;
   }
 
 }
-

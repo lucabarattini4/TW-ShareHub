@@ -8,7 +8,7 @@
   <!--colonna immagine profilo-->
   <div class="col-2 d-flex justify-content-center">
     <a href="./profile.html">
-      <img class="profileImg" src="<?php echo UPLOAD_DIR_PROFILE.$posts["immagineProfilo"]; ?>" alt="immagineProfilo"/>
+      <img src="<?php echo UPLOAD_DIR_PROFILE.$posts["immagineProfilo"]; ?>" alt="immagineProfilo"/>
     </a>
   </div>
 
