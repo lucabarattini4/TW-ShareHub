@@ -1,5 +1,6 @@
 const chooseFile = document.getElementById("fileToUpload");
 const imgPreview = document.getElementById("img-preview");
+const btn = document.getElementById("rmv");
 
 chooseFile.addEventListener("change", function () {
   getImgData();
@@ -14,5 +15,12 @@ function getImgData() {
     imgPreview.style.display = "block";
     imgPreview.innerHTML = '<img src="' + this.result + '" />';
     });    
-  }
+  }  
 }
+
+btn.onclick = function() { 
+  var file = chooseFile;
+  file.value = file.defaultValue;
+  document.querySelectorAll("img").forEach(e => e.remove());
+}
+

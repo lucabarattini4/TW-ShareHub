@@ -1,7 +1,7 @@
 <section>
 <ul>
   <li>
-    <a href="signup.php">SignUp</a>
+    <a href="register.php">SignUp</a>
   </li>
   <li>    
     <a href="login.php">Login</a>

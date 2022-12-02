@@ -12,6 +12,9 @@
         <input type="file" id="fileToUpload" name="fileToUpload" />
       </li>
       <li>
+        <button id="rmv" type="button">Remove file</button>
+      </li>
+      <li>
         <div id="img-preview" class="d-flex justify-content-center pt-5"></div>
       </li>
       <li>

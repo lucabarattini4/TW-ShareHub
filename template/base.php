@@ -12,13 +12,23 @@
 
   <!--Foglio di stile-->
   <link rel="stylesheet" type="text/css" href="./css/style.css" />
+  <?php
+    if(isset($templateParams["css"])):
+        foreach($templateParams["css"] as $css):
+    ?>
+        <link rel="stylesheet" type="text/css" href="<?php echo $css; ?>"/>
+    <?php
+        endforeach;
+    endif;
+  ?>
+
 
   <!--Font Bebas Neue per logo-->
   <link href='https://fonts.googleapis.com/css?family=Bebas+Neue' rel='stylesheet'>
 
   <!--Titolo pagina e icona-->
   <title>Prova Bootstrap</title>
-  <link rel="icon" href="../upload/Logo_Bianco.png" type="image/x-icon">
+  <link rel="icon" href="./upload/webpageIcons/Logo_Nero.png" type="image/x-icon">
 </head>
 <body>
 
