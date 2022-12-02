@@ -60,6 +60,13 @@ function isUserLoggedIn(){
     return !empty($_SESSION['idUtente']);
 }
 
+function isEmailCorrect($email){
+    if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return true;
+    }
+    return false;
+}
+
 function logOut(){
     session_destroy();
     header("location: login-opt.php");

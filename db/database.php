@@ -21,20 +21,29 @@ class DatabaseHelper{
 
     public function insertPostWithImg($testoPost, $imgPost, $descrizioneImmagine, $dataPost, $autore){
       $query = "INSERT INTO post (testo, immagine, descImmagine, dataPost, codUtente) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ssssi',$testoPost, $imgPost, $descrizioneImmagine, $dataPost, $autore);
-        $stmt->execute();
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('ssssi',$testoPost, $imgPost, $descrizioneImmagine, $dataPost, $autore);
+      $stmt->execute();
         
-        return $stmt->insert_id;
+      return $stmt->insert_id;
     }
 
     public function insertPostSimple($testoPost, $dataPost, $autore){
       $query = "INSERT INTO post (testo, dataPost, codUtente) VALUES (?, ?, ?)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ssi',$testoPost, $dataPost, $autore);
-        $stmt->execute();
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('ssi',$testoPost, $dataPost, $autore);
+      $stmt->execute();
         
-        return $stmt->insert_id;
+      return $stmt->insert_id;
+    }
+
+    public function registerUser($nome, $cognome, $dataNascita, $sesso, $prefissoTelefonico, $numeroTelefono, $email, $username, $password, $immagineProfilo){
+      $query = "INSERT INTO utente (`nome`, `cognome`, `dataNascita`, `sesso`, `prefissoTelefonico`, `numeroTelefono`, `email`, `username`, `password`, `immagineProfilo`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('ssssssssss',$nome, $cognome, $dataNascita, $sesso, $prefissoTelefonico, $numeroTelefono, $email, $username, $password, $immagineProfilo);
+      $stmt->execute();
+        
+      return $stmt->insert_id;
     }
 
     private function checkUsernameExistence($username){
@@ -126,15 +135,15 @@ class DatabaseHelper{
       /*restituisce tutti i messaggi di una chat*/
     }
 
-    public function postLiked(){
+    public function postLiked($idUtente, $idPost){
 
     }
 
-    public function postSaved(){
+    public function postSaved($idUtente, $idPost){
 
     }
 
-    public function writeComment(){
+    public function writeComment($idUtente, $idPost, $testo){
       
     }
 
@@ -156,6 +165,21 @@ class DatabaseHelper{
       $result = $stmt->get_result();
 
       return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function isUsernameUnique($username){
+      /*controlla se l'username inserito è già presente nel db*/
+      $query = "SELECT `utente`.`username`
+      FROM `utente`
+      WHERE `utente`.`username` = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('s', $username);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if(mysqli_num_rows($result)==0){
+        return true;
+      }
+      return false;
     }
 }
 ?>

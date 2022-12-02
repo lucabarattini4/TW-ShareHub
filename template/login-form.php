@@ -23,11 +23,11 @@
     <ul>
       <li class="d-flex justify-content-center pt-5">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" />
+        <input type="text" placeholder="username" id="username" name="username"/>
       </li>
       <li class="d-flex justify-content-center pt-5">
         <label for="psw">Password:</label>
-        <input type="password" id="psw" name="psw" />
+        <input type="password" placeholder="password" id="psw" name="psw"/>
       </li>
       <li class="d-flex justify-content-center pt-5">
         <input type="submit" name="submit" value="Invia"/>
