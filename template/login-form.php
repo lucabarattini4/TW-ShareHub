@@ -19,15 +19,16 @@
   }
   ?>
 
+<a href="login-opt.php"><img class="w-25" src="<?php echo UPLOAD_DIR_ICONS ?>back-arrow.svg" alt=""></a>
 <h2 class="d-flex justify-content-center pt-5">Login</h2>
     <ul>
       <li class="d-flex justify-content-center pt-5">
-        <label for="username">Username:</label>
-        <input type="text" placeholder="username" id="username" name="username" required/>
+        <label for="username" hidden>Username:</label>
+        <input class="text-center" type="text" placeholder="username" id="username" name="username" required/>
       </li>
       <li class="d-flex justify-content-center pt-5">
-        <label for="psw">Password:</label>
-        <input type="password" placeholder="password" id="psw" name="psw" required/>
+        <label for="psw" hidden>Password:</label>
+        <input class="text-center" type="password" placeholder="password" id="psw" name="psw" required/>
       </li>
       <li class="d-flex justify-content-center pt-5">
         <input type="submit" name="submit" value="Invia"/>

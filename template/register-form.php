@@ -28,7 +28,7 @@
 
   ?>
   
-
+<a href="login-opt.php"><img class="w-25" src="<?php echo UPLOAD_DIR_ICONS ?>back-arrow.svg" alt=""></a>
 <h2 class="d-flex justify-content-center pt-5">Register</h2>
     <ul>
       <li class="d-flex justify-content-center pt-5">
@@ -45,15 +45,15 @@
       </li>
       <li class="d-flex justify-content-center pt-5">
         <label for="sesso">Sesso:</label>
-        <input type="text" placeholder="sesso" id="sesso" name="sesso" required/>
+        <input type="text" placeholder="sesso" id="sesso" name="sesso" maxlength=1 required/>
       </li>
       <li class="d-flex justify-content-center pt-5">
         <label for="prefix">Prefisso telefonico:</label>
-        <input type="text" placeholder="prefix" id="prefix" name="prefix" required/>
+        <input type="text" placeholder="prefix" id="prefix" name="prefix" minlength=3 maxlength=3 required/>
       </li>
       <li class="d-flex justify-content-center pt-5">
         <label for="numero">Numero di telefono:</label>
-        <input type="text" placeholder="numero" id="numero" name="numero" required/>
+        <input type="text" placeholder="numero" id="numero" name="numero" minlength=10 maxlength=10 required/>
       </li>
       <li class="d-flex justify-content-center pt-5">
         <label for="email">Email:</label>

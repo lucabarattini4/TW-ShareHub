@@ -1,5 +1,8 @@
 <?php
     require_once 'bootstrap.php';
+    if(!isset($_SESSION["username"])){
+        header("location: login-opt.php");
+      }
     
     //Inserisco
     $testoPost = htmlspecialchars($_POST["testopost"]);
