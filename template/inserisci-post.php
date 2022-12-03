@@ -10,8 +10,6 @@
       <li>
         <label for="fileToUpload">Immagine:</label>
         <input type="file" id="fileToUpload" name="fileToUpload" />
-      </li>
-      <li>
         <button id="rmv" type="button">Remove file</button>
       </li>
       <li>

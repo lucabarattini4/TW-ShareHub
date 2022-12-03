@@ -1,4 +1,5 @@
 <?php require_once 'bootstrap.php'; ?>
+<a class="d-flex justify-content-start align-items-center" href="login-opt.php"><img src="<?php echo UPLOAD_DIR_ICONS ?>back-arrow.svg" alt=""></a>
 <form action="#" method="POST">
   <?php
 
@@ -19,7 +20,8 @@
   }
   ?>
 
-<a href="login-opt.php"><img class="w-25" src="<?php echo UPLOAD_DIR_ICONS ?>back-arrow.svg" alt=""></a>
+
+
 <h2 class="d-flex justify-content-center pt-5">Login</h2>
     <ul>
       <li class="d-flex justify-content-center pt-5">
@@ -35,3 +37,4 @@
       </li>
     </ul>
 </form>
+

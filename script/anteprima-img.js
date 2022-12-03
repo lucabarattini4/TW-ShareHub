@@ -20,7 +20,9 @@ function getImgData() {
 
 btn.onclick = function() { 
   var file = chooseFile;
+  if(file.value!=""){
+    document.querySelectorAll("form").forEach(e => e.querySelector("img").remove());
+  }
   file.value = file.defaultValue;
-  document.querySelectorAll("img").forEach(e => e.remove());
 }
 

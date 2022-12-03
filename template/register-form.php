@@ -1,3 +1,5 @@
+<a class="d-flex justify-content-start align-items-left" href="login-opt.php"><img class="w-25" src="<?php echo UPLOAD_DIR_ICONS ?>back-arrow.svg" alt=""></a>
+
 <?php require_once 'bootstrap.php'; ?>
 <form action="#" method="POST" enctype="multipart/form-data">
   
@@ -28,7 +30,6 @@
 
   ?>
   
-<a href="login-opt.php"><img class="w-25" src="<?php echo UPLOAD_DIR_ICONS ?>back-arrow.svg" alt=""></a>
 <h2 class="d-flex justify-content-center pt-5">Register</h2>
     <ul>
       <li class="d-flex justify-content-center pt-5">
@@ -74,8 +75,6 @@
       <li class="d-flex justify-content-center pt-5">
         <label for="fileToUpload">Immagine del profilo:</label>
         <input type="file" id="fileToUpload" name="fileToUpload" required/>
-      </li>
-      <li>
         <button id="rmv" type="button">Remove file</button>
       </li>
       <li>

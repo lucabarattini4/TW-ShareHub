@@ -67,6 +67,40 @@ h2 {
   width: 100%;
 }
 
+form ul {
+  list-style-type: none;
+  padding: 0px;
+}
+
+form > ul > li {
+  padding-bottom: 5%;
+}
+
+textarea {
+  width: 100%;
+  padding-bottom: 50%;
+}
+
+form li button {
+  border: 1px solid grey;
+  border-radius: 5%;
+  height: 30px;
+}
+
+form > div div, form li > div {
+  display: none; 
+  width: 100%;   
+  border: 1px dashed #333;  
+  margin-bottom: 20px;
+}
+
+form > div div img, form li > div img {  
+  width: 80%;
+  height: auto; 
+  display: block;
+  padding: 10% 0px;   
+}
+
 body > div:nth-child(3), header > div {
   /*colore di sfondo di header e nav*/
   background-color: #00cc99;
