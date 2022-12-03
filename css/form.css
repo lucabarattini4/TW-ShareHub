@@ -7,18 +7,19 @@ form > ul > li {
   padding-bottom: 5%;
 }
 
-form > div div, form li > div {
+form > div div, form > fieldset > div {
   display: none; 
   width: 100%;   
   border: 1px dashed #333;  
   margin-bottom: 20px;
 }
 
-form > div div img, form li > div img {  
+form > div div img, form > fieldset > div img {  
   width: 80%;
   height: auto; 
   display: block;
-  padding: 10% 0px;   
+  padding: 10% 0px;
+  border-radius: 50%;
 }
 
 /******************
@@ -40,14 +41,31 @@ login/register-form.php
 img {
   width: 50px;
   height: 50px;
+  border-radius: 50%;
 }
 
 input, label {
-    display:block;
+    display: inline;
 }
 
-form li button {
+input {
+  margin-bottom: 2%;
+}
+
+form li button, form button {
   border: 1px solid grey;
   border-radius: 5%;
   height: 30px;
+}
+
+form fieldset {
+  margin-bottom: 1em !important;
+  border: 1px solid #666 !important;
+  padding: 2% !important;
+}
+
+form legend {
+  padding: 1px 10px !important;
+  float:none;
+  width:auto;
 }
