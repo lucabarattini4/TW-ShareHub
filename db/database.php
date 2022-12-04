@@ -83,7 +83,7 @@ class DatabaseHelper{
     public function getUserPosts($username){
       /*restituisce tutti i post di un utente*/
       if($this->checkUsernameExistence($username)){
-        $query = "SELECT idPost, username, testo, immagine, immagineProfilo, descImmagine FROM post, utente WHERE idUtente=codUtente AND username = ? ORDER BY dataPost DESC";
+        $query = "SELECT idPost, username, testo, immagine, immagineProfilo, descImmagine, dataPost FROM post, utente WHERE idUtente=codUtente AND username = ? ORDER BY dataPost DESC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $username);
         $stmt->execute();
@@ -93,7 +93,19 @@ class DatabaseHelper{
       }
       return 0;
     }
+    public function getUserInfo($username){
+      /*restituisce tutti i post di un utente*/
+      if($this->checkUsernameExistence($username)){
+        $query = "SELECT username, immagineProfilo FROM utente WHERE username = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
+        return $result->fetch_all(MYSQLI_ASSOC);
+      }
+      return 0;
+    }
     public function getFriends($username){
       /*restituisce tutti gli amici di un determinato utente*/
       if($this->checkUsernameExistence($username)){
