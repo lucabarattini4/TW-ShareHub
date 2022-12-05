@@ -133,8 +133,10 @@ class DatabaseHelper{
       return 0;
     }
 
+    /**
+     * Ritorna le info di un utente
+     */
     public function getUserInfo($username){
-      /*restituisce tutti i post di un utente*/
       if($this->checkUsernameExistence($username)){
         $query = "SELECT username, immagineProfilo FROM utente WHERE username = ?";
         $stmt = $this->db->prepare($query);
@@ -145,7 +147,10 @@ class DatabaseHelper{
       }
       return 0;
     }
-    
+
+    /**
+     * Restituisce gli amici di un utente
+     */
     public function getFriends($username){
       if($this->checkUsernameExistence($username)){
         $query = "SELECT `utente`.`username`
