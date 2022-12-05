@@ -9,8 +9,10 @@ class DatabaseHelper{
       }        
     }
 
+    /**
+     * Restituisce tutti i post
+     */
     public function getPosts(){
-      /*restituisce tutti i post*/
       $query = "SELECT idPost, username, testo, immagine, immagineProfilo, descImmagine FROM post, utente WHERE idUtente=codUtente ORDER BY dataPost DESC";
       $stmt = $this->db->prepare($query);
       $stmt->execute();
@@ -19,24 +21,42 @@ class DatabaseHelper{
       return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function insertPostWithImg($testoPost, $imgPost, $descrizioneImmagine, $dataPost, $autore){
+    /**
+     * Inserisce un post con una immagine
+     * 
+     * @param string $testoPost testo del post
+     * @param string $imgPost immagine del post
+     * @param string $descrizioneImmagine alt dell'immagine postata
+     * @param string $dataPost data del post
+     * @param int $codUtente utente autore del post
+     */
+    public function insertPostWithImg($testoPost, $imgPost, $descrizioneImmagine, $dataPost, $codUtente){
       $query = "INSERT INTO post (testo, immagine, descImmagine, dataPost, codUtente) VALUES (?, ?, ?, ?, ?)";
       $stmt = $this->db->prepare($query);
-      $stmt->bind_param('ssssi',$testoPost, $imgPost, $descrizioneImmagine, $dataPost, $autore);
+      $stmt->bind_param('ssssi',$testoPost, $imgPost, $descrizioneImmagine, $dataPost, $codUtente);
       $stmt->execute();
         
       return $stmt->insert_id;
     }
 
-    public function insertPostSimple($testoPost, $dataPost, $autore){
+    /**
+     * Inserisce un post senza immagine
+     * @param string $testoPost testo del post
+     * @param string $dataPost data del post
+     * @param int $codUtente utente autore del post
+     */
+    public function insertPostSimple($testoPost, $dataPost, $codUtente){
       $query = "INSERT INTO post (testo, dataPost, codUtente) VALUES (?, ?, ?)";
       $stmt = $this->db->prepare($query);
-      $stmt->bind_param('ssi',$testoPost, $dataPost, $autore);
+      $stmt->bind_param('ssi',$testoPost, $dataPost, $codUtente);
       $stmt->execute();
         
       return $stmt->insert_id;
     }
 
+    /**
+     * Registra un nuovo utente
+     */
     public function registerUser($nome, $cognome, $dataNascita, $sesso, $prefissoTelefonico, $numeroTelefono, $email, $username, $password, $immagineProfilo){
       $query = "INSERT INTO utente (`nome`, `cognome`, `dataNascita`, `sesso`, `prefissoTelefonico`, `numeroTelefono`, `email`, `username`, `password`, `immagineProfilo`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
       $stmt = $this->db->prepare($query);
@@ -46,8 +66,10 @@ class DatabaseHelper{
       return $stmt->insert_id;
     }
 
+    /**
+     * Controlla l'esistenza di un username
+     */
     private function checkUsernameExistence($username){
-      /*controlla l'esistenza del nomeutente*/
       $query = "SELECT `utente`.`nome`, `utente`.`cognome`
       FROM `utente`
       WHERE `utente`.`username` = ?";
@@ -61,8 +83,10 @@ class DatabaseHelper{
       return false;
     }
 
+    /**
+     * Controlla l'esistenza di un post
+     */
     private function checkPostExistence($idPost){
-      /*controlla l'esistenza di un post*/
       $query = "SELECT `post`.`idPost`
       FROM `post`
       WHERE `post`.`idPost` = ?";
@@ -76,12 +100,27 @@ class DatabaseHelper{
       return false;
     }
 
+    /**
+     * Controlla l'esistenza di una chat
+     */
     private function  checkChatExistence($idChat){
-      /*controlla l'esistenza di una chat*/
+      $query = "SELECT `chat`.`idChat`
+      FROM `chat`
+      WHERE `chat`.`idChat` = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $idChat);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if(mysqli_num_rows($result)){
+        return true;
+      }
+      return false;
     }
 
+    /**
+     * Restituisce tutti i post di un utente
+     */
     public function getUserPosts($username){
-      /*restituisce tutti i post di un utente*/
       if($this->checkUsernameExistence($username)){
         $query = "SELECT idPost, username, testo, immagine, immagineProfilo, descImmagine FROM post, utente WHERE idUtente=codUtente AND username = ? ORDER BY dataPost DESC";
         $stmt = $this->db->prepare($query);
@@ -94,8 +133,10 @@ class DatabaseHelper{
       return 0;
     }
 
+    /**
+     * Restituisce tutti gli amici di un determinato utente
+     */
     public function getFriends($username){
-      /*restituisce tutti gli amici di un determinato utente*/
       if($this->checkUsernameExistence($username)){
         $query = "SELECT `utente`.`username`
         FROM `utente`
@@ -112,6 +153,9 @@ class DatabaseHelper{
       return 0;
     }
 
+    /**
+     * Restituisce tutti i commenti di un post
+     */
     public function getComments($idPost){
       if($this->checkPostExistence($idPost)){
         $query = "SELECT `testo`, `dataCommento`, `username`, `codPost`
@@ -127,26 +171,87 @@ class DatabaseHelper{
       return 0;
     }
 
-    public function getChatUsers($idChat){
-      /*restituisce tutti gli utenti di una chat*/
+    /**
+     * Restituisce tutti gli utenti che partecipano ad una determinata chat
+     */
+    public function getChatComponents($idChat){
+      $query = "SELECT `utente`.`username` FROM `chat`, `partecipazione`, `utente` WHERE `chat`.`idChat`=`partecipazione`.`codChat` AND `partecipazione`.`codUtente` = `utente`.`idUtente` AND `chat`.`idChat` = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i',$idChat);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      
+      return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    /**
+     * Restituisce tutti i messaggi di una determinata chat
+     */
     public function getChatMessages($idChat){
-      /*restituisce tutti i messaggi di una chat*/
+      $query = "SELECT `utente`.`username`, `messaggio`.`testo`  FROM `chat`, `partecipazione`, `utente`, `messaggio` WHERE `chat`.`idChat` = `partecipazione`.`codChat` AND `partecipazione`.`codUtente` = `utente`.`idUtente` AND `utente`.`idUtente` = `messaggio`,`codUtente` AND `chat`.`idChat` = `messaggio`.`codChat` AND `chat`.`idChat` = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i',$idChat);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      
+      return $result->fetch_all(MYSQLI_ASSOC);
+
     }
 
-    public function postLiked($idUtente, $idPost){
+    /**
+     * Restituisce tutte le chat di un determinato utente
+     */
+    public function getUserChat($username){
+      $query = "SELECT `chat`.`idChat`, `chat`.`nomeChat`, `chat`.`descrizioneChat`, `chat`.`immagineGruppo` FROM `chat`, `partecipazione`, `utente` WHERE `chat`.`idChat`=`partecipazione`.`codChat` AND `partecipazione`.`codUtente` = `utente`.`idUtente` AND `utente`.`username` = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('s',$username);
+      $stmt->execute();
+      $result = $stmt->get_result();
+
+      return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
+     * Mette like ad un post
+     */
+    public function setPostLiked($idUtente, $idPost){
+    }
+
+    /**
+     * Ritorna tutti i post a cui l'utente ha messo like
+     */
+    public function getPostLiked($username){
 
     }
 
-    public function postSaved($idUtente, $idPost){
-
+    /**
+     * Salva un post
+     */
+    public function setPostSaved($idUtente, $idPost){
     }
 
-    public function writeComment($idUtente, $idPost, $testo){
+    /**
+     * Ritorna tutti i post salvati da un utente
+     */
+    public function getPostSaved($username){
       
     }
 
+    /**
+     * Scrive un commento sotto un post
+     */
+    public function writeComment($idUtente, $idPost, $testo){
+      $query = "INSERT INTO commento (`testo`, `codUtente`, `codPost`) VALUES (?, ?, ?)";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('sii',$testo, $idUtente, $idPost);
+      $stmt->execute();
+        
+      return $stmt->insert_id;
+    }
+
+    /**
+     * Controlla se il login è corretto
+     */
     public function checkLogin($username, $password){
       $query = "SELECT idUtente, username, nome FROM utente WHERE username = ? AND password = ?";
         $stmt = $this->db->prepare($query);
@@ -157,6 +262,9 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    /**
+     * Restituisce l'immagine profilo di un determinato utente
+     */
     public function getUserProfileImg($idUtente){
       $query = "SELECT immagineProfilo FROM utente WHERE idUtente = ?";
       $stmt = $this->db->prepare($query);
@@ -167,8 +275,10 @@ class DatabaseHelper{
       return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    /**
+     * Controlla se l'username inserito è già presente nel db
+     */
     public function isUsernameUnique($username){
-      /*controlla se l'username inserito è già presente nel db*/
       $query = "SELECT `utente`.`username`
       FROM `utente`
       WHERE `utente`.`username` = ?";
@@ -182,8 +292,10 @@ class DatabaseHelper{
       return false;
     }
 
+    /**
+     * Controlla se l'username inserito è già presente nel db
+     */
     public function isEmailUnique($mail){
-      /*controlla se l'username inserito è già presente nel db*/
       $query = "SELECT `utente`.`email`
       FROM `utente`
       WHERE `utente`.`email` = ?";
