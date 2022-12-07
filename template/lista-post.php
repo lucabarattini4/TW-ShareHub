@@ -30,9 +30,11 @@
   </div>
   </div>
 
+  <?php $postId="post".$posts['idPost']; ?>
+
   <!--riga eventuale immagine-->
   <div class="row">
-  <div class="col d-flex justify-content-center">
+  <div class="col d-flex justify-content-center" id="<?php echo $postId?>">
     <img src="<?php echo UPLOAD_DIR_POST.$posts["immagine"]; ?>" alt="<?php echo $posts["descImmagine"]; ?>" />
   </div>
   </div>
@@ -74,6 +76,7 @@
 
   </div>
 
+  <!--riga commenti-->
   <div class="row">
     <div class="col-12 d-flex justify-content-center">
 
