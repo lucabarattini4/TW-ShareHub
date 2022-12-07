@@ -260,6 +260,19 @@ class DatabaseHelper{
     }
 
     /**
+     * 
+     */
+    public function searchUser($string){
+      $query = "SELECT idUtente, username, nome FROM utente WHERE username LIKE %?%";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('s', $string);
+      $stmt->execute();
+      $result = $stmt->get_result();
+
+      return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
      * Scrive un commento sotto un post
      */
     public function writeComment($idUtente, $idPost, $testo){
