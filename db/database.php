@@ -214,16 +214,23 @@ class DatabaseHelper{
     }
 
     /**
-     * Restituisce tutte le chat di un determinato utente
+     * Restituisce tutte le chat di gruppo di un determinato utente
      */
-    public function getUserChat($username){
-      $query = "SELECT `chat`.`idChat`, `chat`.`nomeChat`, `chat`.`descrizioneChat`, `chat`.`immagineGruppo` FROM `chat`, `partecipazione`, `utente` WHERE `chat`.`idChat`=`partecipazione`.`codChat` AND `partecipazione`.`codUtente` = `utente`.`idUtente` AND `utente`.`username` = ?";
+    public function getUserGroupChat($username){
+      $query = "SELECT `chat`.`idChat`, `chat`.`nomeChat`, `chat`.`descrizioneChat`, `chat`.`immagineGruppo` FROM `chat`, `partecipazione`, `utente` WHERE `chat`.`idChat`=`partecipazione`.`codChat` AND `partecipazione`.`codUtente` = `utente`.`idUtente` AND `utente`.`username` = ? AND `chat`.`nomeChat` != '' ";
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('s',$username);
       $stmt->execute();
       $result = $stmt->get_result();
 
       return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
+     * Restituisce tutte le chat con un singolo utente
+     */
+    public function getUserSingleChat($idUtente){
+      
     }
 
     /**

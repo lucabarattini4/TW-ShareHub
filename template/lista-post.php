@@ -38,7 +38,7 @@
   </div>
 
   <!--riga mi piace, commenti, save-->
-  <div class="row w-75 pb-5">
+  <div class="row w-75 pb-3">
 
   <div class="col-md-3"></div>
 
@@ -73,5 +73,20 @@
   <div class="col"></div>
 
   </div>
+
+  <div class="row">
+    <div class="col-12 d-flex justify-content-center">
+
+    <?php $div="myDIV".$posts['idPost']; ?>
+
+    <button onclick="comments(<?php echo $div?>)">Show comments</button> 
+    </div>
+  </div>
+
+  <div id="myDIV<?php echo $posts["idPost"]?>" class="row" style="display: none;"> 
+      <ul class="d-flex justify-content-center">
+        <li>Commento1</li>
+      </ul>
+  </div> 
 </article>
   <?php endforeach; ?>
