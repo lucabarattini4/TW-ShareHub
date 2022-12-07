@@ -44,7 +44,7 @@
     <?php if(isUserLoggedIn()){ ?>
       <!--colonna impostazioni-->
       <div class="col-2">
-        <a class="d-flex justify-content-start align-items-center" href="#">
+        <a class="d-flex justify-content-start align-items-center" href="impostazioni.php">
           <img class="menu" src="./upload/webpageIcons/setting.svg" alt="impostazioni"/>
         </a>
       </div>
@@ -106,21 +106,21 @@
 
         <!--chat-->
         <li class="nav-item col-3 text-center">
-          <a href="./chat.html">
+          <a href="./chat.php">
             <img src="./upload/webpageIcons/paper-plane.svg" alt="nuovo messaggio">
           </a>
         </li>
 
         <!--like e salvati-->
         <li class="nav-item col-3 text-center">
-          <a href="./likes.html">
+          <a href="./likes.php">
             <img src="./upload/webpageIcons/heart.svg" alt="like e salvati">
           </a>
         </li>
 
         <!--cerca-->
         <li class="nav-item col-3 text-center">
-          <a href="./search.html">
+          <a href="./search.php">
             <img src="./upload/webpageIcons/search.svg" alt="cerca">
           </a>
         </li>
