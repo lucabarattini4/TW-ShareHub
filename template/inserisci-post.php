@@ -16,8 +16,8 @@
         <div id="img-preview" class="d-flex justify-content-center pt-5"></div>
       </li>
       <li>
-        <label for="descrizioneimmagine">Breve descrizione:</label>
-        <textarea id="descrizioneimmagine" name="descrizioneimmagine"></textarea>
+        <label for="descrizioneimmagine" id="labelDescrizione" style="display: none">Breve descrizione:</label>
+        <textarea id="descrizioneimmagine" name="descrizioneimmagine" style="display: none"></textarea>
       </li>
       <li>
         <input type="submit" name="submit" value="Invia"/>
