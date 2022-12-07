@@ -23,18 +23,18 @@
 
   </div>
 
+  <?php $postId="post".$posts['idPost']; ?>
+
   <!--riga testo del post-->
   <div class="row">
-  <div class="col-12 d-flex justify-content-center align-items-center">
+  <div class="col-12 d-flex justify-content-center align-items-center" id="<?php echo $postId?>">
     <p><?php echo $posts["testo"]; ?></p>
   </div>
   </div>
 
-  <?php $postId="post".$posts['idPost']; ?>
-
   <!--riga eventuale immagine-->
   <div class="row">
-  <div class="col d-flex justify-content-center" id="<?php echo $postId?>">
+  <div class="col d-flex justify-content-center">
     <img src="<?php echo UPLOAD_DIR_POST.$posts["immagine"]; ?>" alt="<?php echo $posts["descImmagine"]; ?>" />
   </div>
   </div>
