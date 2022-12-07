@@ -84,8 +84,23 @@
   </div>
 
   <div id="myDIV<?php echo $posts["idPost"]?>" class="row" style="display: none;"> 
-      <ul class="d-flex justify-content-center">
-        <li>Commento1</li>
+      <ul>
+        
+      <?php
+      $risultato = $dbh->getComments($posts["idPost"]);
+      if(!count($risultato)==0){
+        foreach($risultato as $r):
+      ?>
+        <li class="d-flex justify-content-center"><h3><?php echo $r["username"].": ";?></h3><p><?php echo $r["testo"]; ?></p></li>
+      <?php endforeach; 
+      }else{
+      ?>
+        <li>Nessun commento...</li>
+      <?php
+      }
+      ?>
+
+
       </ul>
   </div> 
 </article>
