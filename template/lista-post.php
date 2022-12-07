@@ -92,14 +92,24 @@
         foreach($risultato as $r):
       ?>
         <li class="d-flex justify-content-center"><h3><?php echo $r["username"].": ";?></h3><p><?php echo $r["testo"]; ?></p></li>
-      <?php endforeach; 
+      <?php endforeach; ?>
+
+        
+
+      <?php
       }else{
       ?>
         <li>Nessun commento...</li>
       <?php
       }
       ?>
-
+        <!--form per aggiungere un commento-->
+        <form action="upload-comment.php" method="POST">
+          <label for="commento">Commenta:</label>
+          <input type="text" placeholder="commento" id="commento" name="commento" required/>
+          <input type="hidden" id="idPost" name="idPost" value="<?php echo $posts['idPost'] ?>" />
+          <input type="submit" name="submit" value="Invia"/>
+        </form>
 
       </ul>
   </div> 
