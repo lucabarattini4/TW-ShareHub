@@ -24,6 +24,8 @@ function getImgData() {
   }else{
     altImg.style.display = "none";
     label.style.display = "none";
+    /////////** */
+    document.querySelectorAll("form").forEach(e => e.querySelector("img").remove());
   }  
 }
 
