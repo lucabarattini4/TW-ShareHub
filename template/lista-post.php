@@ -53,9 +53,15 @@
 
   <!--colonna commenti-->
   <div class="col">
-    <a href="#">
+    <!--<a href="#">
       <img src="./upload/webpageIcons/comment.svg" alt="commenta"/>
-    </a>
+    </a>-->
+    <?php $div="myDIV".$posts['idPost']; ?>
+
+    <a href="index.php#post<?php echo $posts['idPost']; ?>" onclick="comments(<?php echo $div?>)"> 
+      <img src="./upload/webpageIcons/comment.svg" alt="commenta"/>
+    </a> 
+
   </div>
 
   <!--colonna save-->
@@ -80,9 +86,6 @@
   <div class="row">
     <div class="col-12 d-flex justify-content-center">
 
-    <?php $div="myDIV".$posts['idPost']; ?>
-
-    <button onclick="comments(<?php echo $div?>)">Show comments</button> 
     </div>
   </div>
 
