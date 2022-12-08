@@ -238,12 +238,6 @@ class DatabaseHelper{
 
       return $result->fetch_all(MYSQLI_ASSOC);
     }
-    /**
-     * Restituisce tutte le chat con un singolo utente
-     */
-    public function getUserSingleChat($idUtente){
-
-    }
 
     /**
      * Mette like ad un post
