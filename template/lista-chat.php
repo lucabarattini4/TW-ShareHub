@@ -43,7 +43,7 @@
   <!--colonna nome utente-->
   <div class="col-10 col-md-6 d-flex align-items-center">
     <a href="./messages.php">
-      <h2><?php echo $single["username"]."-".$single["idChat"]; ?></h2>
+      <h2><?php echo $single["username"]; ?></h2>
     </a>
   </div>
 
