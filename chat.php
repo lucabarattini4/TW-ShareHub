@@ -6,7 +6,7 @@ if(!isset($_SESSION["username"])){
 }
 $templateParams["nome"] = "lista-chat.php";
 $templateParams["groups"] = $dbh->getUserGroupChat($_SESSION["username"]);
-$templateParams["single"] = $dbh->getUserSingleChat($_SESSION["username"]);
+$templateParams["single"] = $dbh->getUserSingleChat($_SESSION["idUtente"]);
 $templateParams["css"] = array("css/style.css");
 
 

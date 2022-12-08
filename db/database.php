@@ -229,10 +229,20 @@ class DatabaseHelper{
     /**
      * Restituisce tutte le chat singole di un determinato utente
      */
-    public function getUserSingleChat($username){
-      $query = "SELECT `chat`.`idChat`, `u2.CodUtente`,`u2.immagineProfilo`  FROM `chat`, `partecipazione`, `utente` as u1,`utente` as u2  WHERE `chat`.`idChat`=`partecipazione`.`codChat` AND `partecipazione`.`codUtente` = `u1.idUtente` AND `u1.username` = ? AND `chat`.`nomeChat` == '' ";
+    /*public function getUserSingleChat($username){
+      $query = "SELECT `chat`.`idChat`, `u2`.`idUtente`,`u2`.`immagineProfilo`, `u2`.`username`  FROM `chat`, `partecipazione`, `utente` as `u1`,`utente` as `u2`  WHERE `chat`.`idChat`=`partecipazione`.`codChat` AND `partecipazione`.`codUtente` = `u1`.`idUtente` AND `u1`.`username` = ? AND `chat`.`nomeChat` = '' ";
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('s',$username);
+      $stmt->execute();
+      $result = $stmt->get_result();
+
+      return $result->fetch_all(MYSQLI_ASSOC);
+    }*/
+
+    public function getUserSingleChat($idUtente){
+      $query = "SELECT `chat`.`idChat`, `utente`.`idUtente`,`utente`.`immagineProfilo`, `utente`.`username`  FROM `chat`, `partecipazione`,`utente` WHERE `chat`.`idChat`=`partecipazione`.`codChat` AND `partecipazione`.`codUtente` = `utente`.`idUtente` AND `utente`.`idUtente` != ? AND `chat`.`nomeChat` = '' ";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $idUtente);
       $stmt->execute();
       $result = $stmt->get_result();
 

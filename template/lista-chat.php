@@ -36,14 +36,14 @@
   <!--colonna immagine profilo-->
   <div class="col-2 d-flex justify-content-center">
     <a href="./messages.php">
-      <img src="<?php echo UPLOAD_DIR_PROFILE.$single["immagineGruppo"]; ?>" alt="immagineProfilo"/>
+      <img src="<?php echo UPLOAD_DIR_PROFILE.$single["immagineProfilo"]; ?>" alt="immagineProfilo"/>
     </a>
   </div>
 
   <!--colonna nome utente-->
   <div class="col-10 col-md-6 d-flex align-items-center">
     <a href="./messages.php">
-      <h2><?php echo $single["nomeChat"]; ?></h2>
+      <h2><?php echo $single["username"]."-".$single["idChat"]; ?></h2>
     </a>
   </div>
 
