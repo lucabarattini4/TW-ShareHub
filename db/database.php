@@ -6,7 +6,7 @@ class DatabaseHelper{
       $this->db = new mysqli($servername, $username, $password, $dbname);
       if ($this->db->connect_error) {
         die("Connection failed: " . $db->connect_error);
-      }        
+      }
     }
 
     /**
@@ -23,7 +23,7 @@ class DatabaseHelper{
 
     /**
      * Inserisce un post con una immagine
-     * 
+     *
      * @param string $testoPost testo del post
      * @param string $imgPost immagine del post
      * @param string $descrizioneImmagine alt dell'immagine postata
@@ -35,7 +35,7 @@ class DatabaseHelper{
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('ssssi',$testoPost, $imgPost, $descrizioneImmagine, $dataPost, $codUtente);
       $stmt->execute();
-        
+
       return $stmt->insert_id;
     }
 
@@ -50,7 +50,7 @@ class DatabaseHelper{
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('ssi',$testoPost, $dataPost, $codUtente);
       $stmt->execute();
-        
+
       return $stmt->insert_id;
     }
 
@@ -62,7 +62,7 @@ class DatabaseHelper{
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('ssssssssss',$nome, $cognome, $dataNascita, $sesso, $prefissoTelefonico, $numeroTelefono, $email, $username, $password, $immagineProfilo);
       $stmt->execute();
-        
+
       return $stmt->insert_id;
     }
 
@@ -195,7 +195,7 @@ class DatabaseHelper{
       $stmt->bind_param('i',$idChat);
       $stmt->execute();
       $result = $stmt->get_result();
-      
+
       return $result->fetch_all(MYSQLI_ASSOC);
     }
 
@@ -208,7 +208,7 @@ class DatabaseHelper{
       $stmt->bind_param('i',$idChat);
       $stmt->execute();
       $result = $stmt->get_result();
-      
+
       return $result->fetch_all(MYSQLI_ASSOC);
 
     }
@@ -227,10 +227,22 @@ class DatabaseHelper{
     }
 
     /**
+     * Restituisce tutte le chat singole di un determinato utente
+     */
+    public function getUserSingleChat($username){
+      $query = "SELECT `chat`.`idChat`, `chat`.`nomeChat`, `chat`.`immagineGruppo` FROM `chat`, `partecipazione`, `utente` WHERE `chat`.`idChat`=`partecipazione`.`codChat` AND `partecipazione`.`codUtente` = `utente`.`idUtente` AND `utente`.`username` = ? AND `chat`.`nomeChat` == '' ";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('s',$username);
+      $stmt->execute();
+      $result = $stmt->get_result();
+
+      return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    /**
      * Restituisce tutte le chat con un singolo utente
      */
     public function getUserSingleChat($idUtente){
-      
+
     }
 
     /**
@@ -256,11 +268,11 @@ class DatabaseHelper{
      * Ritorna tutti i post salvati da un utente
      */
     public function getPostSaved($username){
-      
+
     }
 
     /**
-     * 
+     *
      */
     public function searchUser($string){
       $query = "SELECT idUtente, username, nome FROM utente WHERE username LIKE %?%";
@@ -280,7 +292,7 @@ class DatabaseHelper{
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('sii',$testo, $idUtente, $idPost);
       $stmt->execute();
-        
+
       return $stmt->insert_id;
     }
 
