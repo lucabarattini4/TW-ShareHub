@@ -240,29 +240,136 @@ class DatabaseHelper{
     }
 
     /**
+     * 
+     */
+    private function likesaveRowExist($idUtente, $idPost){
+      $query = "SELECT `likesave`.`codUtente` FROM `likesave` WHERE `likesave`.`codUtente`=? AND `likesave`.`codPost`=?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('ii', $idUtente, $idPost);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if(mysqli_num_rows($result)){
+        return true;
+      }
+      return false;
+    }
+
+    /**
+     * 
+     */
+    private function isPostLiked($idUtente, $idPost){
+      $query = "SELECT `likesave`.`like` FROM `likesave` WHERE `likesave`.`like` = ? AND `likesave`.`codPost` = ? AND `likesave`.`codUtente`=?";
+      $stmt = $this->db->prepare($query);
+      $value = 1;
+      $stmt->bind_param('iii', $value, $idPost, $idUtente);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if(mysqli_num_rows($result)){
+        return true;
+      }
+      return false;
+    }
+
+    /**
      * Mette like ad un post
      */
     public function setPostLiked($idUtente, $idPost){
+      $liked = $this->isPostLiked($idUtente, $idPost);
+      if($liked){
+        $query1 = "UPDATE `likesave` SET `like` = ? WHERE `codPost`=? AND `codUtente`=?";
+        $stmt = $this->db->prepare($query1);
+        $value = 0;
+        $stmt->bind_param('iii', $value, $idPost, $idUtente);
+        $stmt->execute();
+      }else{
+        //update
+        if($this->likesaveRowExist($idUtente, $idPost) && !$liked){
+          $query2 = "UPDATE `likesave` SET `like` = 1 WHERE `codPost`=? AND `codUtente`=?";
+          $stmt = $this->db->prepare($query2);
+          $stmt->bind_param('ii', $idPost, $idUtente);
+          $stmt->execute();
+        }else{
+          //insert
+          $query3 = "INSERT INTO `likesave` (`codUtente`, `codPost`, `like`) VALUES (?, ?, ?)";
+          $stmt = $this->db->prepare($query3);
+          $value = 1;
+          $stmt->bind_param('iii', $idUtente, $idPost, $value);
+          $stmt->execute();
+        }
+        
+      }
     }
 
     /**
      * Ritorna tutti i post a cui l'utente ha messo like
      */
-    public function getPostLiked($username){
+    public function getPostLiked($idUtente){
+      $query = "SELECT `likesave`.`codPost` FROM `likesave` WHERE `likesave`.`codUtente` = ? AND `likesave`.`like`=?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('ii', $idUtente, 1);
+      $stmt->execute();
+      $result = $stmt->get_result();
 
+      return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
+     * 
+     */
+    private function isPostSaved($idUtente, $idPost){
+      $query = "SELECT `likesave`.`save` FROM `likesave` WHERE `likesave`.`save` = ? AND `likesave`.`codPost` = ? AND `likesave`.`codUtente`=?";
+      $stmt = $this->db->prepare($query);
+      $value = 1;
+      $stmt->bind_param('iii', $value, $idPost, $idUtente);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if(mysqli_num_rows($result)){
+        return true;
+      }
+      return false;
     }
 
     /**
      * Salva un post
      */
     public function setPostSaved($idUtente, $idPost){
+      $saved = $this->isPostSaved($idUtente, $idPost);
+      if($saved){
+        $query1 = "UPDATE `likesave` SET `save` = ? WHERE `codPost`=? AND `codUtente`=?";
+        $stmt = $this->db->prepare($query1);
+        $value = 0;
+        $stmt->bind_param('iii', $value, $idPost, $idUtente);
+        $stmt->execute();
+      }else{
+        //update
+        if($this->likesaveRowExist($idUtente, $idPost) && !$saved){
+          $query2 = "UPDATE `likesave` SET `save` = 1 WHERE `codPost`=? AND `codUtente`=?";
+          $stmt = $this->db->prepare($query2);
+          $stmt->bind_param('ii', $idPost, $idUtente);
+          $stmt->execute();
+        }else{
+          //insert
+          $query3 = "INSERT INTO `likesave` (`codUtente`, `codPost`, `save`) VALUES (?, ?, ?)";
+          $stmt = $this->db->prepare($query3);
+          $value = 1;
+          $stmt->bind_param('iii', $idUtente, $idPost, $value);
+          $stmt->execute();
+        }
+        
+      }
     }
 
     /**
      * Ritorna tutti i post salvati da un utente
      */
     public function getPostSaved($username){
+      $query = "SELECT `likesave`.`codPost` FROM `likesave` WHERE `likesave`.`codUtente` = ? AND `likesave`.`save`=?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('ii', $idUtente, 1);
+      $stmt->execute();
+      $result = $stmt->get_result();
 
+      return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     /**

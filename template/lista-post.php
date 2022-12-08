@@ -1,3 +1,5 @@
+
+
 <?php foreach($templateParams["post"] as $posts): ?>
   <!--riga img profilo + nome utente -->
 <article>
@@ -46,7 +48,7 @@
 
   <!--colonna mi piace-->
   <div class="col">
-    <a href="#">
+    <a href="likesave.php?like&post=<?php echo $posts['idPost']; ?>">
       <img src="./upload/webpageIcons/heart.svg" alt="mi piace"/>
     </a>
   </div>
@@ -66,7 +68,7 @@
 
   <!--colonna save-->
   <div class="col">
-    <a href="#">
+    <a href="./likesave.php?save&post=<?php echo $posts['idPost']; ?>" >
       <img src="./upload/webpageIcons/save.svg" alt="salva"/>
     </a>
   </div>
