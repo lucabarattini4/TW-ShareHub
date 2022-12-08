@@ -193,9 +193,11 @@ div ul li {
     justify-content: center;
     margin-left:0;
   }
-  div > ul > li  {
+  div > ul > li > h3 {
     font-size: 90%;
   }
-
+  div > ul > li > p {
+    font-size: 90%;
+  }
 
 }
