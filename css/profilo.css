@@ -1,6 +1,11 @@
 div > div > img{
   height: auto;
   width: 30%;
+
+}
+div:nth-child(1) > div > img{
+
+  border-radius: 50%;
 }
 div > div >h2{
   text-align: center;

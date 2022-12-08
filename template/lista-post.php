@@ -29,14 +29,14 @@
 
   <!--riga testo del post-->
   <div class="row">
-  <div class="col-12 d-flex justify-content-center align-items-center" id="<?php echo $postId?>">
+    <div class="col-12 d-flex justify-content-center align-items-center" id="<?php echo $postId?>">
     <p><?php echo $posts["testo"]; ?></p>
   </div>
   </div>
 
   <!--riga eventuale immagine-->
   <div class="row">
-  <div class="col d-flex justify-content-center">
+    <div class="col d-flex justify-content-center">
     <img src="<?php echo UPLOAD_DIR_POST.$posts["immagine"]; ?>" alt="<?php echo $posts["descImmagine"]; ?>" />
   </div>
   </div>
@@ -46,63 +46,62 @@
 
   <div class="col-md-3"></div>
 
-  <!--colonna mi piace-->
-  <div class="col">
-    <a href="likesave.php?like&post=<?php echo $posts['idPost']; ?>">
-      <img src="./upload/webpageIcons/heart.svg" alt="mi piace"/>
-    </a>
-  </div>
+    <!--colonna mi piace-->
+    <div class="col">
+      <a href="likesave.php?like&post=<?php echo $posts['idPost']; ?>">
+        <img src="./upload/webpageIcons/heart.svg" alt="mi piace"/>
+      </a>
+    </div>
 
-  <!--colonna commenti-->
-  <div class="col">
-    <!--<a href="#">
-      <img src="./upload/webpageIcons/comment.svg" alt="commenta"/>
-    </a>-->
-    <?php $div="myDIV".$posts['idPost']; ?>
+    <!--colonna commenti-->
+    <div class="col">
+      <!--<a href="#">
+        <img src="./upload/webpageIcons/comment.svg" alt="commenta"/>
+      </a>-->
+      <?php $div="myDIV".$posts['idPost']; ?>
 
-    <a href="index.php#post<?php echo $posts['idPost']; ?>" onclick="comments(<?php echo $div?>)"> 
-      <img src="./upload/webpageIcons/comment.svg" alt="commenta"/>
-    </a> 
+      <a href="index.php#post<?php echo $posts['idPost']; ?>" onclick="comments(<?php echo $div?>)">
+        <img src="./upload/webpageIcons/comment.svg" alt="commenta"/>
+      </a>
 
-  </div>
+    </div>
 
-  <!--colonna save-->
-  <div class="col">
-    <a href="./likesave.php?save&post=<?php echo $posts['idPost']; ?>" >
-      <img src="./upload/webpageIcons/save.svg" alt="salva"/>
-    </a>
-  </div>
+    <!--colonna save-->
+    <div class="col">
+      <a href="./likesave.php?save&post=<?php echo $posts['idPost']; ?>" >
+        <img src="./upload/webpageIcons/save.svg" alt="salva"/>
+      </a>
+    </div>
 
-  <!--colonna condividi-->
-  <div class="col">
-    <a href="#">
-      <img src="./upload/webpageIcons/share.svg" alt="condividi"/>
-    </a>
-  </div>
+    <!--colonna condividi-->
+    <div class="col">
+      <a href="#">
+        <img src="./upload/webpageIcons/share.svg" alt="condividi"/>
+      </a>
+    </div>
 
-  <div class="col"></div>
+    <div class="col"></div>
 
   </div>
 
   <!--riga commenti-->
   <div class="row">
-    <div class="col-12 d-flex justify-content-center">
-
+    <div class="col-12 d-flex">
     </div>
   </div>
 
-  <div id="myDIV<?php echo $posts["idPost"]?>" class="row" style="display: none;"> 
+  <div id="myDIV<?php echo $posts["idPost"]?>" class="row" style="display: none;">
       <ul>
-        
+
       <?php
       $risultato = $dbh->getComments($posts["idPost"]);
       if(!count($risultato)==0){
         foreach($risultato as $r):
       ?>
-        <li class="d-flex justify-content-center"><h3><?php echo $r["username"].": ";?></h3><p><?php echo $r["testo"]; ?></p></li>
+        <li class="d-flex "><h3><?php echo $r["username"].": ";?></h3><p><?php echo $r["testo"]; ?></p></li>
       <?php endforeach; ?>
 
-        
+
 
       <?php
       }else{
@@ -120,6 +119,6 @@
         </form>
 
       </ul>
-  </div> 
+  </div>
 </article>
   <?php endforeach; ?>

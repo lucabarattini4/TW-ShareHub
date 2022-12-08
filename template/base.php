@@ -49,7 +49,7 @@
         </a>
       </div>
       <?php } ?>
-    
+
 
       <!--colonna logo-->
       <div class="col">
@@ -62,23 +62,23 @@
       <!--colonna profilo-->
       <div class="col-2">
         <a class="d-flex justify-content-end align-items-center" href="#">
-          <?php 
+          <?php
           $templateParams["img"] = $dbh->getUserProfileImg($_SESSION["idUtente"]);
-          foreach($templateParams["img"] as $img): 
+          foreach($templateParams["img"] as $img):
           ?>
           <img src="<?php echo UPLOAD_DIR_PROFILE.$img["immagineProfilo"]?>" alt="profilo"/>
           <?php endforeach; ?>
         </a>
       </div>
       <?php } ?>
-      
+
     </div>
   </header>
   </div>
     <!--FINE HEADER-->
 
 
-   
+
   <!--POST-->
 
   <div class="container">
