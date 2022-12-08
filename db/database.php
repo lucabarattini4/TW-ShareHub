@@ -230,7 +230,7 @@ class DatabaseHelper{
      * Restituisce tutte le chat singole di un determinato utente
      */
     public function getUserSingleChat($username){
-      $query = "SELECT `chat`.`idChat`, `chat`.`nomeChat`, `chat`.`immagineGruppo` FROM `chat`, `partecipazione`, `utente` WHERE `chat`.`idChat`=`partecipazione`.`codChat` AND `partecipazione`.`codUtente` = `utente`.`idUtente` AND `utente`.`username` = ? AND `chat`.`nomeChat` == '' ";
+      $query = "SELECT `chat`.`idChat`, `u2.CodUtente`,`u2.immagineProfilo`  FROM `chat`, `partecipazione`, `utente` as u1,`utente` as u2  WHERE `chat`.`idChat`=`partecipazione`.`codChat` AND `partecipazione`.`codUtente` = `u1.idUtente` AND `u1.username` = ? AND `chat`.`nomeChat` == '' ";
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('s',$username);
       $stmt->execute();
