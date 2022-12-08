@@ -7,14 +7,14 @@
 
   <!--colonna immagine profilo-->
   <div class="col-2 d-flex justify-content-center">
-    <a href="./profilo.php">
-      <img src="<?php echo UPLOAD_DIR_PROFILE.$posts["immagineProfilo"]; ?>" alt="immagineProfilo"/>
+    <a href="./profilo.php?user=<?php echo $posts["username"]; ?>">
+      <img src="<?php echo UPLOAD_DIR_PROFILE.$posts["immagineProfilo"]; ?>" alt="<?php echo $posts["username"]?>"/>
     </a>
   </div>
 
   <!--colonna nome utente-->
   <div class="col-10 col-md-6 d-flex align-items-center">
-    <a href="./profilo.php">
+    <a href="./profilo.php?user=<?php echo $posts["username"]; ?>">
       <h2><?php echo $posts["username"]; ?></h2>
     </a>
   </div>

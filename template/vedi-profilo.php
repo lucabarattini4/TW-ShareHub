@@ -1,3 +1,9 @@
+<?php
+$templateParams["post"] =  $dbh->getUserPosts($_GET["user"]);
+$templateParams["info"] =  $dbh->getUserInfo($_GET["user"]);
+
+?>
+
 <?php foreach($templateParams["info"] as $info): ?>
     <div class="row ">
       <div class="col-12   d-flex justify-content-center">
