@@ -48,8 +48,9 @@
 
     <!--colonna mi piace-->
     <div class="col">
-      <a href="likesave.php?like&post=<?php echo $posts['idPost']; ?>">
+      <a href="">
         <img src="./upload/webpageIcons/heart.svg" alt="mi piace"/>
+        <input type="hidden" value="<?php echo $posts["idPost"]; ?>"/>
       </a>
     </div>
 
@@ -68,8 +69,9 @@
 
     <!--colonna save-->
     <div class="col">
-      <a href="./likesave.php?save&post=<?php echo $posts['idPost']; ?>" >
+      <a href="" >
         <img src="./upload/webpageIcons/save.svg" alt="salva"/>
+        <input type="hidden" value="<?php echo $posts["idPost"]; ?>"/>
       </a>
     </div>
 

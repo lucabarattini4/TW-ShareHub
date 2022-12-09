@@ -257,7 +257,7 @@ class DatabaseHelper{
     /**
      * 
      */
-    private function isPostLiked($idUtente, $idPost){
+    public function isPostLiked($idUtente, $idPost){
       $query = "SELECT `likesave`.`like` FROM `likesave` WHERE `likesave`.`like` = ? AND `likesave`.`codPost` = ? AND `likesave`.`codUtente`=?";
       $stmt = $this->db->prepare($query);
       $value = 1;
@@ -316,7 +316,7 @@ class DatabaseHelper{
     /**
      * 
      */
-    private function isPostSaved($idUtente, $idPost){
+    public function isPostSaved($idUtente, $idPost){
       $query = "SELECT `likesave`.`save` FROM `likesave` WHERE `likesave`.`save` = ? AND `likesave`.`codPost` = ? AND `likesave`.`codUtente`=?";
       $stmt = $this->db->prepare($query);
       $value = 1;

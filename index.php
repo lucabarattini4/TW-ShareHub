@@ -7,7 +7,7 @@ if(!isset($_SESSION["username"])){
 $templateParams["nome"] = "lista-post.php";
 $templateParams["post"] = $dbh->getPosts();
 $templateParams["css"] = array("css/style.css");
-$templateParams["js"] = array("script/comment-section.js");
+$templateParams["js"] = array("js/comment-section.js", "https://unpkg.com/axios/dist/axios.min.js", "js/like.js", "js/save.js");
  
 
 require 'template/base.php';
