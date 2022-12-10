@@ -203,5 +203,7 @@ div ul li {
     width: 100%;
     padding-top: 10px;
   }
-
+  footer ul {
+    margin-left: 8%;
+  }
 }

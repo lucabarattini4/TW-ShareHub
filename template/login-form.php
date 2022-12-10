@@ -13,7 +13,7 @@
           registerLoggedUser($login_result[0]);
       }
   }
-  
+
   if(isUserLoggedIn()){
       $templateParams["nome"] = "index.php";
       header("location: index.php");
@@ -24,17 +24,16 @@
 
 <h2 class="d-flex justify-content-center pt-5">Login</h2>
     <ul>
-      <li class="d-flex justify-content-center pt-5">
+      <li class="d-flex justify-content-center">
         <label for="username" hidden>Username:</label>
         <input class="text-center" type="text" placeholder="username" id="username" name="username" required/>
       </li>
-      <li class="d-flex justify-content-center pt-5">
+      <li class="d-flex justify-content-center">
         <label for="psw" hidden>Password:</label>
         <input class="text-center" type="password" placeholder="password" id="psw" name="psw" required/>
       </li>
-      <li class="d-flex justify-content-center pt-5">
+      <li class="d-flex justify-content-center">
         <input type="submit" name="submit" value="Invia"/>
       </li>
     </ul>
 </form>
-
