@@ -10,7 +10,7 @@
     <!--colonna immagine profilo-->
     <div class="col-2 d-flex justify-content-center">
       <a href="./profilo.php?user=<?php echo $posts["username"]; ?>">
-        <img src="<?php echo UPLOAD_DIR_PROFILE.$posts["immagineProfilo"]; ?>" alt="<?php echo $posts["username"]?>"/>
+        <img src="<?php echo UPLOAD_DIR_PROFILE.$posts["immagineProfilo"]; ?>" alt="<?php echo "immagine profilo di ".$posts["username"]?>"/>
       </a>
     </div>
 
@@ -28,8 +28,7 @@
 
   <!--riga testo del post-->
   <div class="row">
-    <?php $postId="post".$posts['idPost']; ?>
-    <div class="col-12 d-flex justify-content-center align-items-center" id="<?php echo $postId?>">
+    <div class="col-12 d-flex justify-content-center align-items-center">
       <p><?php echo $posts["testo"]; ?></p>
     </div>
   </div>
@@ -49,28 +48,26 @@
 
     <!--colonna mi piace-->
     <div class="col">
-      <img src="./upload/webpageIcons/heart.svg" alt="mi piace"/>
+      <img src="./upload/webpageIcons/heart.svg" alt="<?php echo "like al post di ".$posts["username"]?>"/>
       <input type="hidden" value="<?php echo $posts["idPost"]; ?>"/>
     </div>
 
     <!--colonna commenti-->
     <div class="col">
-      <img src="./upload/webpageIcons/comment.svg" alt="commenta"/>
+      <img src="./upload/webpageIcons/comment.svg" alt="<?php echo "commenta il post di ".$posts["username"]?>"/>
       <input type="hidden" value="<?php echo $posts["idPost"]; ?>"/>
       <input type="hidden" value="<?php echo $_SESSION["idUtente"]; ?>"/>
     </div>
 
     <!--colonna save-->
     <div class="col">
-      <img src="./upload/webpageIcons/save.svg" alt="salva"/>
+      <img src="./upload/webpageIcons/save.svg" alt="<?php echo "salva il post di ".$posts["username"]?>"/>
       <input type="hidden" value="<?php echo $posts["idPost"]; ?>"/>
     </div>
 
     <!--colonna condividi-->
     <div class="col">
-      <a href="#">
-        <img src="./upload/webpageIcons/share.svg" alt="condividi"/>
-      </a>
+      <img src="./upload/webpageIcons/share.svg" alt="<?php echo "condividi il post di ".$posts["username"]?>"/>
     </div>
 
     <!--colonna vuota-->

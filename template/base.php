@@ -48,7 +48,7 @@
       <!--colonna impostazioni-->
       <div class="col-2">
         <a class="d-flex justify-content-start align-items-center" href="impostazioni.php">
-          <img class="menu" src="./upload/webpageIcons/setting.svg" alt="impostazioni"/>
+          <img class="menu" src="./upload/webpageIcons/setting.svg" alt="impostazioni del profilo"/>
         </a>
       </div>
       <?php } ?>
@@ -69,7 +69,7 @@
           $templateParams["img"] = $dbh->getUserProfileImg($_SESSION["idUtente"]);
           foreach($templateParams["img"] as $img):
           ?>
-          <img src="<?php echo UPLOAD_DIR_PROFILE.$img["immagineProfilo"]?>" alt="profilo"/>
+          <img src="<?php echo UPLOAD_DIR_PROFILE.$img["immagineProfilo"]?>" alt="<?php echo "profilo di ".$_SESSION["username"]?>"/>
           <?php endforeach; ?>
         </a>
       </div>
@@ -124,7 +124,7 @@
         <!--cerca-->
         <li class="nav-item col-3 text-center">
           <a href="./search.php">
-            <img src="./upload/webpageIcons/search.svg" alt="cerca">
+            <img src="./upload/webpageIcons/search.svg" alt="cerca utente">
           </a>
         </li>
 
