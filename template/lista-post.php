@@ -59,10 +59,13 @@
       <!--<a href="#">
         <img src="./upload/webpageIcons/comment.svg" alt="commenta"/>
       </a>-->
-      <?php $div="myDIV".$posts['idPost']; ?>
+      
 
-      <a href="index.php#post<?php echo $posts['idPost']; ?>" onclick="comments(<?php echo $div?>)">
+      <!--<a href="index.php#post<?php //echo $posts['idPost']; ?>" onclick="comments(<?php //echo $div?>)">-->
+      <a href="">
         <img src="./upload/webpageIcons/comment.svg" alt="commenta"/>
+        <input type="hidden" value="<?php echo $posts["idPost"]; ?>"/>
+        <input type="hidden" value="<?php echo $_SESSION["idUtente"]; ?>"/>
       </a>
 
     </div>
@@ -86,41 +89,9 @@
 
   </div>
 
-  <!--riga commenti-->
+  <!--sezione commenti + form-->
   <div class="row">
-    <div class="col-12 d-flex">
-    </div>
-  </div>
 
-  <div id="myDIV<?php echo $posts["idPost"]?>" class="row" style="display: none;">
-      <ul>
-
-      <?php
-      $risultato = $dbh->getComments($posts["idPost"]);
-      if(!count($risultato)==0){
-        foreach($risultato as $r):
-      ?>
-        <li class="d-flex "><h3><?php echo $r["username"].": ";?></h3><p><?php echo $r["testo"]; ?></p></li>
-      <?php endforeach; ?>
-
-
-
-      <?php
-      }else{
-      ?>
-        <li>Nessun commento...</li>
-      <?php
-      }
-      ?>
-        <!--form per aggiungere un commento-->
-        <form action="upload-comment.php" method="POST">
-          <label for="commento">Commenta:</label>
-          <input type="text" placeholder="commento" id="commento" name="commento" required/>
-          <input type="hidden" id="idPost" name="idPost" value="<?php echo $posts['idPost'] ?>" />
-          <input type="submit" name="submit" value="Invia"/>
-        </form>
-
-      </ul>
   </div>
 </article>
   <?php endforeach; ?>
