@@ -1,11 +1,11 @@
-let allBtn2 = document.querySelectorAll("article > div:nth-child(4) > div:nth-child(3)   img");
+let allBtn2 = document.querySelectorAll("article > div:nth-child(4) > div:nth-child(3) > img");
 
 for (i of allBtn2){
   let clicked = false;
 
   i.addEventListener("click", function (event) {
     clicked = !clicked;
-    let elem = this.parentElement.parentElement.parentElement.parentElement.querySelector("article > div:nth-child(5)");
+    let elem = this.parentElement.parentElement.parentElement.querySelector("article > div:nth-child(5)");
     event.preventDefault();
     if(clicked){
       elem.style.display="inline-block";

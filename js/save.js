@@ -1,4 +1,4 @@
-let allBtn1 = document.querySelectorAll("article > div:nth-child(4) > div:nth-child(4) > a > img");
+let allBtn1 = document.querySelectorAll("article > div:nth-child(4) > div:nth-child(4) img");
 
 for (i of allBtn1){
   i.addEventListener("click", function (event) {
