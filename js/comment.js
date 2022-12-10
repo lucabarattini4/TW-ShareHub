@@ -1,4 +1,4 @@
-let allBtn2 = document.querySelectorAll("article > div:nth-child(4) > div:nth-child(3) > a > img");
+let allBtn2 = document.querySelectorAll("article > div:nth-child(4) > div:nth-child(3)   img");
 
 for (i of allBtn2){
   let clicked = false;
@@ -9,14 +9,9 @@ for (i of allBtn2){
     event.preventDefault();
     if(clicked){
       elem.style.display="inline-block";
-      //console.log("commenti");
       let id = this.nextElementSibling.getAttribute('value');
       let user = this.nextElementSibling.nextElementSibling.getAttribute('value');
       axios.get('api-comment.php',{ params: { idPost: id, idUtente: user } }).then(response => {
-        //console.log(response);
-        console.log(id);
-
-        console.log(elem);
         visualizzaCommenti(elem, response.data["comments"], id, user);
       });
     }else{
@@ -50,13 +45,11 @@ function visualizzaCommenti(main, listaCommenti, id, user) {
   let commenti = generaCommenti(listaCommenti);
   console.log(commenti);
   let form = generaFormCommento(id);
-  console.log(form);
   commenti += form;
-  console.log(main);
   main.innerHTML = commenti;
-  main.querySelector("form").addEventListener("submit", function (event) {
+  main.querySelector("article form").addEventListener("submit", function (event) {
     event.preventDefault();
-    const testo = document.querySelector("#commento").value;
+    const testo = main.querySelector("article form #commento").value;
     commenta(testo, id, user, main);
 });
 }
@@ -79,12 +72,8 @@ function commenta(testo, id, username, main){
     formData.append('idUtente', username);
     console.log("Sto commentando");
     axios.post('api-comment.php', formData).then(response => {
-        console.log(response.data["commentoInserito"]);
         axios.get('api-comment.php',{ params: { idPost: id, idUtente: username } }).then(response => {
           //console.log(response);
-          console.log(id);
-  
-          console.log(main);
           visualizzaCommenti(main, response.data["comments"], id, username);
         });
     });
