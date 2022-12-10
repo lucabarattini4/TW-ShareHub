@@ -8,6 +8,7 @@ for (i of allBtn2){
     let elem = this.parentElement.parentElement.parentElement.querySelector("article > div:nth-child(5)");
     event.preventDefault();
     if(clicked){
+      //CLICK
       elem.style.display="inline-block";
       let id = this.nextElementSibling.getAttribute('value');
       let user = this.nextElementSibling.nextElementSibling.getAttribute('value');
@@ -16,13 +17,10 @@ for (i of allBtn2){
       });
     }else{
       //UNCLICK
-      console.log("unclick");
       elem.style.display="none";
     }
-    
   });
 }
-
 
 function generaCommenti(listaCommenti){
   if(listaCommenti.length==0){
@@ -30,11 +28,11 @@ function generaCommenti(listaCommenti){
   }else{
     result = `<ul>`
     for (let i = 0; i < listaCommenti.length; i++) {
-         result += 
-           `<li>
-             <h3>${listaCommenti[i]["username"]}</h3>
-             <p>${listaCommenti[i]["testo"]}</p>
-           </li>`;
+      result += 
+      `<li>
+        <h3>${listaCommenti[i]["username"]}</h3>
+        <p>${listaCommenti[i]["testo"]}</p>
+      </li>`;
      }
      result += `</ul>`;
   }
@@ -43,7 +41,6 @@ function generaCommenti(listaCommenti){
 
 function visualizzaCommenti(main, listaCommenti, id, user) {
   let commenti = generaCommenti(listaCommenti);
-  console.log(commenti);
   let form = generaFormCommento(id);
   commenti += form;
   main.innerHTML = commenti;
@@ -67,14 +64,12 @@ function generaFormCommento(id) {
 
 function commenta(testo, id, username, main){
   const formData = new FormData();
-    formData.append('testo', testo);
-    formData.append('idPost', id);
-    formData.append('idUtente', username);
-    console.log("Sto commentando");
-    axios.post('api-comment.php', formData).then(response => {
-        axios.get('api-comment.php',{ params: { idPost: id, idUtente: username } }).then(response => {
-          //console.log(response);
-          visualizzaCommenti(main, response.data["comments"], id, username);
-        });
+  formData.append('testo', testo);
+  formData.append('idPost', id);
+  formData.append('idUtente', username);
+  axios.post('api-comment.php', formData).then(response => {
+    axios.get('api-comment.php',{ params: { idPost: id, idUtente: username } }).then(response => {
+      visualizzaCommenti(main, response.data["comments"], id, username);
     });
+  });
 }
