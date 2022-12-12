@@ -12,8 +12,10 @@ chooseFile.addEventListener("change", function () {
 function getImgData() {
   const files = chooseFile.files[0];
   if (files) {
-    altImg.style.display = "block";
-    label.style.display = "block";
+    if(altImg){
+      altImg.style.display = "block";
+      label.style.display = "block";
+    }
 
     const fileReader = new FileReader();
     fileReader.readAsDataURL(files);
@@ -22,19 +24,28 @@ function getImgData() {
       imgPreview.innerHTML = '<img src="' + this.result + '" />';
     });    
   }else{
-    altImg.style.display = "none";
-    label.style.display = "none";
-    document.querySelectorAll("form").forEach(e => e.querySelector("img").remove());
+    if(altImg){
+      altImg.style.display = "none";
+      label.style.display = "none";
+    }
+    removeImg();
   }  
 }
 
 btn.onclick = function() { 
   var file = chooseFile;
   if(file.value!=""){
-    document.querySelectorAll("form").forEach(e => e.querySelector("img").remove());
+    removeImg();
   }
-  altImg.style.display = "none";
-  label.style.display = "none";
+  if(altImg){
+    altImg.style.display = "none";
+    label.style.display = "none";
+  }
   file.value = file.defaultValue;
 }
+
+function removeImg(){
+  document.getElementById("img-preview").firstChild.remove();
+}
+
 

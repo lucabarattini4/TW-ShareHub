@@ -77,12 +77,12 @@
 
     <br/>
 
-    <label for="fileToUpload">Immagine del profilo:</label>
-    <input type="file" id="fileToUpload" name="fileToUpload" required/>
-    <button id="rmv" type="button">Remove file</button>
+    <label for="fileToUpload">Immagine:</label>
+        <input type="file" id="fileToUpload" name="fileToUpload" />
+        <button id="rmv" type="button">Remove file</button>
 
     <div id="img-preview" class="d-flex justify-content-center pt-5"></div>
-    </fieldset>
+  </fieldset>
 
     <input type="submit" name="submit" value="Invia"/>
 </form>
