@@ -12,9 +12,15 @@ class DatabaseHelper{
     /**
      * Restituisce tutti i post
      */
-    public function getPosts(){
-      $query = "SELECT idPost, username, testo, immagine, immagineProfilo, descImmagine FROM post, utente WHERE idUtente=codUtente ORDER BY dataPost DESC";
+    public function getPosts($n=-1){
+      $query = "SELECT idPost, username, testo, immagine, immagineProfilo, descImmagine FROM post, utente WHERE idUtente=codUtente ORDER BY RAND() DESC";
+      if($n > 0){
+        $query .= " LIMIT ?";
+      }
       $stmt = $this->db->prepare($query);
+      if($n > 0){
+        $stmt->bind_param('i', $n);
+      }
       $stmt->execute();
       $result = $stmt->get_result();
 
