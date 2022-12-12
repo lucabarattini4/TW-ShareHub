@@ -1,4 +1,4 @@
-let allBtn2 = document.querySelectorAll("article > div:nth-child(4) > div:nth-child(3) > img");
+/*let allBtn2 = document.querySelectorAll("article > div:nth-child(4) > div:nth-child(3) > img");
 
 for (i of allBtn2){
   let clicked = false;
@@ -20,6 +20,26 @@ for (i of allBtn2){
       elem.style.display="none";
     }
   });
+}*/
+
+let clicked = false;
+
+function comment(e){
+  clicked = !clicked;
+  let elem = e.parentElement.parentElement.parentElement.querySelector("article > div:nth-child(5)");
+  console.log(elem);
+  if(clicked){
+    //CLICK
+    elem.style.display="inline-block";
+    let id = e.nextElementSibling.getAttribute('value');
+    let user = e.nextElementSibling.nextElementSibling.getAttribute('value');
+    axios.get('api-comment.php',{ params: { idPost: id, idUtente: user } }).then(response => {
+      visualizzaCommenti(elem, response.data["comments"], id, user);
+    });
+  }else{
+    //UNCLICK
+    elem.style.display="none";
+  }
 }
 
 function generaCommenti(listaCommenti){
