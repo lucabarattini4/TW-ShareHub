@@ -120,22 +120,9 @@ console.log("RICHIESTA POST");
 requestPost();
 
 
-/*window.onscroll = function() {
+window.onscroll = function() {
   if(window.onscroll && ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)){
     console.log("fine pagina");
     requestPost();
-  }else{
-    //console.log("metto gli event listener");
   }
-}*/
-
-/*window.onclick = function () {
-    addLikeListener();
-};*/
-
-/*window.onscroll = function() {
-  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-    console.log("FINE PAGINA");
-    addLikeListener();
-  }
-};*/
+}
