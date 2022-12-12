@@ -44,10 +44,12 @@ function generaPosts(posts){
             <img src="${posts[i]['immagine']}" alt="${posts[i]["descImmagine"]}" />
           </div>
         </div>`;
+      }else{
+        post+=`<!--riga eventuale immagine-->
+            <div class="row"></div>`;
       }
 
      post+=`
-
       <!--riga mi piace, commenti, save-->
       <div class="row w-75 pb-3">
 
@@ -97,7 +99,7 @@ function generaPosts(posts){
       </div>
 
       <!--riga sezione commenti + form-->
-      <div class="row"></div>
+      <div class="row" style="display: none"></div>
 
     </article>`;
     result += post;
@@ -117,27 +119,23 @@ const main = document.querySelector("main");
 console.log("RICHIESTA POST");
 requestPost();
 
-//addLikeListener();
 
 /*window.onscroll = function() {
   if(window.onscroll && ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)){
     console.log("fine pagina");
     requestPost();
   }else{
-    //addLikeListener();
     //console.log("metto gli event listener");
   }
 }*/
 
 /*window.onclick = function () {
-    requestPost();
     addLikeListener();
 };*/
 
 /*window.onscroll = function() {
   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
     console.log("FINE PAGINA");
-    requestPost();
     addLikeListener();
   }
 };*/
