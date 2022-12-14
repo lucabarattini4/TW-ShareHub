@@ -7,8 +7,10 @@
       header("location: index.php");
   }
 
-  if(isset($_POST["username"]) && $dbh->isUsernameUnique($_POST["username"])){
+  if(isset($_POST["username"])){
   
+    if($dbh->isUsernameUnique($_POST["username"])){
+
     if($dbh->isEmailUnique($_POST["email"])){
 
         if(isBirthDayCorrect($_POST["datanascita"])){
@@ -56,9 +58,9 @@
     }else{
       $templateParams["erroreRegistrazione"] = "ERRORE: È già presente un account associato a questa mail";
     }
-
   }else{
-    $templateParams["erroreRegistrazione"] = "ERRORE: L'username scelto è già in uso da un altro utente";
+    $templateParams["erroreRegistrazione"] = "ERRORE: È già presente un account con questo nome utente";
+  }
   }
 
   ?>
