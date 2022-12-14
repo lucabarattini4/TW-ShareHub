@@ -1,13 +1,11 @@
 <?php require_once 'bootstrap.php'; ?>
-<a class="d-flex justify-content-start align-items-center" href="login-opt.php"><img src="<?php echo UPLOAD_DIR_ICONS ?>back-arrow.svg" alt=""></a>
-<form action="#" method="POST">
-  <?php
 
+<?php
     if(isset($_POST["username"]) && isset($_POST["psw"])){
       $login_result = $dbh->checkLogin($_POST["username"], $_POST["psw"]);
       if(count($login_result)==0){
           //Login fallito
-          $templateParams["errorelogin"] = "Errore! Controllare username o password!";
+          $templateParams["erroreLogin"] = "Errore! Controllare username o password!";
       }
       else{
           registerLoggedUser($login_result[0]);
@@ -18,15 +16,15 @@
       $templateParams["nome"] = "index.php";
       header("location: index.php");
   }
-  ?>
+?>
 
-
-
+<a class="d-flex justify-content-start align-items-center" href="login-opt.php"><img src="<?php echo UPLOAD_DIR_ICONS ?>back-arrow.svg" alt=""></a>
+<form action="#" method="POST">
 <h2 class="d-flex justify-content-center pt-5">Login</h2>
     <ul>
       <li class="d-flex justify-content-center">
         <label for="username" hidden>Username:</label>
-        <input class="text-center" type="text" placeholder="username" id="username" name="username" required/>
+        <input class="text-center" type="text" placeholder="username" id="username" name="username" value="<?php echo (isset($_POST['username']))?$_POST['username']:'';?>" required/>
       </li>
       <li class="d-flex justify-content-center">
         <label for="psw" hidden>Password:</label>
@@ -34,6 +32,9 @@
       </li>
       <li class="d-flex justify-content-center">
         <input type="submit" name="submit" value="Invia"/>
+      </li>
+      <li>
+        <p><?php if(isset($templateParams["erroreLogin"])){ echo $templateParams["erroreLogin"];}?></p>
       </li>
     </ul>
 </form>
