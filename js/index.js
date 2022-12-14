@@ -64,7 +64,7 @@ function generaPosts(posts){
         }else{
           post+=`<img src="./upload/webpageIcons/heart_checked.svg" alt="like al post di ${posts[i]['username']}" onclick="like(this)"/>`;
         }
-        
+
         post+=`
           <input type="hidden" value="${posts[i]['idPost']}"/>
         </div>
@@ -90,7 +90,7 @@ function generaPosts(posts){
 
         <!--colonna condividi-->
         <div class="col">
-          <img src="./upload/webpageIcons/share.svg" alt="condividi il post di ${posts[i]['username']}"/>
+        <img id="ShareBtn" src="./upload/webpageIcons/share.svg" alt="condividi il post di ${posts[i]['username']}" onclick ="showModal()"/></button>
         </div>
 
         <!--colonna vuota-->
@@ -100,6 +100,26 @@ function generaPosts(posts){
 
       <!--riga sezione commenti + form-->
       <div class="row" style="display: none"></div>
+
+      <!--modal condividi-->
+      <div id="myModal" class="modal">
+
+
+        <!-- Modal content -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="close" onclick="hideModal()">&times;</span>
+            <h2>Condividi questo post</h2>
+          </div>
+          <div class="modal-body">
+
+            <input type="text" value="${posts[i]['idPost']}" id="myLink" disabled>
+            <button onclick="copyLink()">Copia Link</button>
+          </div>
+          <div class="modal-footer"></div>
+        </div>
+
+      </div>
 
     </article>`;
     result += post;
@@ -114,6 +134,30 @@ function requestPost(){
   });
 }
 
+
+
+
+function showModal(){
+  var modal = document.getElementById("myModal");
+  modal.style.display = "block";
+}
+
+function hideModal(){
+  var modal = document.getElementById("myModal");
+   modal.style.display = "none";
+}
+
+function copyLink(){
+  // Get the text field
+  var copyText = document.getElementById("myLink");
+
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+  // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+}
 const main = document.querySelector("main");
 
 console.log("RICHIESTA POST");
