@@ -72,32 +72,18 @@ function logOut(){
     header("location: login-opt.php");
 } 
 
-function isUsernameCorrect($username){
-    $regex = preg_match('[@_!#$%^&*()<>?/|}{~:]', $username);
-    if($regex){
+function isPrefixCorrect($prefix){
+    if(ctype_digit($prefix)){
         return true;
-    } 
+    }
     return false;
 }
-
-/*function checkPrefix($prefix){
-    if(strlen($prefix)==2){
-        $prefix = stringInsert($prefix, "+", 0);
-        $check += "prefix ok: " + $prefix;
-    }else{
-        $first = substr($prefix, 0, 1);
-        if($first!="+"){
-            $newStr = substr($prefix, 1);
-            $newStr = stringInsert($prefix, "+", 0);
-        }
-    }
-}*/
 
 /**
  * Controlla se il numero di telefono è corretto
  */
 function isPhoneCorrect($phone){
-    if(is_numeric($phone)){
+    if(ctype_digit($phone)){
         return true;
     }
     return false;
@@ -111,10 +97,6 @@ function isBirthDayCorrect($date){
         return true;
     }
     return false;
-}
-
-function isRegisterFormCorrect($username, $email, $prefix, $phone, $date){
-    return isEmailCorrect($email) && isPhoneCorrect($prefix) && isBirthDayCorrect($date) /*&& isUsernameCorrect($username)*/;
 }
 
 ?>

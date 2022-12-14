@@ -75,7 +75,7 @@ class DatabaseHelper{
     /**
      * Controlla l'esistenza di un username
      */
-    private function checkUsernameExistence($username){
+    public function checkUsernameExistence($username){
       $query = "SELECT `utente`.`nome`, `utente`.`cognome`
       FROM `utente`
       WHERE `utente`.`username` = ?";

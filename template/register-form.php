@@ -15,16 +15,14 @@
 
         if(isBirthDayCorrect($_POST["datanascita"])){
 
-          if(isPhoneCorrect($_POST["numero"])){
+          if(isPrefixCorrect($_POST["prefix"])){
 
-            if($_POST["psw"] == $_POST["psw2"]){
+              if(isPhoneCorrect($_POST["numero"])){
 
-              if(isPrefixCorrect()){
-
-                if(isRegisterFormCorrect($_POST["username"], $_POST["email"], $_POST["prefix"], $_POST["numero"], $_POST["datanascita"])){
+                if($_POST["psw"] == $_POST["psw2"]){
 
                   $imgPost = end(explode('/', $_POST["profilepic"]));
-                  $id = $dbh->registerUser($_POST["nome"], $_POST["cognome"], $_POST["datanascita"], $_POST["sesso"], $_POST["prefix"], $_POST["numero"], $_POST["email"], $_POST["username"], $_POST["psw"], $imgPost);
+                  $id = $dbh->registerUser($_POST["nome"], $_POST["cognome"], $_POST["datanascita"], $_POST["sesso"], "+".$_POST["prefix"], $_POST["numero"], $_POST["email"], $_POST["username"], $_POST["psw"], $imgPost);
                   if($id!=false){
                     header("location: login.php");
                   }
@@ -33,22 +31,16 @@
                   }
       
                 }else{
-                  $templateParams["erroreRegistrazione"] = "ERRORE: Errore di check dei parametri";
+                  $templateParams["erroreRegistrazione"] = "ERRORE: Le password non coincidono";
                 }
 
 
               }else{
-                $templateParams["erroreRegistrazione"] = "ERRORE: Prefisso telefonico errato: deve essere del formato +00";
+                $templateParams["erroreRegistrazione"] = "ERRORE: Il numero di telefono non contiene solo cifre";
               }
 
-
-            }else{
-              $templateParams["erroreRegistrazione"] = "ERRORE: Le password non coincidono";
-            }
-
-
           }else{
-            $templateParams["erroreRegistrazione"] = "ERRORE: Il numero di telefono non contiene solo cifre";
+            $templateParams["erroreRegistrazione"] = "ERRORE: Prefisso telefonico errato: deve essere del formato 0000 senza alcun simbolo";
           }
 
         }else{
@@ -97,7 +89,7 @@
         <br/>
 
         <label for="prefix">Prefisso telefonico:</label>
-        <input type="text" placeholder="prefix" id="prefix" name="prefix" minlength=2 maxlength=3 value="<?php echo (isset($_POST['prefix']))?$_POST['prefix']:'';?>" required/>
+        <input type="text" placeholder="prefix" id="prefix" name="prefix" minlength=4 maxlength=4 value="<?php echo (isset($_POST['prefix']))?$_POST['prefix']:'';?>" required/>
 
         <label for="numero">Numero di telefono:</label>
         <input type="text" placeholder="numero" id="numero" name="numero" minlength=10 maxlength=10 value="<?php echo (isset($_POST['numero']))?$_POST['numero']:'';?>" required>

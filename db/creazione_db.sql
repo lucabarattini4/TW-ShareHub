@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `sharehub`.`utente` (
   `cognome` VARCHAR(100) NOT NULL,
   `dataNascita` DATE NOT NULL,
   `sesso` VARCHAR(1) NOT NULL,
-  `prefissoTelefonico` VARCHAR(3) NOT NULL,
+  `prefissoTelefonico` VARCHAR(5) NOT NULL,
   `numeroTelefono` varchar(10) NOT NULL UNIQUE,
   `email` VARCHAR(100) NOT NULL UNIQUE,
   `username` VARCHAR(100) NOT NULL UNIQUE,

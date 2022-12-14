@@ -2,14 +2,20 @@
 
 <?php
     if(isset($_POST["username"]) && isset($_POST["psw"])){
-      $login_result = $dbh->checkLogin($_POST["username"], $_POST["psw"]);
-      if(count($login_result)==0){
-          //Login fallito
-          $templateParams["erroreLogin"] = "Errore! Controllare username o password!";
+
+      if($dbh->checkUsernameExistence($_POST["username"])){
+        $login_result = $dbh->checkLogin($_POST["username"], $_POST["psw"]);
+        if(count($login_result)==0){
+            //Login fallito
+            $templateParams["erroreLogin"] = "ERRORE: password errata";
+        }
+        else{
+            registerLoggedUser($login_result[0]);
+        }
+      }else{
+        $templateParams["erroreLogin"] = "ERRORE: utente non esistente";
       }
-      else{
-          registerLoggedUser($login_result[0]);
-      }
+
   }
 
   if(isUserLoggedIn()){
