@@ -169,26 +169,6 @@ class DatabaseHelper{
     }
 
     /**
-     * Restituisce gli amici di un utente
-     */
-    public function getFriends($username){
-      if($this->checkUsernameExistence($username)){
-        $query = "SELECT `utente`.`username`
-        FROM `utente`
-        WHERE `utente`.`idUtente` IN (SELECT `amicizia`.`codUtente2`
-        FROM `amicizia`, `utente`
-        WHERE `utente`.`idUtente` = `amicizia`.`codUtente`
-        AND `utente`.`username` = ?)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('s', $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
-      }
-      return 0;
-    }
-
-    /**
      * Restituisce tutti i commenti di un post
      */
     public function getComments($idPost){
@@ -494,27 +474,44 @@ class DatabaseHelper{
     }
 
     /**
-     * confronto di un utente con l'utente loggato
+     * Controlla se l'utente $username ha il profilo pubblico
      */
-    public function isUserProfilePublic($username){
-
-    }
+    public function isUserProfilePublic($username){}
 
     /**
-     * confronto di un utente con l'utente loggato
+     * Controlla se l'utente registrato in sessione ha come amico $idUtente
      */
-    public function isUserFriend($idUtente){
-      /*$query = "SELECT `amicizia`.`codUtente` AND `amicizia`.`codUtente2`
-      FROM `amicizia`
-      WHERE `utente`.`codUtente` = ? AND `utente`.`codUtente2` = ?";
-      $stmt = $this->db->prepare($query);
-      $stmt->bind_param('ii', $idUtente, $_SESSION["idUtente"]);
-      $stmt->execute();
-      $result = $stmt->get_result();
-      if(mysqli_num_rows($result)==0){
-        return true;
-      }
-      return false;*/
-    }
+    public function isUserFriend($idUtente){}
+    
+    /**
+     * Restituisce gli amici di un utente
+     */
+    public function getFriends($username){}
+
+    /**
+     * Restituisce tutte le richieste di amicizia
+     */
+    public function getFriendRequests($username){}
+
+    /**
+     * Restituisce tutti i followers
+     */
+    public function getFollowers($username){}
+
+    /**
+     * Restituisce tutta la gente seguita dall'utente
+     */
+    public function getFollowed($username){}
+
+    /**
+     * Controlla se l'utente ha ricevuto nuove notifiche
+     */
+    public function hasNotifications($idUtente){}
+
+    /**
+     * Restituisce tutte le notifiche di un utente
+     */
+    public function getNotifications($idUtente){}
+
 }
 ?>

@@ -154,6 +154,7 @@ CREATE TABLE IF NOT EXISTS `sharehub`.`notifica` (
   `idNotifica` INT NOT NULL AUTO_INCREMENT,
   `descrizioneNotifica` DATE NOT NULL,
   `dataNotifica` DATETIME NOT NULL DEFAULT current_timestamp(),
+  `presaVisione` INT NOT NULL DEFAULT 0,
   `codUtenteDestinatario` INT NOT NULL,
   `codUtenteMittente` INT,
   PRIMARY KEY (`idNotifica`),
