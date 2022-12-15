@@ -3,7 +3,6 @@ function generaPosts(posts){
 
   for(let i=0; i < posts.length; i++){
     let post = `
-    <article>
       <!--riga img profilo + nome utente -->
       <div class="row ">
 
@@ -60,9 +59,9 @@ function generaPosts(posts){
         <div class="col">`;
 
         if(posts[i]['isLiked']==false){
-          post+=`<img src="./upload/webpageIcons/heart.svg" alt="like al post di ${posts[i]['username']}" onclick="like(this)"/>`;
+          post+=`<img src="./upload/webpageIcons/heart.svg" alt="like al post di ${posts[i]['username']}"/>`;
         }else{
-          post+=`<img src="./upload/webpageIcons/heart_checked.svg" alt="like al post di ${posts[i]['username']}" onclick="like(this)"/>`;
+          post+=`<img src="./upload/webpageIcons/heart_checked.svg" alt="like al post di ${posts[i]['username']}"/>`;
         }
 
         post+=`
@@ -71,7 +70,7 @@ function generaPosts(posts){
 
         <!--colonna commenti-->
         <div class="col">
-          <img src="./upload/webpageIcons/comment.svg" alt="commenta il post di ${posts[i]['username']}" onclick="comment(this)"/>
+          <img src="./upload/webpageIcons/comment.svg" alt="commenta il post di ${posts[i]['username']}"/>
           <input type="hidden" value="${posts[i]['idPost']}"/>
           <input type="hidden" value="${posts[i]['sessionIdUtente']}"/>
         </div>
@@ -80,9 +79,9 @@ function generaPosts(posts){
         <div class="col">`;
 
         if(posts[i]['isSaved']==false){
-          post+=`<img src="./upload/webpageIcons/save.svg" alt="salva il post di ${posts[i]['username']}" onclick="save(this)"/>`;
+          post+=`<img src="./upload/webpageIcons/save.svg" alt="salva il post di ${posts[i]['username']}"/>`;
         }else{
-          post+=`<img src="./upload/webpageIcons/save_checked.svg" alt="salva il post di ${posts[i]['username']}" onclick="save(this)"/>`;
+          post+=`<img src="./upload/webpageIcons/save_checked.svg" alt="salva il post di ${posts[i]['username']}"/>`;
         }
         post+=`
           <input type="hidden" value="${posts[i]['idPost']}"/>
@@ -90,7 +89,7 @@ function generaPosts(posts){
 
         <!--colonna condividi-->
         <div class="col">
-        <img id="ShareBtn" src="./upload/webpageIcons/share.svg" alt="condividi il post di ${posts[i]['username']}" onclick ="showModal()"/></button>
+        <img id="ShareBtn" src="./upload/webpageIcons/share.svg" alt="condividi il post di ${posts[i]['username']}"/></button>
         </div>
 
         <!--colonna vuota-->
@@ -99,7 +98,7 @@ function generaPosts(posts){
       </div>
 
       <!--riga sezione commenti + form-->
-      <div class="row" style="display: none"></div>
+      <div class="row"></div>
 
       <!--modal condividi-->
       <div id="myModal" class="modal">
@@ -108,63 +107,56 @@ function generaPosts(posts){
         <!-- Modal content -->
         <div class="modal-content">
           <div class="modal-header">
-            <span class="close" onclick="hideModal()">&times;</span>
+            <span class="close">&times;</span>
             <h2>Condividi questo post</h2>
           </div>
           <div class="modal-body">
 
             <input type="text" value="localhost/TW-ShareHub/post.php?username=${posts[i]['username']}&idPost=${posts[i]['idPost']}" id="myLink" disabled>
-            <button onclick="copyLink()">Copia Link</button>
+            <button>Copia Link</button>
           </div>
           <div class="modal-footer"></div>
         </div>
 
-      </div>
+      </div>`;
 
-    </article>`;
-    result += post;
+    const art = document.createElement("article");
+    art.innerHTML = post; 
+
+    /*aggiungo eventListener per il like */
+    art.querySelector("div:nth-child(4) > div:nth-child(2) img").addEventListener("click", event => like(event));
+
+    /*aggiungo eventListener per il save*/
+    art.querySelector("div:nth-child(4) > div:nth-child(4) img").addEventListener("click", event => save(event));
+
+    /*aggiungo eventListener per i commenti*/
+    art.querySelector("div:nth-child(4) > div:nth-child(3) img").addEventListener("click", event => comment(event));
+
+    /*aggiungo eventListener per il condividi*/
+    art.querySelector("div:nth-child(4) > div:nth-child(5) img").addEventListener("click", event => showModal(event));
+
+    art.querySelector("div:nth-child(6) > div > div > span").addEventListener("click", event => hideModal(event));
+
+    art.querySelector("div:nth-child(6) button").addEventListener("click", event => copyLink(event));
+
+    main.appendChild(art);
+    
   }
-  return result;
 }
 
 function requestPost(){
   axios.get('api-post.php').then(response => {
     //console.log(response);
-    main.innerHTML += generaPosts(response.data);
+    generaPosts(response.data);
   });
 }
 
-
-
-
-function showModal(){
-  var modal = document.getElementById("myModal");
-  modal.style.display = "block";
-}
-
-function hideModal(){
-  var modal = document.getElementById("myModal");
-   modal.style.display = "none";
-}
-
-function copyLink(){
-  // Get the text field
-  var copyText = document.getElementById("myLink");
-
-  // Select the text field
-  copyText.select();
-  copyText.setSelectionRange(0, 99999); // For mobile devices
-
-  // Copy the text inside the text field
-  navigator.clipboard.writeText(copyText.value);
-}
 const main = document.querySelector("main");
 
 console.log("RICHIESTA POST");
 requestPost();
 
-
-window.onscroll = function() {
+window.onscroll = function () {
   if(window.onscroll && ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)){
     console.log("fine pagina");
     requestPost();

@@ -1,11 +1,11 @@
-function like(elem){
-  let id = elem.nextElementSibling.getAttribute('value');
+function like(event){
+  let id = event.target.nextElementSibling.getAttribute('value');
   console.log(id);
   axios.get('api-like.php',{ params: { idPost: id } }).then(response => {
     if(response.data["liked"]){
-      elem.setAttribute('src', 'upload/webpageIcons/heart_checked.svg');
+      event.target.setAttribute('src', 'upload/webpageIcons/heart_checked.svg');
     }else{
-      elem.setAttribute('src', 'upload/webpageIcons/heart.svg');
+      event.target.setAttribute('src', 'upload/webpageIcons/heart.svg');
     }
   });
 }
