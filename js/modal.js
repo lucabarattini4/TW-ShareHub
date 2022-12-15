@@ -1,7 +1,7 @@
 function showModal(event){
   event.preventDefault();
   let article = event.target.parentElement.parentElement.parentElement;
-  let modal = article.querySelector("article > div:nth-child(6)");
+  let modal = article.querySelector("article > div:nth-child(7)");
   modal.style.display = "block";
 }
 

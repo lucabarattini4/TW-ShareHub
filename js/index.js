@@ -27,12 +27,13 @@ function generaPosts(posts){
         <div class="col-md-2"></div>
 
       </div>
-      <!--riga testo del post-->
+      <!--riga data del post-->
       <div class="row">
         <div class="col-12 d-flex justify-content-center align-items-center">
           <p>${posts[i]['dataPost']}</p>
         </div>
       </div>
+
       <!--riga testo del post-->
       <div class="row">
         <div class="col-12 d-flex justify-content-center align-items-center">
@@ -129,20 +130,21 @@ function generaPosts(posts){
     art.innerHTML = post;
 
     /*aggiungo eventListener per il like */
-    art.querySelector("div:nth-child(4) > div:nth-child(2) img").addEventListener("click", event => like(event));
+    art.querySelector("div:nth-child(5) > div:nth-child(2) img").addEventListener("click", event => like(event));
 
     /*aggiungo eventListener per il save*/
-    art.querySelector("div:nth-child(4) > div:nth-child(4) img").addEventListener("click", event => save(event));
+    art.querySelector("div:nth-child(5) > div:nth-child(4) img").addEventListener("click", event => save(event));
 
     /*aggiungo eventListener per i commenti*/
-    art.querySelector("div:nth-child(4) > div:nth-child(3) img").addEventListener("click", event => comment(event));
+    art.querySelector("div:nth-child(5) > div:nth-child(3) img").addEventListener("click", event => comment(event));
+    console.log(art.querySelector("div:nth-child(5) > div:nth-child(3) img"));
 
     /*aggiungo eventListener per il condividi*/
-    art.querySelector("div:nth-child(4) > div:nth-child(5) img").addEventListener("click", event => showModal(event));
+    art.querySelector("div:nth-child(5) > div:nth-child(5) img").addEventListener("click", event => showModal(event));
 
-    art.querySelector("div:nth-child(6) > div > div > span").addEventListener("click", event => hideModal(event));
+    art.querySelector("div:nth-child(7) > div > div > span").addEventListener("click", event => hideModal(event));
 
-    art.querySelector("div:nth-child(6) button").addEventListener("click", event => copyLink(event));
+    art.querySelector("div:nth-child(7) button").addEventListener("click", event => copyLink(event));
 
     main.appendChild(art);
 

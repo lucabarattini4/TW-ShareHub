@@ -2,7 +2,7 @@ let clicked = false;
 
 function comment(event){
   event.preventDefault();
-  let elem = event.target.parentElement.parentElement.parentElement.querySelector("article > div:nth-child(5)");
+  let elem = event.target.parentElement.parentElement.parentElement.querySelector("article > div:nth-child(6)");
   if(elem.style.display=="inline-block"){
     //nascondi
     elem.style.display="none";
