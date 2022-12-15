@@ -95,7 +95,7 @@ function generaPosts(posts){
 
         <!--colonna condividi-->
         <div class="col">
-        <img id="ShareBtn" src="./upload/webpageIcons/share.svg" alt="condividi il post di ${posts[i]['username']}"/></button>
+        <img src="./upload/webpageIcons/share.svg" alt="condividi il post di ${posts[i]['username']}"/></button>
         </div>
 
         <!--colonna vuota-->
@@ -107,7 +107,7 @@ function generaPosts(posts){
       <div class="row"></div>
 
       <!--modal condividi-->
-      <div id="myModal" class="modal">
+      <div class="modal">
 
 
         <!-- Modal content -->
@@ -117,8 +117,8 @@ function generaPosts(posts){
             <h2>Condividi questo post</h2>
           </div>
           <div class="modal-body">
-
-            <input type="text" value="localhost/TW-ShareHub/post.php?username=${posts[i]['username']}&idPost=${posts[i]['idPost']}" id="myLink" disabled>
+            <label for="link${posts[i]['idPost']}" hidden>Link</label>
+            <input type="text" id="link${posts[i]['idPost']}" value="localhost/TW-ShareHub/post.php?username=${posts[i]['username']}&idPost=${posts[i]['idPost']}" disabled>
             <button>Copia Link</button>
           </div>
           <div class="modal-footer"></div>
