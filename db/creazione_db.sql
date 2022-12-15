@@ -156,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `sharehub`.`notifica` (
   `dataNotifica` DATETIME NOT NULL DEFAULT current_timestamp(),
   `presaVisione` INT NOT NULL DEFAULT 0,
   `codUtenteDestinatario` INT NOT NULL,
-  `codUtenteMittente` INT,
+  `codUtenteMittente` INT DEFAULT 0,
   PRIMARY KEY (`idNotifica`),
   CONSTRAINT `fk_notifica_utente_dest` FOREIGN KEY (`codUtenteDestinatario`) 
   REFERENCES `sharehub`.`utente` (`idUtente`),
