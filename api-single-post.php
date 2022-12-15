@@ -1,7 +1,7 @@
 <?php
 require_once 'bootstrap.php';
 
-if(isset($_GET["idPost"]) && ($dbh->isUserProfilePublic($_GET["username"]) || $dbh->isUserFriend($_GET["username"]))){
+if(isset($_GET["idPost"])){
     $posts = $dbh->getPostById($_GET["idPost"]);
 
     for($i = 0; $i < count($posts); $i++){
