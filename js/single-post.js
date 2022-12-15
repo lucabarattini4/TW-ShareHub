@@ -128,13 +128,15 @@ function generaPosts(posts){
 }
 
 function requestPost(){
-  axios.get('api-post.php').then(response => {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  let id = urlParams.get('idPost');
+  console.log(id);
+  axios.get('api-single-post.php', { params: { idPost: id } }).then(response => {
     //console.log(response);
     main.innerHTML += generaPosts(response.data);
   });
 }
-
-
 
 
 function showModal(){
@@ -158,15 +160,8 @@ function copyLink(){
   // Copy the text inside the text field
   navigator.clipboard.writeText(copyText.value);
 }
+
 const main = document.querySelector("main");
 
 console.log("RICHIESTA POST");
 requestPost();
-
-
-window.onscroll = function() {
-  if(window.onscroll && ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)){
-    console.log("fine pagina");
-    requestPost();
-  }
-}

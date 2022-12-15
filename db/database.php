@@ -28,6 +28,19 @@ class DatabaseHelper{
     }
 
     /**
+     * Restituisce un post dato l'id
+     */
+    public function getPostById($idPost){
+      $query = "SELECT idPost, username, testo, immagine, immagineProfilo, descImmagine FROM post, utente WHERE idUtente=codUtente AND idPost=?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $idPost);
+      $stmt->execute();
+      $result = $stmt->get_result();
+
+      return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
      * Inserisce un post con una immagine
      *
      * @param string $testoPost testo del post
@@ -478,6 +491,30 @@ class DatabaseHelper{
         return true;
       }
       return false;
+    }
+
+    /**
+     * confronto di un utente con l'utente loggato
+     */
+    public function isUserProfilePublic($username){
+
+    }
+
+    /**
+     * confronto di un utente con l'utente loggato
+     */
+    public function isUserFriend($idUtente){
+      /*$query = "SELECT `amicizia`.`codUtente` AND `amicizia`.`codUtente2`
+      FROM `amicizia`
+      WHERE `utente`.`codUtente` = ? AND `utente`.`codUtente2` = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('ii', $idUtente, $_SESSION["idUtente"]);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if(mysqli_num_rows($result)==0){
+        return true;
+      }
+      return false;*/
     }
 }
 ?>
