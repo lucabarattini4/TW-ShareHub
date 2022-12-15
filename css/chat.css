@@ -1,0 +1,8 @@
+article{
+  padding-bottom: 5%;
+}
+
+
+body > div > main > div > form > input:nth-last-child(0){<!-- NON FUNZIONA -->
+  width:90%;
+}

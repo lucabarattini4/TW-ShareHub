@@ -28,7 +28,12 @@ function generaPosts(posts){
         <div class="col-md-2"></div>
 
       </div>
-
+      <!--riga testo del post-->
+      <div class="row">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+          <p>${posts[i]['dataPost']}</p>
+        </div>
+      </div>
       <!--riga testo del post-->
       <div class="row">
         <div class="col-12 d-flex justify-content-center align-items-center">
@@ -135,7 +140,12 @@ function requestPost(){
 }
 
 
-
+window.onclick = function(event) {
+  var modal = document.getElementById("myModal");
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
 
 function showModal(){
   var modal = document.getElementById("myModal");

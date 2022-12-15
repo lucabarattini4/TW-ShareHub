@@ -13,7 +13,7 @@ class DatabaseHelper{
      * Restituisce tutti i post
      */
     public function getPosts($n=-1){
-      $query = "SELECT idPost, username, testo, immagine, immagineProfilo, descImmagine FROM post, utente WHERE idUtente=codUtente ORDER BY RAND() DESC";
+      $query = "SELECT idPost, username, testo, immagine, immagineProfilo, descImmagine, dataPost FROM post, utente WHERE idUtente=codUtente ORDER BY RAND() DESC";
       if($n > 0){
         $query .= " LIMIT ?";
       }
@@ -246,7 +246,7 @@ class DatabaseHelper{
     }
 
     /**
-     * 
+     *
      */
     private function likesaveRowExist($idUtente, $idPost){
       $query = "SELECT `likesave`.`codUtente` FROM `likesave` WHERE `likesave`.`codUtente`=? AND `likesave`.`codPost`=?";
@@ -261,7 +261,7 @@ class DatabaseHelper{
     }
 
     /**
-     * 
+     *
      */
     public function isPostLiked($idUtente, $idPost){
       $query = "SELECT `likesave`.`like` FROM `likesave` WHERE `likesave`.`like` = ? AND `likesave`.`codPost` = ? AND `likesave`.`codUtente`=?";
@@ -302,7 +302,7 @@ class DatabaseHelper{
           $stmt->bind_param('iii', $idUtente, $idPost, $value);
           $stmt->execute();
         }
-        
+
       }
     }
 
@@ -320,7 +320,7 @@ class DatabaseHelper{
     }
 
     /**
-     * 
+     *
      */
     public function isPostSaved($idUtente, $idPost){
       $query = "SELECT `likesave`.`save` FROM `likesave` WHERE `likesave`.`save` = ? AND `likesave`.`codPost` = ? AND `likesave`.`codUtente`=?";
@@ -361,7 +361,7 @@ class DatabaseHelper{
           $stmt->bind_param('iii', $idUtente, $idPost, $value);
           $stmt->execute();
         }
-        
+
       }
     }
 
