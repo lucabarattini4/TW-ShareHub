@@ -31,7 +31,7 @@ class DatabaseHelper{
      * Restituisce un post dato l'id
      */
     public function getPostById($idPost){
-      $query = "SELECT idPost, username, testo, immagine, immagineProfilo, descImmagine FROM post, utente WHERE idUtente=codUtente AND idPost=?";
+      $query = "SELECT idPost, username, testo, immagine, immagineProfilo, descImmagine, dataPost FROM post, utente WHERE idUtente=codUtente AND idPost=?";
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('i', $idPost);
       $stmt->execute();
