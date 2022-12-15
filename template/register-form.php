@@ -57,7 +57,7 @@
 
   ?>
 
-<a class="d-flex justify-content-start align-items-left" href="login-opt.php"><img class="w-25" src="<?php echo UPLOAD_DIR_ICONS ?>back-arrow.svg" alt=""></a>
+<a class="d-flex justify-content-start align-items-left" href="login-opt.php"><img class="w-25" src="<?php echo UPLOAD_DIR_ICONS ?>back-arrow.svg" alt="torna indietro"></a>
 
 <form action="#" method="POST" enctype="multipart/form-data">
   <h2 class="d-flex justify-content-center pt-5">Register</h2>
