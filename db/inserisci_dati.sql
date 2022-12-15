@@ -10,10 +10,10 @@ INSERT INTO `utente` (`idUtente`, `nome`, `cognome`, `dataNascita`, `sesso`, `pr
 /* -----------------------------------------------------
 -- Insert into `sharehub`.`amicizia`
 -- ---------------------------------------------------*/
-INSERT INTO `amicizia` (`codUtente`, `codUtente2`, `dataAmicizia`) VALUES
-(1, 2, '2022-11-18'),
-(1, 3, '2022-10-15'),
-(2, 3, '2022-10-12');
+INSERT INTO `amicizia` (`codFollowed`, `codFollower`, `dataAmicizia`, `accettata`) VALUES
+(1, 2, '2022-11-18', 1),
+(1, 3, '2022-10-15', 1),
+(2, 3, '2022-10-12', 1);
 
 /* -----------------------------------------------------
 -- Insert into `sharehub`.`post`
@@ -47,7 +47,7 @@ INSERT INTO `commento` (`idCommento`, `testo`, `dataCommento`, `codUtente`, `cod
 -- Insert into `sharehub`.`impostazione`
 -- ---------------------------------------------------*/
 INSERT INTO `impostazione` (`idImpostazione`, `privato`, `tema`, `codUtente`) VALUES
-(1, TRUE, FALSE, 1),
+(1, FALSE, FALSE, 1),
 (2, FALSE, FALSE, 2);
 
 /* -----------------------------------------------------
