@@ -2,10 +2,10 @@
 -- Insert into `sharehub`.`utente`
 -- ---------------------------------------------------*/
 INSERT INTO `utente` (`idUtente`, `nome`, `cognome`, `dataNascita`, `sesso`, `prefissoTelefonico`, `numeroTelefono`, `email`, `username`, `password`, `immagineProfilo`, `cookie`) VALUES
-(1, 'pippo', 'cognomePippo', '1990-10-28', 'M', '+39','3347638900', 'pippo@gmail.com', 'pippoIlGrande', 'pippo1234', 'elmo.jpg', TRUE),
-(2, 'topolino', 'cognomeTopolino', '1990-10-28', 'M', '+39','3347898910', 'topolino@gmail.com', 'topolinoIlGrande', 'topolino1234', 'elmo3.webp', TRUE),
-(3, 'zio', 'paperone', '1960-10-28', 'M', '+39','3347148910', 'ziopaperone@gmail.com', 'zioPaperoneIlGrande', 'paperone1234', 'elmo2.jfif', TRUE),
-(4, 'pluto', 'cognomePluto', '1990-10-28', 'M', '+39','3347856710', 'pluto@gmail.com', 'plutoIlGrande', 'pluto1234', 'elmo4.jpg', FALSE);
+(1, 'pippo', 'cognomePippo', '1990-10-28', 'M', '+39','3347638900', 'pippo@gmail.com', 'pippoIlGrande', '$2y$10$tyIUVIUQC3MaLTT6VFYEIOMMhk6kREJe4bkl8eJ0JT5P/nTC4Drjq', 'elmo.jpg', TRUE),
+(2, 'topolino', 'cognomeTopolino', '1990-10-28', 'M', '+39','3347898910', 'topolino@gmail.com', 'topolinoIlGrande', '$2y$10$ZcyQLrdI9WRYahxPkXsZmuPDfa6j4Qf0a9kfZsAy1FKctYJWUn1oa', 'elmo3.webp', TRUE),
+(3, 'zio', 'paperone', '1960-10-28', 'M', '+39','3347148910', 'ziopaperone@gmail.com', 'zioPaperoneIlGrande', '$2y$10$XeVeb5J2WFoBMUHxjpnf8uHD0hxgW62xSBQRke0OfIKQTtoC9PFpK', 'elmo2.jfif', TRUE),
+(4, 'pluto', 'cognomePluto', '1990-10-28', 'M', '+39','3347856710', 'pluto@gmail.com', 'plutoIlGrande', '$2y$10$2eAI89x6VUZEE3pzxO34YO/gSD7/pLCHqUUcBJTeIlvzD5JmjSPRa', 'elmo4.jpg', FALSE);
 
 /* -----------------------------------------------------
 -- Insert into `sharehub`.`amicizia`
@@ -53,10 +53,10 @@ INSERT INTO `impostazione` (`idImpostazione`, `privato`, `tema`, `codUtente`) VA
 /* -----------------------------------------------------
 -- Insert into `sharehub`.`chat`
 -- ---------------------------------------------------*/
-INSERT INTO `chat` (`idChat`, `nomeChat`, `descrizioneChat`) VALUES
-(1, 'PiPaTo', 'Gruppo di Pippo, Zio Paperone, Topolino'),
-(2, '', ''),
-(3, '', '');
+INSERT INTO `chat` (`idChat`, `nomeChat`, `descrizioneChat`, `immagineGruppo`) VALUES
+(1, 'PiPaTo', 'Gruppo di Pippo, Zio Paperone, Topolino', 'chat1.webp'),
+(2, '', '', ''),
+(3, '', '', '');
 
 
 /* -----------------------------------------------------

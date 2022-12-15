@@ -66,6 +66,7 @@ class DatabaseHelper{
     public function registerUser($nome, $cognome, $dataNascita, $sesso, $prefissoTelefonico, $numeroTelefono, $email, $username, $password, $immagineProfilo){
       $query = "INSERT INTO utente (`nome`, `cognome`, `dataNascita`, `sesso`, `prefissoTelefonico`, `numeroTelefono`, `email`, `username`, `password`, `immagineProfilo`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
       $stmt = $this->db->prepare($query);
+      $password = hashPassword($password, PASSWORD_DEFAULT);
       $stmt->bind_param('ssssssssss',$nome, $cognome, $dataNascita, $sesso, $prefissoTelefonico, $numeroTelefono, $email, $username, $password, $immagineProfilo);
       $stmt->execute();
 
@@ -403,17 +404,33 @@ class DatabaseHelper{
       return $stmt->insert_id;
     }
 
+    public function verifyPassword($username, $password){
+      $query = "SELECT `password` FROM `utente` WHERE `username` = ? LIMIT 1";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('s', $username);
+      $stmt->execute();
+      $stmt->bind_result($hash);
+      while ($stmt->fetch()) {
+        return password_verify($password, $hash);
+      }
+    }
+
     /**
      * Controlla se il login è corretto
      */
     public function checkLogin($username, $password){
-      $query = "SELECT idUtente, username, nome FROM utente WHERE username = ? AND password = ?";
+      if($this->verifyPassword($username, $password)){
+        $query = "SELECT `idUtente`, `username`, `nome` FROM `utente` WHERE `username` = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ss',$username, $password);
+        $stmt->bind_param('s',$username);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
+      }else{
+        return array();
+      }
+      
     }
 
     /**
