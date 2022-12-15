@@ -12,6 +12,7 @@
     if($_FILES["fileToUpload"]["name"]!=""){
         $descrizioneImmagine = htmlspecialchars($_POST["descrizioneimmagine"]);
         list($result, $msg) = uploadImage(UPLOAD_DIR_POST, $_FILES["fileToUpload"]);
+
         if($result != 0){
             $imgPost = $msg;
             $id = $dbh->insertPostWithImg($testoPost, $imgPost, $descrizioneImmagine, $dataPost, $utente);
@@ -19,18 +20,25 @@
                 header("location: index.php");
             }
             else{
-                echo "Errore in inserimento!";
+
+                $templateParams["errore"] = $msg;
+                header("location: nuovo-post.php?msg=".$msg);
+
             }
         
+        }else{
+            $templateParams["errore"] = $msg;
+            header("location: nuovo-post.php?msg=".$msg);
         }
-        header("location: index.php");
+        //header("location: index.php");
     }else{
         $id = $dbh->insertPostSimple($testoPost, $dataPost, $utente);
         if($id!=false){
             header("location: index.php");
         }
         else{
-            echo "Errore in inserimento!";
+            $templateParams["errore"] = "Post non inserito";
+            header("location: nuovo-post.php?msg=".$msg);
         }
         
     }

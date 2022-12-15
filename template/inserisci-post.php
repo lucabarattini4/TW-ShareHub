@@ -22,6 +22,7 @@
       <li>
         <input type="submit" name="submit" value="Invia"/>
       </li>
+      <li><p><?php if(isset($_GET["msg"])){ echo $_GET["msg"]; }?></p></li>
     </ul>
   </div>
 </form>

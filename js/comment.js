@@ -1,39 +1,16 @@
-/*let allBtn2 = document.querySelectorAll("article > div:nth-child(4) > div:nth-child(3) > img");
-
-for (i of allBtn2){
-  let clicked = false;
-
-  i.addEventListener("click", function (event) {
-    clicked = !clicked;
-    let elem = this.parentElement.parentElement.parentElement.querySelector("article > div:nth-child(5)");
-    event.preventDefault();
-    if(clicked){
-      //CLICK
-      elem.style.display="inline-block";
-      let id = this.nextElementSibling.getAttribute('value');
-      let user = this.nextElementSibling.nextElementSibling.getAttribute('value');
-      axios.get('api-comment.php',{ params: { idPost: id, idUtente: user } }).then(response => {
-        visualizzaCommenti(elem, response.data["comments"], id, user);
-      });
-    }else{
-      //UNCLICK
-      elem.style.display="none";
-    }
-  });
-}*/
-
 let clicked = false;
 
-function comment(e){
-  let elem = e.parentElement.parentElement.parentElement.querySelector("article > div:nth-child(5)");
+function comment(event){
+  event.preventDefault();
+  let elem = event.target.parentElement.parentElement.parentElement.querySelector("article > div:nth-child(5)");
   if(elem.style.display=="inline-block"){
     //nascondi
     elem.style.display="none";
   }else{
     //mostra
     elem.style.display="inline-block";
-    let id = e.nextElementSibling.getAttribute('value');
-    let user = e.nextElementSibling.nextElementSibling.getAttribute('value');
+    let id = event.target.nextElementSibling.getAttribute('value');
+    let user = event.target.nextElementSibling.nextElementSibling.getAttribute('value');
     axios.get('api-comment.php',{ params: { idPost: id, idUtente: user } }).then(response => {
       visualizzaCommenti(elem, response.data["comments"], id, user);
     });

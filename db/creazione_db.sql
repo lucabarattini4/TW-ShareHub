@@ -27,10 +27,15 @@ ENGINE = InnoDB;
 -- Table `sharehub`.`amicizia`
 -- ---------------------------------------------------*/
 CREATE TABLE IF NOT EXISTS `sharehub`.`amicizia` (
-  `codUtente` INT NOT NULL,
-  `codUtente2` INT NOT NULL,
+  `codFollowed` INT NOT NULL,
+  `codFollower` INT NOT NULL,
   `dataAmicizia` DATE NOT NULL,
-  PRIMARY KEY (`codUtente`, `codUtente2`)
+  `accettata` INT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`codFollowed`, `codFollower`),
+  CONSTRAINT `fk_amicizia_followed` FOREIGN KEY (`codFollowed`) 
+  REFERENCES `sharehub`.`utente` (`idUtente`),
+  CONSTRAINT `fk_amicizia_follower` FOREIGN KEY (`codFollower`) 
+  REFERENCES `sharehub`.`utente` (`idUtente`)
 )
 ENGINE = InnoDB;
 
@@ -42,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `sharehub`.`post` (
   `testo` VARCHAR(2000) NOT NULL,
   `immagine` VARCHAR(500),
   `descImmagine` VARCHAR(200), 
-  `dataPost` DATE NOT NULL DEFAULT current_timestamp(),
+  `dataPost` DATETIME NOT NULL DEFAULT current_timestamp(),
   `codUtente` INT NOT NULL,
   PRIMARY KEY (`idPost`),
   CONSTRAINT `fk_post_utente` FOREIGN KEY (`codUtente`) 
@@ -114,6 +119,7 @@ CREATE TABLE IF NOT EXISTS `sharehub`.`messaggio` (
   `testo` VARCHAR(2000) NOT NULL,
   `immagine` VARCHAR(500),
   `altroFile` VARCHAR(500),
+  `dataMessaggio` DATETIME NOT NULL DEFAULT current_timestamp(),
   `codChat` INT NOT NULL,
   `codUtente` INT NOT NULL,
   PRIMARY KEY (`idMessaggio`),
@@ -130,7 +136,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `sharehub`.`commento` (
   `idCommento` INT NOT NULL AUTO_INCREMENT,
   `testo` VARCHAR(1000) NOT NULL,
-  `dataCommento` DATE NOT NULL DEFAULT current_timestamp(),
+  `dataCommento` DATETIME NOT NULL DEFAULT current_timestamp(),
   `codUtente` INT NOT NULL,
   `codPost` INT NOT NULL,
   PRIMARY KEY (`idCommento`),
@@ -138,5 +144,23 @@ CREATE TABLE IF NOT EXISTS `sharehub`.`commento` (
   REFERENCES `sharehub`.`utente` (`idUtente`),
   CONSTRAINT `fk_commento_post` FOREIGN KEY (`codPost`)
   REFERENCES `sharehub`.`post` (`idPost`)
+)
+ENGINE = InnoDB;
+
+/* -----------------------------------------------------
+-- Table `sharehub`.`notifica`
+-- ---------------------------------------------------*/
+CREATE TABLE IF NOT EXISTS `sharehub`.`notifica` (
+  `idNotifica` INT NOT NULL AUTO_INCREMENT,
+  `descrizioneNotifica` DATE NOT NULL,
+  `dataNotifica` DATETIME NOT NULL DEFAULT current_timestamp(),
+  `presaVisione` INT NOT NULL DEFAULT 0,
+  `codUtenteDestinatario` INT NOT NULL,
+  `codUtenteMittente` INT DEFAULT 0,
+  PRIMARY KEY (`idNotifica`),
+  CONSTRAINT `fk_notifica_utente_dest` FOREIGN KEY (`codUtenteDestinatario`) 
+  REFERENCES `sharehub`.`utente` (`idUtente`),
+  CONSTRAINT `fk_notifica_utente_mitt` FOREIGN KEY (`codUtenteMittente`) 
+  REFERENCES `sharehub`.`utente` (`idUtente`)
 )
 ENGINE = InnoDB;
