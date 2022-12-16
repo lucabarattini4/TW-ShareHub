@@ -79,7 +79,7 @@ class DatabaseHelper{
     public function registerUser($nome, $cognome, $dataNascita, $sesso, $prefissoTelefonico, $numeroTelefono, $email, $username, $password, $immagineProfilo){
       $query = "INSERT INTO utente (`nome`, `cognome`, `dataNascita`, `sesso`, `prefissoTelefonico`, `numeroTelefono`, `email`, `username`, `password`, `immagineProfilo`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
       $stmt = $this->db->prepare($query);
-      $password = hashPassword($password, PASSWORD_DEFAULT);
+      $password = password_hash($password, PASSWORD_DEFAULT);
       $stmt->bind_param('ssssssssss',$nome, $cognome, $dataNascita, $sesso, $prefissoTelefonico, $numeroTelefono, $email, $username, $password, $immagineProfilo);
       $stmt->execute();
 

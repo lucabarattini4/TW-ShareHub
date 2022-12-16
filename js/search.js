@@ -35,10 +35,9 @@
     main.appendChild(searchBar);
   }
 
-  function autocomplete(event){
+  function autocomplete(event, val){
     event.preventDefault();
-    console.log(event.target);
-    document.querySelector("input").value = event.target;
+    document.querySelector("input").value = val;
   }
 
   function generaRisultati(results){
@@ -52,7 +51,6 @@
     }
     //main.querySelector()
     if(results.length > 0 && results!="ERR"){
-      console.log(results);
       for(let i=0; i < results.length; i++){
         let res = `<img src="${results[i]['immagineProfilo']}" width="50px" height="50px" alt="immagine profilo di ${results[i]['username']}"\> <p>${results[i]['username']}</p>`;
         console.log("res"+res);
@@ -62,7 +60,7 @@
         divBox.innerHTML = res;
     
         /*aggiungo eventListener per il like */
-        divBox.addEventListener("click", event => autocomplete(event));
+        divBox.addEventListener("click", event => autocomplete(event, results[i]['username']));
   
         main.appendChild(divBox);
     
@@ -79,7 +77,6 @@
   
   function requestResult(val){
     axios.get('api-search.php', { params: { search: val } }).then(response => {
-      console.log(response.data);
       generaRisultati(response.data);
     });
   }
@@ -90,9 +87,7 @@
 
   $(document).ready(function(){
     $("#search").on("keyup", function(){
-    console.log("RICHIESTA RISULTATI");
     var search = $(this).val();
-    console.log(search);
     requestResult(search);
     });
   }); 
