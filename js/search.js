@@ -1,10 +1,14 @@
 function generaBarra(){
   let bar = `<h2 class="text-center">Cerca</h2>
-  <input type="search" class="form-control" name="search" id="search"
-  placeholder="Search Users">`;
+  <input type="text" class="form-control" name="search" id="search" placeholder="Search Users">`;
 
   const searchBar = document.createElement("form");
   searchBar.innerHTML = bar;
+  /**disabilita l'invio della ricerca */
+  searchBar.addEventListener("submit", function(event){
+    event.preventDefault();
+    return false;
+  });
   main.appendChild(searchBar);
 }
 
@@ -19,9 +23,9 @@ function generaRisultati(results){
   }
   if(results.length > 0 && results!="ERR"){
     for(let i=0; i < results.length; i++){
-      let res = `<a href="./profilo.php?user=${results[i]['username']}"><img src="${results[i]['immagineProfilo']}" width="50px" height="50px" alt="immagine profilo di ${results[i]['username']}"\> <p>${results[i]['username']}</p></a>`;
+      let res = `<a class="results" href="./profilo.php?user=${results[i]['username']}"><img src="${results[i]['immagineProfilo']}" alt="immagine profilo di ${results[i]['username']}"\><p>${results[i]['username']}</p></a>`;
       const divBox = document.createElement("div");
-      divBox.className = "user";
+      divBox.className = "user row";
       divBox.innerHTML = res;
       main.appendChild(divBox);
     }
@@ -35,7 +39,9 @@ function generaRisultati(results){
 }
   
 function requestResult(val){
-  axios.get('api-search.php', { params: { search: val } }).then(response => {
+  const formData = new FormData();
+  formData.append('search', val);
+  axios.post('api-search.php', formData).then(response => {
     generaRisultati(response.data);
   });
 }
