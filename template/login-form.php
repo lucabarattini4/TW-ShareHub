@@ -24,7 +24,7 @@
   }
 ?>
 
-<a class="d-flex justify-content-start align-items-center" href="login-opt.php"><img src="<?php echo UPLOAD_DIR_ICONS ?>back-arrow.svg" alt=""></a>
+<a class="d-flex justify-content-start align-items-center" href="login-opt.php"><img src="<?php echo UPLOAD_DIR_ICONS ?>back-arrow.svg" alt="torna indietro"></a>
 <form action="#" method="POST">
 <h2 class="d-flex justify-content-center pt-5">Login</h2>
     <ul>
