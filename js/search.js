@@ -33,13 +33,13 @@ function generaRisultati(results){
     main.appendChild(err);
   }
 }
-  
+
 function requestResult(val){
   axios.get('api-search.php', { params: { search: val } }).then(response => {
     generaRisultati(response.data);
   });
 }
-  
+
 const main = document.querySelector("main");
 generaBarra();
 
@@ -49,4 +49,4 @@ $(document).ready(function(){
     var search = $(this).val();
     requestResult(search);
   });
-}); 
+});

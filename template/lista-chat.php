@@ -3,7 +3,7 @@
 </div>
 <hr>
 <?php foreach($templateParams["groups"] as $chat): ?>
-  <!--riga img profilo + nome utente -->
+<!--riga img profilo + nome utente -->
 <article>
   <div class="row ">
 
@@ -40,9 +40,13 @@
 
   <!--colonna immagine profilo-->
   <div class="col-2 d-flex justify-content-center">
-    <a href="./user-chat.php">
+    <a href="./user-chat.php?">
       <img src="<?php echo UPLOAD_DIR_PROFILE.$single["immagineProfilo"]; ?>" alt="immagineProfilo"/>
+
     </a>
+    
+      <input type="hidden" id="user" value="<?php echo $single["username"]; ?>">
+
   </div>
 
   <!--colonna nome utente-->
