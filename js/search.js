@@ -35,11 +35,6 @@
     main.appendChild(searchBar);
   }
 
-  function autocomplete(event, val){
-    event.preventDefault();
-    document.querySelector("input").value = val;
-  }
-
   function generaRisultati(results){
     let elemExist = main.querySelectorAll("div.user");
     let errExist = main.querySelectorAll("p.error");
@@ -49,18 +44,14 @@
     if( errExist ){
       errExist.forEach(e => e.remove())
     }
-    //main.querySelector()
     if(results.length > 0 && results!="ERR"){
       for(let i=0; i < results.length; i++){
-        let res = `<img src="${results[i]['immagineProfilo']}" width="50px" height="50px" alt="immagine profilo di ${results[i]['username']}"\> <p>${results[i]['username']}</p>`;
+        let res = `<a href="./profilo.php?user=${results[i]['username']}"><img src="${results[i]['immagineProfilo']}" width="50px" height="50px" alt="immagine profilo di ${results[i]['username']}"\> <p>${results[i]['username']}</p></a>`;
         console.log("res"+res);
     
         const divBox = document.createElement("div");
         divBox.className = "user";
         divBox.innerHTML = res;
-    
-        /*aggiungo eventListener per il like */
-        divBox.addEventListener("click", event => autocomplete(event, results[i]['username']));
   
         main.appendChild(divBox);
     
