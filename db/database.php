@@ -376,7 +376,7 @@ class DatabaseHelper{
      *
      */
     public function searchUser($string){
-      $query = "SELECT idUtente, username, nome FROM utente WHERE username LIKE %?%";
+      $query = "SELECT idUtente, username, immagineProfilo FROM utente WHERE username LIKE CONCAT(?,'%')";
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('s', $string);
       $stmt->execute();
