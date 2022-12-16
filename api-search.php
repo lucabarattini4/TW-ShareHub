@@ -1,8 +1,8 @@
 <?php
 require_once "bootstrap.php";
 
-if (isset($_GET['search']) && $_GET['search']!="") {
-  $result = $dbh->searchUser($_GET["search"]);
+if (isset($_POST['search']) && $_POST['search']!="") {
+  $result = $dbh->searchUser($_POST["search"]);
 
 
   if (count($result) > 0) {
