@@ -530,7 +530,6 @@ class DatabaseHelper{
     /**
      * Controlla se l'utente registrato in sessione ha come amico $idUtente
      */
-<<<<<<< HEAD
     public function isUserFriend($idFriend, $idUser){
       $query = "SELECT `amicizia`.`codFollowed`, `amicizia`.`codFollower`, `amicizia`.`dataAmicizia`, `amicizia`.`accettata`
       FROM `amicizia`
@@ -567,10 +566,6 @@ class DatabaseHelper{
       return $result->fetch_all(MYSQLI_ASSOC);
     }
         
-=======
-    public function isUserFriend($idUtente){}
-
->>>>>>> 8bf2a317104f9813f0cb83b7276765897020899a
     /**
      * Restituisce gli amici di un utente
      */
