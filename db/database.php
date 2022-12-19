@@ -28,6 +28,19 @@ class DatabaseHelper{
     }
 
     /**
+     * Restituisce tutti i msg di una chat
+     */
+    public function getMsg($idChat){
+      $query = "SELECT idMessaggio, testo, immagine, altroFile, dataMessaggio, codChat, codUtente FROM messaggio WHERE codChat = ? ";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $idChat);
+      $stmt->execute();
+      $result = $stmt->get_result();
+
+      return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
      * Restituisce un post dato l'id
      */
     public function getPostById($idPost){
@@ -407,6 +420,8 @@ class DatabaseHelper{
       return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+
+
     /**
      * Scrive un commento sotto un post
      */
@@ -445,7 +460,7 @@ class DatabaseHelper{
       }else{
         return array();
       }
-      
+
     }
 
     /**
@@ -515,6 +530,7 @@ class DatabaseHelper{
     /**
      * Controlla se l'utente registrato in sessione ha come amico $idUtente
      */
+<<<<<<< HEAD
     public function isUserFriend($idFriend, $idUser){
       $query = "SELECT `amicizia`.`codFollowed`, `amicizia`.`codFollower`, `amicizia`.`dataAmicizia`, `amicizia`.`accettata`
       FROM `amicizia`
@@ -551,6 +567,10 @@ class DatabaseHelper{
       return $result->fetch_all(MYSQLI_ASSOC);
     }
         
+=======
+    public function isUserFriend($idUtente){}
+
+>>>>>>> 8bf2a317104f9813f0cb83b7276765897020899a
     /**
      * Restituisce gli amici di un utente
      */

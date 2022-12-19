@@ -42,7 +42,7 @@ function generaRisultati(results){
     main.appendChild(err);
   }
 }
-  
+
 function requestResult(val){
   const formData = new FormData();
   formData.append('search', val);
@@ -50,7 +50,7 @@ function requestResult(val){
     generaRisultati(response.data);
   });
 }
-  
+
 const main = document.querySelector("main");
 generaBarraDiRicerca();
 
@@ -60,4 +60,4 @@ $(document).ready(function(){
     var search = $(this).val();
     requestResult(search);
   });
-}); 
+});
