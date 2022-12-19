@@ -1,6 +1,6 @@
-function generaBarra(){
+function generaBarraDiRicerca(){
   let bar = `<h2 class="text-center">Cerca</h2>
-  <input type="text" class="form-control" name="search" id="search" placeholder="Search Users">`;
+  <input type="search" class="form-control" name="search" id="search" placeholder="Search Users">`;
 
   const searchBar = document.createElement("form");
   searchBar.innerHTML = bar;
@@ -23,10 +23,15 @@ function generaRisultati(results){
   }
   if(results.length > 0 && results!="ERR"){
     for(let i=0; i < results.length; i++){
-      let res = `<a class="results" href="./profilo.php?user=${results[i]['username']}"><img src="${results[i]['immagineProfilo']}" alt="immagine profilo di ${results[i]['username']}"\><p>${results[i]['username']}</p></a>`;
+      let res = `<button class="results" role="link"><img src="${results[i]['immagineProfilo']}" alt="immagine profilo di ${results[i]['username']}"\><p>${results[i]['username']}</p></button>`;
       const divBox = document.createElement("div");
       divBox.className = "user row";
       divBox.innerHTML = res;
+      divBox.querySelector("button").addEventListener("click", function(event){
+        event.preventDefault();
+        main.querySelector("input").value = "";
+        window.location.href = "./profilo.php?user="+results[i]['username'];
+      })
       main.appendChild(divBox);
     }
   }else{
@@ -47,7 +52,7 @@ function requestResult(val){
 }
   
 const main = document.querySelector("main");
-generaBarra();
+generaBarraDiRicerca();
 
 
 $(document).ready(function(){

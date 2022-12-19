@@ -152,7 +152,7 @@ ENGINE = InnoDB;
 -- ---------------------------------------------------*/
 CREATE TABLE IF NOT EXISTS `sharehub`.`notifica` (
   `idNotifica` INT NOT NULL AUTO_INCREMENT,
-  `descrizioneNotifica` DATE NOT NULL,
+  `descrizioneNotifica` VARCHAR(200) NOT NULL,
   `dataNotifica` DATETIME NOT NULL DEFAULT current_timestamp(),
   `presaVisione` INT NOT NULL DEFAULT 0,
   `codUtenteDestinatario` INT NOT NULL,

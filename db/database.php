@@ -41,6 +41,29 @@ class DatabaseHelper{
     }
 
     /**
+     * 
+     */
+    public function getUserIdFromIdPost($idPost){
+      $query = "SELECT codUtente FROM post WHERE idPost = ? LIMIT 1";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $idPost);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      $row = $result->fetch_assoc();
+      return $row['codUtente'];
+    }
+
+    public function getUsernameFromId($idUser){
+      $query = "SELECT username FROM utente WHERE idUtente = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $idUser);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      $row = $result->fetch_assoc();
+      return $row['username'];
+    }
+
+    /**
      * Inserisce un post con una immagine
      *
      * @param string $testoPost testo del post
@@ -296,7 +319,6 @@ class DatabaseHelper{
           $stmt->bind_param('iii', $idUtente, $idPost, $value);
           $stmt->execute();
         }
-
       }
     }
 
@@ -476,42 +498,127 @@ class DatabaseHelper{
     /**
      * Controlla se l'utente $username ha il profilo pubblico
      */
-    public function isUserProfilePublic($username){}
+    public function isUserProfilePublic($username){
+      $query = "SELECT `impostazione`.`idImpostazione`
+      FROM `impostazione`, `utente`
+      WHERE `utente`.`idUtente` = `impostazione`.`codUtente` AND `impostazione`.`privato` = ? AND `utente`.`username` = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('is', 0, $username);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if(mysqli_num_rows($result)){
+        return true;
+      }
+      return false;
+    }
 
     /**
      * Controlla se l'utente registrato in sessione ha come amico $idUtente
      */
-    public function isUserFriend($idUtente){}
-    
+    public function isUserFriend($idFriend, $idUser){
+      $query = "SELECT `amicizia`.`codFollowed`, `amicizia`.`codFollower`, `amicizia`.`dataAmicizia`, `amicizia`.`accettata`
+      FROM `amicizia`
+      WHERE `amicizia`.`codFollowed` = ? AND `amicizia`.`codFollower` = ? AND `amicizia`.`accettata` = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('iii', $idFriend, $idUser, 1);
+      $stmt->execute();
+      if(mysqli_num_rows($result)){
+        $query2 = "SELECT `amicizia`.`codFollowed`, `amicizia`.`codFollower`, `amicizia`.`dataAmicizia`, `amicizia`.`accettata` 
+        FROM `amicizia` 
+        WHERE `amicizia`.`codFollowed` = ? AND `amicizia`.`codFollower` = ? AND `amicizia`.`accettata` = ?";
+        $stmt = $this->db->prepare($query2);
+        $stmt->bind_param('iii', $idUser, $idFriend, 1);
+        $stmt->execute();
+        if(mysqli_num_rows($result)){
+          return true;
+        }
+        return false;
+      }
+      return false;
+    }
+
+    /**
+     * Restituisce tutte le richieste di amicizia
+     */
+    public function getFriendRequests($idUser){
+      $query = "SELECT `amicizia`.`codFollower`, `amicizia`.`accettata`, `utente`.`username`
+      FROM `amicizia`, `utente`
+      WHERE `amicizia`.`codFollower` = `utente`.`idUtente` AND `amicizia`.`codFollowed` = ? AND `amicizia`.`accettata` = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('ii', $idUser, 0);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      return $result->fetch_all(MYSQLI_ASSOC);
+    }
+        
     /**
      * Restituisce gli amici di un utente
      */
     public function getFriends($username){}
 
     /**
-     * Restituisce tutte le richieste di amicizia
-     */
-    public function getFriendRequests($username){}
-
-    /**
      * Restituisce tutti i followers
      */
-    public function getFollowers($username){}
+    public function getFollowers($idUtente){}
 
     /**
      * Restituisce tutta la gente seguita dall'utente
      */
-    public function getFollowed($username){}
+    public function getFollowed($idUtente){}
+
+    /**
+     * Manda una richiesta di follow o inizia a seguire un profilo
+     */
+    public function follow($username){
+      
+    }
 
     /**
      * Controlla se l'utente ha ricevuto nuove notifiche
      */
-    public function hasNotifications($idUtente){}
+    public function hasNotifications($idUtente){
+      $query = "SELECT `notifica`.`idNotifica`
+      FROM `notifica`
+      WHERE `notifica`.`codUtenteDestinatario` = ? AND `notifica`.`presaVisione` = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('ii', $idUtente, 0);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if(mysqli_num_rows($result)){
+        return true;
+      }
+      return false;
+    }
 
     /**
      * Restituisce tutte le notifiche di un utente
      */
-    public function getNotifications($idUtente){}
+    public function getNotifications($idUtente){
+      $query = "SELECT `notifica`.`idNotifica`, `notifica`.`descrizioneNotifica`, `notifica`.`dataNotifica`, `notifica`.`codUtenteMittente`, `utente`.`username`
+      FROM `notifica`, `utente`
+      WHERE `notifica`.`codUtenteMittente` = `utente`.`idUtente` AND `notifica`.`codUtenteDestinatario` = ? ORDER BY `notifica`.`presaVisione` DESC, `notifica`.`dataNotifica` DESC";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $idUtente);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function sendNotification($idUtenteDestinatario, $testo, $codMittente=-1){
+      if($codMittente > 0){
+        $query = "INSERT INTO `notifica` (`descrizioneNotifica`, codUtenteDestinatario, `CodUtenteMittente`) VALUES (?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('sii', $testo, $idUtenteDestinatario, $codMittente);
+        $stmt->execute();
+        return $stmt->insert_id;
+      }else{
+        $query2 = "INSERT INTO `notifica` (`descrizioneNotifica`, codUtenteDestinatario) VALUES (?, ?)";
+        $stmt = $this->db->prepare($query2);
+        $stmt->bind_param('si', $testo, $idUtenteDestinatario);
+        $stmt->execute();
+        return $stmt->insert_id;
+      }
+    }
 
 }
 ?>
