@@ -1,8 +1,6 @@
-let clicked = false;
-
 function comment(event){
   event.preventDefault();
-  let elem = event.target.parentElement.parentElement.parentElement.querySelector("article > div:nth-child(6)");
+  let elem = event.target.parentElement.parentElement.parentElement.querySelector("article > div:nth-child(7)");
   if(elem.style.display=="inline-block"){
     //nascondi
     elem.style.display="none";
@@ -11,10 +9,14 @@ function comment(event){
     elem.style.display="inline-block";
     let id = event.target.nextElementSibling.getAttribute('value');
     let user = event.target.nextElementSibling.nextElementSibling.getAttribute('value');
-    axios.get('api-comment.php',{ params: { idPost: id, idUtente: user } }).then(response => {
-      visualizzaCommenti(elem, response.data["comments"], id, user);
-    });
+    richiediCommenti(id, user);
   }
+}
+
+function richiediCommenti(id, user){
+  axios.get('api-comment.php',{ params: { idPost: id, idUtente: user } }).then(response => {
+    visualizzaCommenti(elem, response.data["comments"], id, user);
+  });
 }
 
 function generaCommenti(listaCommenti){

@@ -606,6 +606,19 @@ class DatabaseHelper{
     }
 
     /**
+     * 
+     */
+    public function getNewNotificationsNumber($idUtente){
+      $query = "SELECT `notifica`.`idNotifica` FROM `notifica` WHERE `notifica`.`presaVisione` = 0 AND `notifica`.`codUtenteDestinatario` = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $idUtente);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      $rowcount = mysqli_num_rows($result);
+      return $rowcount;
+    }
+
+    /**
      * Restituisce tutte le notifiche di un utente
      */
     public function getNotifications($idUtente){

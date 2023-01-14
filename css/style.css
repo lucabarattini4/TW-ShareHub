@@ -134,10 +134,28 @@ div ul li {
 /*-------FINE-COMMENTI-------*/
 
 
+/*-------NOTIFICHE-----------*/
+.notification {
+  padding: 15px 26px;
+  position: relative;
+  /*display: inline-block;*/
+  border-radius: 2px;
+}
+
+.notification .badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background: red;
+  color: white;
+}
+/*-------FINE-NOTIFICHE-----------*/
+
 
 /* The Modal (background) */
 .modal {
-
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */

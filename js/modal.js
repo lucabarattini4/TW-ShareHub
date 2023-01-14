@@ -1,17 +1,16 @@
-function showModal(event){
-  event.preventDefault();
-  let article = event.target.parentElement.parentElement.parentElement;
-  let modal = article.querySelector("article > div:nth-child(7)");
-  modal.style.display = "block";
-}
-
-function hideModal(event){
-  event.preventDefault();
-  let element = event.target.parentElement.parentElement.parentElement;
-  element.style.display = "none";
+function sharePost(event){
+  let elem = event.target.parentElement.parentElement.parentElement.querySelector("article > div:nth-child(6)");
+  if(elem.style.display=="inline-block"){
+    //nascondi
+    elem.style.display="none";
+  }else{
+    //mostra
+    elem.style.display="inline-block";
+  }
 }
 
 function copyLink(event){
+  console.log("ciao mondo");
   event.preventDefault();
   // Get the text field
   let element = event.target.parentElement;
