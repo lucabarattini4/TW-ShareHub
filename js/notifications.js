@@ -38,5 +38,12 @@ function richiediNotifiche(){
   });
 }
 
+function richiediNumeroNuoveNotifiche(){
+  axios.get('api-notifications.php').then(response => {
+    let s = document.querySelector("footer span");
+    s.innerHTML = response.data.newNotificationsNumber;
+  });
+}
 
 richiediNotifiche();
+setInterval(richiediNumeroNuoveNotifiche, 500);
