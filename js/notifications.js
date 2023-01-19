@@ -45,5 +45,11 @@ function richiediNumeroNuoveNotifiche(){
   });
 }
 
-richiediNotifiche();
+let url = location.href;
+let urlFileName = url.substring(url.lastIndexOf('/')+1);
+
+if(urlFileName == "notifications.php"){
+  richiediNotifiche();
+}
+
 setInterval(richiediNumeroNuoveNotifiche, 500);

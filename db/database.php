@@ -85,10 +85,10 @@ class DatabaseHelper{
      * @param string $dataPost data del post
      * @param int $codUtente utente autore del post
      */
-    public function insertPostWithImg($testoPost, $imgPost, $descrizioneImmagine, $dataPost, $codUtente){
-      $query = "INSERT INTO post (testo, immagine, descImmagine, dataPost, codUtente) VALUES (?, ?, ?, ?, ?)";
+    public function insertPostWithImg($testoPost, $imgPost, $descrizioneImmagine, $codUtente){
+      $query = "INSERT INTO post (testo, immagine, descImmagine, codUtente) VALUES (?, ?, ?, ?)";
       $stmt = $this->db->prepare($query);
-      $stmt->bind_param('ssssi',$testoPost, $imgPost, $descrizioneImmagine, $dataPost, $codUtente);
+      $stmt->bind_param('sssi',$testoPost, $imgPost, $descrizioneImmagine, $codUtente);
       $stmt->execute();
 
       return $stmt->insert_id;
@@ -100,10 +100,10 @@ class DatabaseHelper{
      * @param string $dataPost data del post
      * @param int $codUtente utente autore del post
      */
-    public function insertPostSimple($testoPost, $dataPost, $codUtente){
-      $query = "INSERT INTO post (testo, dataPost, codUtente) VALUES (?, ?, ?)";
+    public function insertPostSimple($testoPost, $codUtente){
+      $query = "INSERT INTO post (testo, codUtente) VALUES (?, ?)";
       $stmt = $this->db->prepare($query);
-      $stmt->bind_param('ssi',$testoPost, $dataPost, $codUtente);
+      $stmt->bind_param('si',$testoPost, $codUtente);
       $stmt->execute();
 
       return $stmt->insert_id;

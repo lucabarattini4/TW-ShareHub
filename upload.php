@@ -6,7 +6,6 @@
     
     //Inserisco
     $testoPost = htmlspecialchars($_POST["testopost"]);
-    $dataPost = date("Y-m-d");
     $utente = $_SESSION["idUtente"];
     //id utente da prendere dall'utente in sessione
     if($_FILES["fileToUpload"]["name"]!=""){
@@ -15,7 +14,7 @@
 
         if($result != 0){
             $imgPost = $msg;
-            $id = $dbh->insertPostWithImg($testoPost, $imgPost, $descrizioneImmagine, $dataPost, $utente);
+            $id = $dbh->insertPostWithImg($testoPost, $imgPost, $descrizioneImmagine, $utente);
             if($id!=false){
                 header("location: index.php");
             }
@@ -32,7 +31,7 @@
         }
         //header("location: index.php");
     }else{
-        $id = $dbh->insertPostSimple($testoPost, $dataPost, $utente);
+        $id = $dbh->insertPostSimple($testoPost, $utente);
         if($id!=false){
             header("location: index.php");
         }
