@@ -455,7 +455,6 @@ class DatabaseHelper{
         $stmt->bind_param('s',$username);
         $stmt->execute();
         $result = $stmt->get_result();
-
         return $result->fetch_all(MYSQLI_ASSOC);
       }else{
         return array();
@@ -574,12 +573,30 @@ class DatabaseHelper{
     /**
      * Restituisce tutti i followers
      */
-    public function getFollowers($idUtente){}
+    public function getFollowers($idUtente){
+      $query = "SELECT `amicizia`.`codFollower`, `utente`.`username`
+      FROM `amicizia`, `utente`
+      WHERE `amicizia`.`codFollower` = `utente`.`idUtente` AND `amicizia`.`codFollowed` = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $idUser);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      return $result->fetch_all(MYSQLI_ASSOC);
+    }
 
     /**
      * Restituisce tutta la gente seguita dall'utente
      */
-    public function getFollowed($idUtente){}
+    public function getFollowed($idUtente){
+      $query = "SELECT `amicizia`.`codFollowed`, `utente`.`username`
+      FROM `amicizia`, `utente`
+      WHERE `amicizia`.`codFollowed` = `utente`.`idUtente` AND `amicizia`.`codFollower` = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $idUtente);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      return $result->fetch_all(MYSQLI_ASSOC);
+    }
 
     /**
      * Manda una richiesta di follow o inizia a seguire un profilo
@@ -622,9 +639,9 @@ class DatabaseHelper{
      * Restituisce tutte le notifiche di un utente
      */
     public function getNotifications($idUtente){
-      $query = "SELECT `notifica`.`idNotifica`, `notifica`.`descrizioneNotifica`, `notifica`.`dataNotifica`, `notifica`.`codUtenteMittente`, `utente`.`username`
+      $query = "SELECT `notifica`.`idNotifica`, `notifica`.`descrizioneNotifica`, `notifica`.`dataNotifica`, `notifica`.`codUtenteMittente`, `utente`.`username`, `notifica`.`presaVisione`
       FROM `notifica`, `utente`
-      WHERE `notifica`.`codUtenteMittente` = `utente`.`idUtente` AND `notifica`.`codUtenteDestinatario` = ? ORDER BY `notifica`.`presaVisione` DESC, `notifica`.`dataNotifica` DESC";
+      WHERE `notifica`.`codUtenteMittente` = `utente`.`idUtente` AND `notifica`.`codUtenteDestinatario` = ? ORDER BY `notifica`.`presaVisione` ASC, `notifica`.`dataNotifica` DESC";
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('i', $idUtente);
       $stmt->execute();
@@ -646,6 +663,35 @@ class DatabaseHelper{
         $stmt->execute();
         return $stmt->insert_id;
       }
+    }
+
+    public function getNotificationStatus($idNotifica){
+      $query = "SELECT `notifica`.`presaVisione`
+      FROM `notifica`
+      WHERE `notifica`.`idNotifica` = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $idNotifica);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      $row = $result->fetch_assoc();
+      return $row['presaVisione'];
+
+    }
+
+    public function changeNotificationStatus($idNotifica){
+      
+      if($this->getNotificationStatus($idNotifica) == 1){
+        $val = 0;
+      }else{
+        $val = 1;
+      }
+      //setNotificationAsRead
+      $query2 = "UPDATE `notifica` SET `presaVisione` = ? WHERE `idNotifica`=?";
+      $stmt = $this->db->prepare($query2);
+      $stmt->bind_param('ii', $val, $idNotifica);
+      $stmt->execute();
+
+      return $this->getNotificationStatus($idNotifica);
     }
 
 }

@@ -5,7 +5,7 @@ if(!isset($_SESSION["username"])){
 }
 
 $templateParams["notifications"] = $dbh->getNotifications($_SESSION["idUtente"]);
-$templateParams["css"] = array("css/style.css");
+$templateParams["css"] = array("css/style.css", "css/notifications.css");
 $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js", "js/notifications.js");
 
 require 'template/base.php';

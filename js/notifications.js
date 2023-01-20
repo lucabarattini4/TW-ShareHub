@@ -13,27 +13,44 @@ function generaNotifiche(notifications){
   
     <!--colonna nome utente-->
     <div class="col-10 col-md-6 d-flex align-items-center">
-      <a href="./messages.php">
-        <p>${notifications[i]['descrizioneNotifica']}</p>
+      <input type="hidden" value="${notifications[i]['idNotifica']}"/>
+      <a href="./messages.php">`;
+      
+    if(notifications[i].presaVisione == 0){
+      notifica += `<p style="font-weight:bold;">${notifications[i]['descrizioneNotifica']}</p>
       </a>
-    </div>
+      </div>`;
+    }else{
+      notifica += `<p style="font-weight:normal;">${notifications[i]['descrizioneNotifica']}</p>
+      </a>
+      </div>`;
+    }
+
   
-    <div class="col-md-2"></div>
+    if(notifications[i].presaVisione == 0){
+      notifica += `<div class="col-md-2"><img src="./upload/webpageIcons/eye.svg"/></div>`;
+    }else{
+      notifica += `<div class="col-md-2"></div>`;
+    }
+    
   
-    </div>`;
-    //
+    notifica += `</div>`;
 
     const sec = document.createElement("section");
     sec.innerHTML = notifica;
+
+    if(sec.querySelector("div:nth-child(1) > div:nth-child(4) img") != null){
+      sec.querySelector("div:nth-child(1) > div:nth-child(4) img").addEventListener("click", event => checkAsRead(event));
+    }
+
     mainNotifiche.appendChild(sec);
-    console.log(mainNotifiche);
   }
      
 }
 
 function richiediNotifiche(){
   axios.get('api-notifications.php').then(response => {
-    //console.log(response.data);
+    console.log(response.data);
     generaNotifiche(response.data.notifications);
   });
 }
@@ -43,6 +60,23 @@ function richiediNumeroNuoveNotifiche(){
     let s = document.querySelector("footer span");
     s.innerHTML = response.data.newNotificationsNumber;
   });
+}
+
+function checkAsRead(event){
+  event.preventDefault();
+  let pElem = event.target.parentElement.parentElement.querySelector("div:nth-child(3) p");
+  let idN = event.target.parentElement.parentElement.querySelector("div:nth-child(3) input").getAttribute("value");
+
+  const formData = new FormData();
+  formData.append('idNotifica', idN);
+  axios.post('api-notifications.php', formData).then(response => {
+    if(response.data["seen"]){
+      pElem.setAttribute("style", "font-weight:bold;");
+    }
+    pElem.setAttribute("style", "font-weight:normal;");
+    event.target.style.display="none";
+  });
+  richiediNotifiche();
 }
 
 let url = location.href;
