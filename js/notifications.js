@@ -4,25 +4,23 @@ function generaNotifiche(notifications){
 
     let notifica = `<div class="row ">
 
-    <div class="col-md-2"></div>
+    <div class="col-md-1"></div>
   
-    <!--colonna immagine profilo-->
-    <div class="col-2 d-flex justify-content-center">
-      img profilo
+    <!--colonna-->
+    <div class="col-1 d-flex justify-content-center">
+    <p>${notifications[i]['dataNotifica']}</p>
     </div>
   
-    <!--colonna nome utente-->
+    <!--colonna-->
     <div class="col-10 col-md-6 d-flex align-items-center">
       <input type="hidden" value="${notifications[i]['idNotifica']}"/>
-      <a href="./messages.php">`;
+      `;
       
     if(notifications[i].presaVisione == 0){
       notifica += `<p style="font-weight:bold;">${notifications[i]['descrizioneNotifica']}</p>
-      </a>
       </div>`;
     }else{
       notifica += `<p style="font-weight:normal;">${notifications[i]['descrizioneNotifica']}</p>
-      </a>
       </div>`;
     }
 

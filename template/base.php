@@ -60,7 +60,7 @@
       <?php if(isUserLoggedIn()){ ?>
       <!--colonna profilo-->
       <div class="col-2">
-        <a class="d-flex justify-content-end align-items-center" href="#">
+        <a class="d-flex justify-content-end align-items-center" href="myprofile.php">
           <?php
           $templateParams["img"] = $dbh->getUserProfileImg($_SESSION["idUtente"]);
           foreach($templateParams["img"] as $img):

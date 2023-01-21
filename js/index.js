@@ -144,14 +144,92 @@ function requestPost(){
   });
 }
 
+function requestUserPost(){
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  let user = urlParams.get('user');
+  axios.get('api-post.php',{ params: { user: user } }).then(response => {
+    console.log(response.data);
+    generaPosts(response.data);
+  });
+}
+
+function requestUserInfo(param){
+  axios.get('api-userInfo.php',{ params: { user: param } }).then(response => {
+    console.log("fsdfdsf");
+    console.log(response.data);
+    createProfileHeader(response.data);
+  });
+}
+
+function createProfileHeader(param){
+  let info = "";
+  if(param[0]['isCurrentUser'] == "true"){
+    info = `<div class="row ">
+    <div class="col-12   d-flex justify-content-center">
+      <img src="${param[0]['immagineProfilo']}" alt="immagineProfilo"/>
+    </div>
+  </div>
+  <div class="row ">
+      <div class="col-12  r">
+        <h2>${param[0]['username']}</h2>
+      </div>
+  </div>`;
+  }else{
+    info = `<div class="row ">
+    <div class="col-12   d-flex justify-content-center">
+      <img src="${param[0]['immagineProfilo']}" alt="immagineProfilo"/>
+    </div>
+  </div>
+  <div class="row ">
+      <div class="col-12  r">
+        <h2>${param[0]['username']}</h2>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-md-3"></div>
+    <div class="col-3 d-flex align-items-center">
+        <button  id="follow" type="button"><img src="./upload/webpageIcons/user-plus.svg" alt="Follow"/></button>
+    </div>
+    <div class="col-3  d-flex align-items-center">
+        <a href="#"><img src="./upload/webpageIcons/paper-plane.svg" alt="messaggio"/></a>
+    </div>
+    <div class="col-3  d-flex align-items-center">
+        <a href="#"><img src="./upload/webpageIcons/report.svg" alt="report"/></a>
+    </div>
+    
+  </div>`;
+  }
+
+  const f = document.createElement("section");
+  f.innerHTML = info;
+  main.appendChild(f);
+}
+
+let url2 = location.href;
+let urlFileName2 = url2.substring(url2.lastIndexOf('/')+1);
 const main = document.querySelector("main");
+let param = new URLSearchParams(window.location.search).get('user');
+
+if(urlFileName2.startsWith("profilo.php")){
+  requestUserInfo(param);
+}
 
 console.log("RICHIESTA POST");
-requestPost();
+if(urlFileName2.startsWith("profilo.php")){
+  requestUserPost();
+}else{
+  requestPost();
+}
 
 window.onscroll = function () {
   if(window.onscroll && ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)){
     console.log("fine pagina");
-    requestPost();
+    
+    if(urlFileName2.startsWith("profilo.php")){
+      requestUserPost();
+    }else{
+      requestPost();
+    }
   }
 }

@@ -194,7 +194,7 @@ class DatabaseHelper{
      */
     public function getUserInfo($username){
       if($this->checkUsernameExistence($username)){
-        $query = "SELECT username, immagineProfilo FROM utente WHERE username = ?";
+        $query = "SELECT idUtente, username, immagineProfilo FROM utente WHERE username = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $username);
         $stmt->execute();
