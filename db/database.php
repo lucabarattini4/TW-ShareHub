@@ -13,7 +13,7 @@ class DatabaseHelper{
      * Restituisce tutti i post
      */
     public function getPosts($n=-1){
-      $query = "SELECT idPost, username, testo, immagine, immagineProfilo, descImmagine, dataPost FROM post, utente WHERE idUtente=codUtente ORDER BY RAND() DESC";
+      $query = "SELECT idPost, idUtente, username, testo, immagine, immagineProfilo, descImmagine, dataPost FROM post, utente WHERE idUtente=codUtente ORDER BY RAND() DESC";
       if($n > 0){
         $query .= " LIMIT ?";
       }
@@ -178,7 +178,7 @@ class DatabaseHelper{
      */
     public function getUserPosts($username){
       if($this->checkUsernameExistence($username)){
-        $query = "SELECT idPost, username, testo, immagine, immagineProfilo, descImmagine, dataPost FROM post, utente WHERE idUtente=codUtente AND username = ? ORDER BY dataPost DESC";
+        $query = "SELECT idPost, idUtente, username, testo, immagine, immagineProfilo, descImmagine, dataPost FROM post, utente WHERE idUtente=codUtente AND username = ? ORDER BY dataPost DESC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $username);
         $stmt->execute();
@@ -584,6 +584,10 @@ class DatabaseHelper{
       return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function countFollowers($idUtente){
+      return count($this->getFollowers($idUtente));
+    }
+
     /**
      * Restituisce tutta la gente seguita dall'utente
      */
@@ -596,6 +600,10 @@ class DatabaseHelper{
       $stmt->execute();
       $result = $stmt->get_result();
       return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function countFollowed($idUtente){
+      return count($this->getFollowed($idUtente));
     }
 
     /**

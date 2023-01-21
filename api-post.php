@@ -9,6 +9,7 @@ for($i = 0; $i < count($posts); $i++){
     $posts[$i]["sessionIdUtente"] = $_SESSION["idUtente"];
     $posts[$i]["isLiked"] = $dbh->isPostLiked($_SESSION["idUtente"], $posts[$i]["idPost"]);
     $posts[$i]["isSaved"] = $dbh->isPostSaved($_SESSION["idUtente"], $posts[$i]["idPost"]);
+    
 }
 
 if(isset($_GET["user"])){

@@ -115,6 +115,10 @@ function generaPosts(posts){
       <!--riga sezione commenti + form-->
       <div class="row"></div>`;
 
+      if(posts[i]["idUtente"] == posts[i]["sessionIdUtente"]){
+        post+=`<p>modifica</p><p>elimina</p>`;
+      }
+
     const art = document.createElement("article");
     art.innerHTML = post;
 
@@ -156,7 +160,6 @@ function requestUserPost(){
 
 function requestUserInfo(param){
   axios.get('api-userInfo.php',{ params: { user: param } }).then(response => {
-    console.log("fsdfdsf");
     console.log(response.data);
     createProfileHeader(response.data);
   });
@@ -164,7 +167,7 @@ function requestUserInfo(param){
 
 function createProfileHeader(param){
   let info = "";
-  if(param[0]['isCurrentUser'] == "true"){
+  if(param[0]['isCurrentUser']){
     info = `<div class="row ">
     <div class="col-12   d-flex justify-content-center">
       <img src="${param[0]['immagineProfilo']}" alt="immagineProfilo"/>
@@ -174,7 +177,15 @@ function createProfileHeader(param){
       <div class="col-12  r">
         <h2>${param[0]['username']}</h2>
       </div>
-  </div>`;
+  </div>
+  <div class="row ">
+  <div class="col-12  r">
+    <p>FOLLOWERS: ${param[0]['followers']}</p>
+  </div>
+  <div class="col-12  r">
+    <p>FOLLOWED: ${param[0]['followed']}</p>
+  </div>
+</div>`;
   }else{
     info = `<div class="row ">
     <div class="col-12   d-flex justify-content-center">
@@ -186,6 +197,14 @@ function createProfileHeader(param){
         <h2>${param[0]['username']}</h2>
       </div>
   </div>
+  <div class="row ">
+  <div class="col-12  r">
+    <p>FOLLOWERS: ${param[0]['followers']}</p>
+  </div>
+  <div class="col-12  r">
+    <p>FOLLOWED: ${param[0]['followed']}</p>
+  </div>
+</div>
   <div class="row">
       <div class="col-md-3"></div>
     <div class="col-3 d-flex align-items-center">
