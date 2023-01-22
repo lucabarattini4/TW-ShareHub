@@ -143,9 +143,11 @@ CREATE TABLE IF NOT EXISTS `sharehub`.`commento` (
   `codPost` INT NOT NULL,
   PRIMARY KEY (`idCommento`),
   CONSTRAINT `fk_commento_utente` FOREIGN KEY (`codUtente`)
-  REFERENCES `sharehub`.`utente` (`idUtente`),
+  REFERENCES `sharehub`.`utente` (`idUtente`)
+  ON DELETE CASCADE,
   CONSTRAINT `fk_commento_post` FOREIGN KEY (`codPost`)
   REFERENCES `sharehub`.`post` (`idPost`)
+  ON DELETE CASCADE
 )
 ENGINE = InnoDB;
 
