@@ -9,9 +9,6 @@ $idDest = $dbh->getUserIdFromIdPost($_GET["idPost"]);
 if($result["saved"]){
   $testo = $username." ha salvato il tuo post";
   $dbh->sendNotification($idDest, $testo, $_SESSION["idUtente"]);
-}else{
-  $testo = $username." ha tolto il save al tuo post";
-  $dbh->sendNotification($idDest, $testo, $_SESSION["idUtente"]);
 }
 
 header('Content-Type: application/json');

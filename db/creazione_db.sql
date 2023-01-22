@@ -65,9 +65,11 @@ CREATE TABLE IF NOT EXISTS `sharehub`.`likeSave` (
   `save` BOOLEAN DEFAULT 0 NOT NULL,
   PRIMARY KEY (`codUtente`, `codPost`),
   CONSTRAINT `fk_like_utente` FOREIGN KEY (`codUtente`)
-  REFERENCES `sharehub`.`utente` (`idUtente`),
+  REFERENCES `sharehub`.`utente` (`idUtente`)
+  ON DELETE CASCADE,
   CONSTRAINT `fk_like_post` FOREIGN KEY (`codPost`)
   REFERENCES `sharehub`.`post` (`idPost`)
+  ON DELETE CASCADE
 )
 ENGINE = InnoDB;
 

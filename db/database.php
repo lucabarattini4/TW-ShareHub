@@ -108,6 +108,14 @@ class DatabaseHelper{
 
       return $stmt->insert_id;
     }
+    
+
+    public function deletePost($idPost){
+      $query = "DELETE FROM `post` WHERE `idPost`=?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $idPost);
+      $stmt->execute();
+    }
 
     /**
      * Registra un nuovo utente

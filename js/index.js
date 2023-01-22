@@ -115,8 +115,13 @@ function generaPosts(posts){
       <!--riga sezione commenti + form-->
       <div class="row"></div>`;
 
-      if(posts[i]["idUtente"] == posts[i]["sessionIdUtente"]){
-        post+=`<p>modifica</p><p>elimina</p>`;
+      if(posts[i]["idUtente"] == posts[i]["sessionIdUtente"] && getPageName().startsWith("profilo.php")){
+        post+=`<div class="row">
+        <div class="col"><img src="./upload/webpageIcons/edit.svg" alt="modifica post"/>
+        <input type="hidden" value="${posts[i]['idPost']}"/></div>
+        <div class="col"><img src="./upload/webpageIcons/trash.svg" alt="elimina post"/>
+        <input type="hidden" value="${posts[i]['idPost']}"/></div>
+        </div>`;
       }
 
     const art = document.createElement("article");
@@ -135,6 +140,14 @@ function generaPosts(posts){
     art.querySelector("div:nth-child(5) > div:nth-child(5) img").addEventListener("click", event => sharePost(event));
 
     art.querySelector("div:nth-child(6) button").addEventListener("click", event => copyLink(event));
+
+
+    if(posts[i]["idUtente"] == posts[i]["sessionIdUtente"] && getPageName().startsWith("profilo.php")){
+      art.querySelector("div:nth-child(8) > div:nth-child(1) img").addEventListener("click", event => edit(event));
+
+      art.querySelector("div:nth-child(8) > div:nth-child(2) img").addEventListener("click", event => deletePost(event));
+    }
+
 
     main.appendChild(art);
 
@@ -225,17 +238,39 @@ function createProfileHeader(param){
   main.appendChild(f);
 }
 
-let url2 = location.href;
-let urlFileName2 = url2.substring(url2.lastIndexOf('/')+1);
+function edit(event){
+  event.preventDefault();
+  console.log("edita");
+}
+
+function deletePost(event){
+  event.preventDefault();
+  console.log("elimina");
+  codPost = event.target.nextElementSibling.getAttribute('value');
+  const dataPost = new FormData();
+  dataPost.append('idPost', codPost);
+  axios.post('api-remove-post.php', dataPost).then(response => {
+    console.log(response.data);
+    window.location.reload();
+  });
+
+}
+
+function getPageName(){
+  let url2 = location.href;
+  let urlFileName2 = url2.substring(url2.lastIndexOf('/')+1);
+  return urlFileName2;
+}
+
 const main = document.querySelector("main");
 let param = new URLSearchParams(window.location.search).get('user');
 
-if(urlFileName2.startsWith("profilo.php")){
+if(getPageName().startsWith("profilo.php")){
   requestUserInfo(param);
 }
 
 console.log("RICHIESTA POST");
-if(urlFileName2.startsWith("profilo.php")){
+if(getPageName().startsWith("profilo.php")){
   requestUserPost();
 }else{
   requestPost();
@@ -245,7 +280,7 @@ window.onscroll = function () {
   if(window.onscroll && ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)){
     console.log("fine pagina");
     
-    if(urlFileName2.startsWith("profilo.php")){
+    if(getPageName().startsWith("profilo.php")){
       requestUserPost();
     }else{
       requestPost();

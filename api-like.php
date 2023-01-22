@@ -10,9 +10,6 @@ $idDest = $dbh->getUserIdFromIdPost($_GET["idPost"]);
 if($result["liked"]){
   $testo = $username." ha messo like al tuo post";
   $dbh->sendNotification($idDest, $testo, $_SESSION["idUtente"]);
-}else{
-  $testo = $username." ha tolto il like al tuo post";
-  $dbh->sendNotification($idDest, $testo, $_SESSION["idUtente"]);
 }
 
 header('Content-Type: application/json');
