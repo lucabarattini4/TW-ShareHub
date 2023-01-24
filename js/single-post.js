@@ -137,7 +137,7 @@ function generaPosts(posts){
 
       /*aggiungo eventListener per i commenti*/
       art.querySelector("div:nth-child(5) > div:nth-child(3) img").addEventListener("click", event => comment(event));
-      console.log(art.querySelector("div:nth-child(5) > div:nth-child(3) img"));
+      //console.log(art.querySelector("div:nth-child(5) > div:nth-child(3) img"));
 
       /*aggiungo eventListener per il condividi*/
       art.querySelector("div:nth-child(5) > div:nth-child(5) img").addEventListener("click", event => showModal(event));
@@ -154,7 +154,7 @@ function requestPost(){
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   let id = urlParams.get('idPost');
-  console.log(id);
+  //console.log(id);
   axios.get('api-single-post.php', { params: { idPost: id } }).then(response => {
     //console.log(response);
     generaPosts(response.data);
@@ -186,5 +186,5 @@ function copyLink(){
 
 const main = document.querySelector("main");
 
-console.log("RICHIESTA POST");
+//console.log("RICHIESTA POST");
 requestPost();

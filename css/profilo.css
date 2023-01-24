@@ -19,7 +19,19 @@ div:nth-child(3) > div > a > img{
   width: 10%;
 }
 
+div:nth-child(8) img {
+  width: 10%;
+}
+
+.friends {
+  text-align: center;
+}
+
 @media screen and (max-width: 768px) {
+
+  div:nth-child(8) img {
+    width: 10%;
+  }
 
   div:nth-child(3) > div > button {
 

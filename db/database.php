@@ -76,6 +76,16 @@ class DatabaseHelper{
       return $row['username'];
     }
 
+    public function getIdFromUsername($username){
+      $query = "SELECT idUtente FROM utente WHERE username = ? LIMIT 1";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('s', $username);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      $row = $result->fetch_assoc();
+      return $row['idUtente'];
+    }
+
     /**
      * Inserisce un post con una immagine
      *
@@ -617,8 +627,42 @@ class DatabaseHelper{
     /**
      * Manda una richiesta di follow o inizia a seguire un profilo
      */
-    public function follow($username){
+    public function follow($usernameFollowed, $usernameFollower){
+      $followed = $this->getIdFromUsername($usernameFollowed);
+      $follower = $this->getIdFromUsername($usernameFollower);
+      $follow = $this->isUserFollowed($usernameFollowed, $usernameFollower);
+      if($follow){
+        $query = "DELETE FROM `amicizia` WHERE `codFollowed`=? AND `codFollower`=?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ii',$followed, $follower);
+        $stmt->execute();
+        return $stmt->insert_id;
+      }else{
+        $query2 = "INSERT INTO amicizia (`codFollowed`, `codFollower`, `accettata`) VALUES (?, ?, ?)";
+        $accettata = 1;
+        $stmt = $this->db->prepare($query2);
+        $stmt->bind_param('iii',$followed, $follower, $accettata);
+        $stmt->execute();
+        return $stmt->insert_id;
+      }
       
+    }
+
+    public function isUserFollowed($usernameFollowed, $usernameFollower){
+      $query2 = "SELECT `amicizia`.`dataAmicizia` 
+      FROM `amicizia` 
+      WHERE `amicizia`.`codFollowed` = ? AND `amicizia`.`codFollower` = ? AND `amicizia`.`accettata` = ?";
+      $followed = $this->getIdFromUsername($usernameFollowed);
+      $follower = $this->getIdFromUsername($usernameFollower);
+      $accettata = 1;
+      $stmt = $this->db->prepare($query2);
+      $stmt->bind_param('iii', $followed, $follower, $accettata);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if($result->num_rows > 0){
+        return true;
+      }
+      return false;
     }
 
     /**

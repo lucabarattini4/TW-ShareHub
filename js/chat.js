@@ -4,7 +4,7 @@ function generaBarraUtente(){ //img profilo + nome
 }
 
 function generaRisultati(results, ){
-  console.log(results);
+  //console.log(results);
   if(results.length > 0 && results!="ERR"){
     for(let i=0; i < results.length; i++){
       let res = " ";

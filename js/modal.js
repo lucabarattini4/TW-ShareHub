@@ -10,7 +10,7 @@ function sharePost(event){
 }
 
 function copyLink(event){
-  console.log("ciao mondo");
+  //console.log("ciao mondo");
   event.preventDefault();
   // Get the text field
   let element = event.target.parentElement;

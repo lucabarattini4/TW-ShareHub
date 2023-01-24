@@ -1,7 +1,7 @@
 function save(event){
   event.preventDefault();
   id = event.target.nextElementSibling.getAttribute('value');
-  console.log(id);
+  //console.log(id);
   axios.get('api-save.php',{ params: { idPost: id } }).then(response => {
     //console.log(response);
     if(response.data["saved"]){

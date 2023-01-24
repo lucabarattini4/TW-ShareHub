@@ -166,91 +166,84 @@ function requestUserPost(){
   const urlParams = new URLSearchParams(queryString);
   let user = urlParams.get('user');
   axios.get('api-post.php',{ params: { user: user } }).then(response => {
-    console.log(response.data);
+    //console.log(response.data);
     generaPosts(response.data);
   });
 }
 
 function requestUserInfo(param){
   axios.get('api-userInfo.php',{ params: { user: param } }).then(response => {
-    console.log(response.data);
+    //console.log(response.data);
     createProfileHeader(response.data);
   });
 }
 
 function createProfileHeader(param){
-  let info = "";
-  if(param[0]['isCurrentUser']){
-    info = `<div class="row ">
+  let info = `<div class="row ">
     <div class="col-12   d-flex justify-content-center">
-      <img src="${param[0]['immagineProfilo']}" alt="immagineProfilo"/>
+    <img src="${param[0]['immagineProfilo']}" alt="immagineProfilo"/>
     </div>
-  </div>
-  <div class="row ">
-      <div class="col-12  r">
-        <h2>${param[0]['username']}</h2>
-      </div>
-  </div>
-  <div class="row ">
-  <div class="col-12  r">
-    <p>FOLLOWERS: ${param[0]['followers']}</p>
-  </div>
-  <div class="col-12  r">
-    <p>FOLLOWED: ${param[0]['followed']}</p>
-  </div>
-</div>`;
-  }else{
-    info = `<div class="row ">
-    <div class="col-12   d-flex justify-content-center">
-      <img src="${param[0]['immagineProfilo']}" alt="immagineProfilo"/>
     </div>
-  </div>
-  <div class="row ">
-      <div class="col-12  r">
-        <h2>${param[0]['username']}</h2>
-      </div>
-  </div>
-  <div class="row ">
-  <div class="col-12  r">
+    <div class="row ">
+    <div class="col-12">
+      <h2>${param[0]['username']}</h2>
+    </div>
+    </div>
+    <div class="row friends">
+    <div class="col-12">
     <p>FOLLOWERS: ${param[0]['followers']}</p>
-  </div>
-  <div class="col-12  r">
+    </div>
+    <div class="col-12">
     <p>FOLLOWED: ${param[0]['followed']}</p>
-  </div>
-</div>
-  <div class="row">
+    </div>
+    </div>`;
+  if(!param[0]['isCurrentUser']){
+    info += `<div class="row">
       <div class="col-md-3"></div>
-    <div class="col-3 d-flex align-items-center">
-        <button  id="follow" type="button"><img src="./upload/webpageIcons/user-plus.svg" alt="Follow"/></button>
-    </div>
-    <div class="col-3  d-flex align-items-center">
-        <a href="#"><img src="./upload/webpageIcons/paper-plane.svg" alt="messaggio"/></a>
-    </div>
-    <div class="col-3  d-flex align-items-center">
-        <a href="#"><img src="./upload/webpageIcons/report.svg" alt="report"/></a>
-    </div>
-    
-  </div>`;
+      <div class="col-3 d-flex align-items-center">
+      <button  id="follow" type="button">`;
+      if(param[0]['isFollowed']){
+        info+= `<img src="./upload/webpageIcons/user-check.svg" alt="is followed"/>`;
+      }else{
+        info+= `<img src="./upload/webpageIcons/user-plus.svg" alt="Follow"/>`;
+      }
+      info+= `</button>
+      </div>
+      <div class="col-3  d-flex align-items-center">
+      <button  id="message" type="button"><img src="./upload/webpageIcons/paper-plane.svg" alt="messaggio"/></button>
+      </div> 
+      </div>`;
   }
 
   const f = document.createElement("section");
   f.innerHTML = info;
+  if(!param[0]['isCurrentUser']){
+    f.querySelector("div:nth-child(4) > div:nth-child(2) button").addEventListener("click", event => follow(event));
+
+    f.querySelector("div:nth-child(4) > div:nth-child(3) button").addEventListener("click", event => openchat(event));
+  }
+
   main.appendChild(f);
+}
+
+function openchat(event){
+  event.preventDefault();
+  //console.log("CHATTA");
 }
 
 function edit(event){
   event.preventDefault();
-  console.log("edita");
+  //console.log("edita");
 }
 
 function deletePost(event){
   event.preventDefault();
-  console.log("elimina");
+  //console.log("elimina");
   codPost = event.target.nextElementSibling.getAttribute('value');
   const dataPost = new FormData();
   dataPost.append('idPost', codPost);
   axios.post('api-remove-post.php', dataPost).then(response => {
-    console.log(response.data);
+    //console.log(response.data);
     window.location.reload();
   });
 
@@ -267,18 +260,21 @@ let param = new URLSearchParams(window.location.search).get('user');
 
 if(getPageName().startsWith("profilo.php")){
   requestUserInfo(param);
-}
-
-console.log("RICHIESTA POST");
-if(getPageName().startsWith("profilo.php")){
   requestUserPost();
 }else{
   requestPost();
 }
 
+/*console.log("RICHIESTA POST");
+if(getPageName().startsWith("profilo.php")){
+  requestUserPost();
+}else{
+  requestPost();
+}*/
+
 window.onscroll = function () {
   if(window.onscroll && ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)){
-    console.log("fine pagina");
+    //console.log("fine pagina");
     
     if(getPageName().startsWith("profilo.php")){
       requestUserPost();

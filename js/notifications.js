@@ -48,7 +48,7 @@ function generaNotifiche(notifications){
 
 function richiediNotifiche(){
   axios.get('api-notifications.php').then(response => {
-    console.log(response.data);
+    //console.log(response.data);
     generaNotifiche(response.data.notifications);
   });
 }

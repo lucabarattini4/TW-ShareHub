@@ -1,6 +1,6 @@
 <?php 
   if(array_key_exists('logout', $_POST)) {
-    logOut();
+    sec_session_destroy();
   }
 ?>
 
