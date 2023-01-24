@@ -1,7 +1,7 @@
 function generaPosts(posts){
-  let result = "";
 
   for(let i=0; i < posts.length; i++){
+    arr.push(posts[i]['idPost']);
     let post = `
       <!--riga img profilo + nome utente -->
       <div class="row ">
@@ -148,14 +148,15 @@ function generaPosts(posts){
       art.querySelector("div:nth-child(8) > div:nth-child(2) img").addEventListener("click", event => deletePost(event));
     }
 
-
     main.appendChild(art);
 
   }
 }
 
 function requestPost(){
-  axios.get('api-post.php').then(response => {
+  const postNotIncluded = new FormData();
+  postNotIncluded.append('arr', JSON.stringify(arr));
+  axios.post('api-post.php', postNotIncluded).then(response => {
     //console.log(response);
     generaPosts(response.data);
   });
@@ -164,9 +165,14 @@ function requestPost(){
 function requestUserPost(){
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  let user = urlParams.get('user');
-  axios.get('api-post.php',{ params: { user: user } }).then(response => {
-    //console.log(response.data);
+  const arr1 = new FormData();
+  arr1.append('arr', JSON.stringify(arr));
+  const user = urlParams.get('user');
+  arr1.append('user', user);
+  
+
+  axios.post('api-post.php', arr1).then(response => {
+    console.log(response.data);
     generaPosts(response.data);
   });
 }
@@ -255,27 +261,28 @@ function getPageName(){
   return urlFileName2;
 }
 
+// sleep time expects milliseconds
+function sleep (time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
+
+const arr = [0];
 const main = document.querySelector("main");
 let param = new URLSearchParams(window.location.search).get('user');
 
 if(getPageName().startsWith("profilo.php")){
   requestUserInfo(param);
-  requestUserPost();
+  sleep(50).then(() => {
+    requestUserPost();
+  })
 }else{
   requestPost();
 }
 
-/*console.log("RICHIESTA POST");
-if(getPageName().startsWith("profilo.php")){
-  requestUserPost();
-}else{
-  requestPost();
-}*/
-
 window.onscroll = function () {
   if(window.onscroll && ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)){
-    //console.log("fine pagina");
-    
+    //console.log("fine pagina"); 
     if(getPageName().startsWith("profilo.php")){
       requestUserPost();
     }else{

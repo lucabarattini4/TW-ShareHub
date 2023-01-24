@@ -12,19 +12,38 @@ class DatabaseHelper{
     /**
      * Restituisce tutti i post
      */
-    public function getPosts($n=-1){
-      $query = "SELECT idPost, idUtente, username, testo, immagine, immagineProfilo, descImmagine, dataPost FROM post, utente WHERE idUtente=codUtente ORDER BY RAND() DESC";
-      if($n > 0){
-        $query .= " LIMIT ?";
-      }
+    public function getPosts($arr){ 
+
+      $in  = str_repeat('?,', count($arr) - 1) . '?';
+      $query = "SELECT idPost, idUtente, username, testo, immagine, immagineProfilo, descImmagine, dataPost FROM post, utente WHERE idUtente=codUtente AND idPost NOT IN ($in) ORDER BY RAND() LIMIT 3";
+
       $stmt = $this->db->prepare($query);
-      if($n > 0){
-        $stmt->bind_param('i', $n);
-      }
+      $types = str_repeat('i', count($arr));
+      $stmt->bind_param($types, ...$arr);
+
       $stmt->execute();
       $result = $stmt->get_result();
 
       return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
+     * Restituisce tutti i post di un utente
+     */
+    public function getUserPosts($username, $arr){
+      if($this->checkUsernameExistence($username)){
+        $in  = str_repeat('?,', count($arr) - 1) . '?';
+        $query = "SELECT idPost, idUtente, username, testo, immagine, immagineProfilo, descImmagine, dataPost FROM post, utente WHERE idUtente=codUtente AND username = ? AND idPost NOT IN ($in) ORDER BY dataPost DESC";
+        $stmt = $this->db->prepare($query);
+        $types = 's';
+        $types .= str_repeat('i', count($arr));
+        $stmt->bind_param($types, $username, ...$arr);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+      }
+      return 0;
     }
 
     /**
@@ -189,22 +208,6 @@ class DatabaseHelper{
         return true;
       }
       return false;
-    }
-
-    /**
-     * Restituisce tutti i post di un utente
-     */
-    public function getUserPosts($username){
-      if($this->checkUsernameExistence($username)){
-        $query = "SELECT idPost, idUtente, username, testo, immagine, immagineProfilo, descImmagine, dataPost FROM post, utente WHERE idUtente=codUtente AND username = ? ORDER BY dataPost DESC";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('s', $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        return $result->fetch_all(MYSQLI_ASSOC);
-      }
-      return 0;
     }
 
     /**
@@ -596,7 +599,7 @@ class DatabaseHelper{
       FROM `amicizia`, `utente`
       WHERE `amicizia`.`codFollower` = `utente`.`idUtente` AND `amicizia`.`codFollowed` = ?";
       $stmt = $this->db->prepare($query);
-      $stmt->bind_param('i', $idUser);
+      $stmt->bind_param('i', $idUtente);
       $stmt->execute();
       $result = $stmt->get_result();
       return $result->fetch_all(MYSQLI_ASSOC);
@@ -638,10 +641,11 @@ class DatabaseHelper{
         $stmt->execute();
         return $stmt->insert_id;
       }else{
-        $query2 = "INSERT INTO amicizia (`codFollowed`, `codFollower`, `accettata`) VALUES (?, ?, ?)";
+        $query2 = "INSERT INTO amicizia (`codFollowed`, `codFollower`, `dataAmicizia`, `accettata`) VALUES (?, ?, ?, ?)";
         $accettata = 1;
+        $data = date("Y-m-d");
         $stmt = $this->db->prepare($query2);
-        $stmt->bind_param('iii',$followed, $follower, $accettata);
+        $stmt->bind_param('iisi',$followed, $follower, $data, $accettata);
         $stmt->execute();
         return $stmt->insert_id;
       }

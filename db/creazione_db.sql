@@ -29,7 +29,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `sharehub`.`amicizia` (
   `codFollowed` INT NOT NULL,
   `codFollower` INT NOT NULL,
-  `dataAmicizia` DATETIME NOT NULL current_timestamp(),
+  `dataAmicizia` DATETIME NOT NULL DEFAULT current_timestamp(),
   `accettata` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`codFollowed`, `codFollower`),
   CONSTRAINT `fk_amicizia_followed` FOREIGN KEY (`codFollowed`) 
