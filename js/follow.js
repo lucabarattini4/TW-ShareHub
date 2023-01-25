@@ -9,5 +9,6 @@ function follow(event){
     }else{
       event.target.setAttribute('src', 'upload/webpageIcons/user-plus.svg');
     }
+    window.location.reload();
   });
 }
