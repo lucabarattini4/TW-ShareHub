@@ -12,17 +12,19 @@ class DatabaseHelper{
     /**
      * Restituisce tutti i post
      */
-    public function getPosts($arr, $idUtente){ 
+
+    public function getPosts($arr, $idUtente){
       $ids = $this->getFollowed($idUtente);
       $idarr = array();
       array_push($idarr, $idUtente);
       for($i = 0; $i < count($ids); $i++){
         array_push($idarr, $ids[$i]["codFollowed"]);
       }
-      
+
       $in2  = str_repeat('?,', count($arr) - 1) . '?';
-      $in = str_repeat('?,', count($idarr) -1). '?'; 
+      $in = str_repeat('?,', count($idarr) -1). '?';
       $query = "SELECT idPost, idUtente, username, testo, immagine, immagineProfilo, descImmagine, dataPost FROM post, utente WHERE idUtente=codUtente AND idPost NOT IN ($in2) AND idUtente IN ($in) ORDER BY RAND() LIMIT 3";
+
 
       $stmt = $this->db->prepare($query);
       $types = str_repeat('i', count($arr));
@@ -81,7 +83,7 @@ class DatabaseHelper{
     }
 
     /**
-     * 
+     *
      */
     public function getUserIdFromIdPost($idPost){
       $query = "SELECT codUtente FROM post WHERE idPost = ? LIMIT 1";
@@ -145,7 +147,7 @@ class DatabaseHelper{
 
       return $stmt->insert_id;
     }
-    
+
 
     public function deletePost($idPost){
       $query = "DELETE FROM `post` WHERE `idPost`=?";
@@ -174,6 +176,23 @@ class DatabaseHelper{
       $query = "SELECT `utente`.`nome`, `utente`.`cognome`
       FROM `utente`
       WHERE `utente`.`username` = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('s', $username);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if(mysqli_num_rows($result)){
+        return true;
+      }
+      return false;
+    }
+
+    /**
+     * Controlla l'esistenza di un id
+     */
+    public function checkUsernameIdExistence($username){
+      $query = "SELECT `utente`.`nome`, `utente`.`cognome`
+      FROM `utente`
+      WHERE `utente`.`idUtente` = ?";
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('s', $username);
       $stmt->execute();
@@ -279,10 +298,27 @@ class DatabaseHelper{
     }
 
     /**
+     * Restituisce id di una chat
+     */
+    public function getIdChatMessages($User,$UserFriend){
+      $idFriend = $this->getIdFromUsername($UserFriend);
+
+
+
+      $query = "SELECT `idChat`  FROM `partecipazione`as p1, `partecipazione`as p2, `chat`  WHERE `p1`.`codChat` = `p2`.`codChat` AND `p1`.`codChat` = `idChat` AND `p1`.`codUtente`=? AND p2.codUtente=? AND nomeChat IS NULL";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('ii',$User,$idFriend);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      return $result->fetch_all(MYSQLI_ASSOC);
+
+    }
+
+    /**
      * Restituisce tutte le chat di gruppo di un determinato utente
      */
     public function getUserGroupChat($username){
-      $query = "SELECT `chat`.`idChat`, `chat`.`nomeChat`, `chat`.`descrizioneChat`, `chat`.`immagineGruppo` FROM `chat`, `partecipazione`, `utente` WHERE `chat`.`idChat`=`partecipazione`.`codChat` AND `partecipazione`.`codUtente` = `utente`.`idUtente` AND `utente`.`username` = ? AND `chat`.`nomeChat` != '' ";
+      $query = "SELECT `chat`.`idChat`, `chat`.`nomeChat`, `chat`.`descrizioneChat`, `chat`.`immagineGruppo` FROM `chat`, `partecipazione`, `utente` WHERE `chat`.`idChat`=`partecipazione`.`codChat` AND `partecipazione`.`codUtente` = `utente`.`idUtente` AND `utente`.`username` = ? AND `chat`.`nomeChat` IS NOT NULL ";
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('s',$username);
       $stmt->execute();
@@ -295,7 +331,7 @@ class DatabaseHelper{
      * Restituisce tutte le chat singole di un determinato utente
      */
     public function getUserSingleChat($idUtente){
-      $query = "SELECT `partecipazione`.`codChat`, `utente`.`idUtente`, `utente`.`immagineProfilo`, `utente`.`username`  FROM `partecipazione`, `utente`, `chat` WHERE `partecipazione`.`codUtente`=`utente`.`idUtente` AND `utente`.`idUtente` != ? AND `partecipazione`.`codChat`=`chat`.`idChat` AND `partecipazione`.`codChat`= ANY (SELECT `partecipazione`.`codChat` FROM `partecipazione`, `chat` WHERE `chat`.`idChat`=`partecipazione`.`codChat` AND `chat`.`nomeChat` = '' AND `partecipazione`.`codUtente` = ?)";
+      $query = "SELECT `partecipazione`.`codChat`, `utente`.`idUtente`, `utente`.`immagineProfilo`, `utente`.`username`  FROM `partecipazione`, `utente`, `chat` WHERE `partecipazione`.`codUtente`=`utente`.`idUtente` AND `utente`.`idUtente` != ? AND `partecipazione`.`codChat`=`chat`.`idChat` AND `partecipazione`.`codChat`= ANY (SELECT `partecipazione`.`codChat` FROM `partecipazione`, `chat` WHERE `chat`.`idChat`=`partecipazione`.`codChat` AND `chat`.`nomeChat` IS NULL AND `partecipazione`.`codUtente` = ?)";
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('ii', $idUtente, $idUtente);
       $stmt->execute();
@@ -317,6 +353,30 @@ class DatabaseHelper{
         return true;
       }
       return false;
+    }
+    /**
+     * Restituisce  gli amici
+     */
+    public function getUsersFollowed($idUtente){
+      $query = "SELECT idUtente,username,immagineProfilo FROM utente WHERE idUtente IN (SELECT codFollower FROM amicizia WHERE codFollowed=?  )";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $idUtente);
+      $stmt->execute();
+      $result = $stmt->get_result();
+
+      return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    /**
+     * Restituisce  gli amici
+     */
+    public function getUsersFollower($idUtente){
+      $query = "SELECT idUtente,username,immagineProfilo FROM utente WHERE idUtente IN (SELECT codFollowed FROM amicizia WHERE codFollower=?  )";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $idUtente);
+      $stmt->execute();
+      $result = $stmt->get_result();
+
+      return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     /**
@@ -566,8 +626,8 @@ class DatabaseHelper{
       $stmt->bind_param('iii', $idFriend, $idUser, 1);
       $stmt->execute();
       if(mysqli_num_rows($result)){
-        $query2 = "SELECT `amicizia`.`codFollowed`, `amicizia`.`codFollower`, `amicizia`.`dataAmicizia`, `amicizia`.`accettata` 
-        FROM `amicizia` 
+        $query2 = "SELECT `amicizia`.`codFollowed`, `amicizia`.`codFollower`, `amicizia`.`dataAmicizia`, `amicizia`.`accettata`
+        FROM `amicizia`
         WHERE `amicizia`.`codFollowed` = ? AND `amicizia`.`codFollower` = ? AND `amicizia`.`accettata` = ?";
         $stmt = $this->db->prepare($query2);
         $stmt->bind_param('iii', $idUser, $idFriend, 1);
@@ -593,7 +653,7 @@ class DatabaseHelper{
       $result = $stmt->get_result();
       return $result->fetch_all(MYSQLI_ASSOC);
     }
-        
+
     /**
      * Restituisce gli amici di un utente
      */
@@ -689,8 +749,8 @@ class DatabaseHelper{
     }
 
     public function isUserFollowed($usernameFollowed, $usernameFollower){
-      $query2 = "SELECT `amicizia`.`dataAmicizia` 
-      FROM `amicizia` 
+      $query2 = "SELECT `amicizia`.`dataAmicizia`
+      FROM `amicizia`
       WHERE `amicizia`.`codFollowed` = ? AND `amicizia`.`codFollower` = ? AND `amicizia`.`accettata` = ?";
       $followed = $this->getIdFromUsername($usernameFollowed);
       $follower = $this->getIdFromUsername($usernameFollower);
@@ -723,7 +783,7 @@ class DatabaseHelper{
     }
 
     /**
-     * 
+     *
      */
     public function getNewNotificationsNumber($idUtente){
       $query = "SELECT `notifica`.`idNotifica` FROM `notifica` WHERE `notifica`.`presaVisione` = 0 AND `notifica`.`codUtenteDestinatario` = ?";
@@ -779,7 +839,7 @@ class DatabaseHelper{
     }
 
     public function changeNotificationStatus($idNotifica){
-      
+
       if($this->getNotificationStatus($idNotifica) == 1){
         $val = 0;
       }else{
@@ -793,6 +853,44 @@ class DatabaseHelper{
 
       return $this->getNotificationStatus($idNotifica);
     }
+
+    /**
+     * crea chat
+     */
+    public function createChat(){
+      $query = "INSERT INTO chat VALUES ()";
+      $stmt = $this->db->prepare($query);
+
+      $stmt->execute();
+
+      return $stmt->insert_id;
+    }
+
+    /**
+     * crea partecipazione
+     */
+    public function LinkChat($idChat,$idUser){
+      $query = "INSERT INTO partecipazione (`codChat`, `codUtente`) VALUES (?, ?)";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('ii', $idChat,$idUser);
+      $stmt->execute();
+
+      return $stmt->insert_id;
+    }
+
+    /**
+     * Scrive un messaggio in chat
+     */
+    public function writeMessage($idUtente, $idChat, $testo){
+      $query = "INSERT INTO messaggio (`testo`, `codChat`, `codUtente`) VALUES (?, ?, ?)";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('sii',$testo, $idChat, $idUtente);
+      $stmt->execute();
+
+      return $stmt->insert_id;
+    }
+
+
 
 }
 ?>
