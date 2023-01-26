@@ -3,7 +3,7 @@ require_once 'bootstrap.php';
 //var_dump($_POST);
 $arr = json_decode($_POST["arr"]);
 
-if($_SESSION["idUtente"] != $dbh->getIdFromUsername("ShareHub") && $dbh->isUserFollowed("ShareHub", $_SESSION["username"])){
+if($_SESSION["idUtente"] != $dbh->getIdFromUsername("ShareHub")){
     $dbh->followShareHub($_SESSION["idUtente"]);
 }
 
