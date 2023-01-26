@@ -57,7 +57,7 @@ generaBarraDiRicerca();
 
 $(document).ready(function(){
   $("#search").on("keyup", function(){
-    var search = $(this).val();
+    let search = $(this).val();
     requestResult(search);
   });
 });

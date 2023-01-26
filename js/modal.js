@@ -14,7 +14,7 @@ function copyLink(event){
   event.preventDefault();
   // Get the text field
   let element = event.target.parentElement;
-  var copyText = element.querySelector("input");
+  let copyText = element.querySelector("input");
 
   // Select the text field
   copyText.select();

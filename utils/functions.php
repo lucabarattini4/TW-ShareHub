@@ -49,9 +49,9 @@ function uploadImage($path, $image){
 }
 
 function registerLoggedUser($user){
-    var_dump($user);
+    //var_dump($user);
     $_SESSION["idUtente"] = $user["idUtente"];
-    var_dump($_SESSION["idUtente"]);
+    //var_dump($_SESSION["idUtente"]);
     $_SESSION["username"] = $user["username"];
     $_SESSION["nome"] = $user["nome"];
 }

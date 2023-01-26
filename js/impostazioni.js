@@ -12,7 +12,11 @@ function generaImpostazioni(){
         <div style="display:none;"></div>
       </li>
       <li>
-        <h2>Cambio dati personali</h2>
+        <h2>Cambio email</h2>
+        <div style="display:none;"></div>
+      </li>
+      <li>
+        <h2>Elimina profilo</h2>
         <div style="display:none;"></div>
       </li>
       <li>
@@ -28,10 +32,13 @@ function generaImpostazioni(){
 
     section.querySelector("div li:nth-child(2)").addEventListener("click", event => changePassword(event));
 
-    section.querySelector("div li:nth-child(3)").addEventListener("click", event => changePersonalData(event));
+    section.querySelector("div li:nth-child(3)").addEventListener("click", event => changeEmail(event));
 
     /*aggiungo eventListener per il logout */
-    section.querySelector("div li:nth-child(4)").addEventListener("click", event => logout(event));
+    section.querySelector("div li:nth-child(4)").addEventListener("click", event => eliminaProfilo(event));
+
+    /*aggiungo eventListener per il logout */
+    section.querySelector("div li:nth-child(5)").addEventListener("click", event => logout(event));
 
     main.appendChild(section);
 }
@@ -63,9 +70,17 @@ function createChangePassForm(event){
   event.target.nextElementSibling.innerHTML += userForm;
 }
 
-function createChangePDForm(event){
+function createChangeEmailForm(event){
   let userForm = `<form method="post">
-    <input type="text" name="user" id="name" required/>
+    <input type="text" name="email" id="email" required/>
+    <input type="submit" name="submit" value="Cambia"/>
+  </form>`;
+  event.target.nextElementSibling.innerHTML += userForm;
+}
+
+function createPhoneNumberForm(event){
+  let userForm = `<form method="post">
+    <input type="text" name="email" id="email" required/>
     <input type="submit" name="submit" value="Cambia"/>
   </form>`;
   event.target.nextElementSibling.innerHTML += userForm;
@@ -89,10 +104,10 @@ function changePassword(event){
   showHide(event);
 }
 
-function changePersonalData(event){
+function changeEmail(event){
   event.preventDefault();
   if(!execPD){
-    createChangePDForm(event);
+    createChangeEmailForm(event);
     execPD = true;
   }
   showHide(event);

@@ -33,7 +33,7 @@ function getImgData() {
 }
 
 btn.onclick = function() { 
-  var file = chooseFile;
+  let file = chooseFile;
   if(file.value!=""){
     removeImg();
   }

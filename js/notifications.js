@@ -7,12 +7,12 @@ function generaNotifiche(notifications){
     <div class="col-md-1"></div>
   
     <!--colonna-->
-    <div class="col-1 d-flex justify-content-center">
-    <p>${notifications[i]['dataNotifica']}</p>
+    <div class="col-3 d-flex justify-content-center">
+    <p class="data">${notifications[i]['dataNotifica']}</p>
     </div>
   
     <!--colonna-->
-    <div class="col-10 col-md-6 d-flex align-items-center">
+    <div class="col-7 col-md-6 d-flex align-items-center">
       <input type="hidden" value="${notifications[i]['idNotifica']}"/>
       `;
       
@@ -26,9 +26,9 @@ function generaNotifiche(notifications){
 
   
     if(notifications[i].presaVisione == 0){
-      notifica += `<div class="col-md-2"><img src="./upload/webpageIcons/eye.svg"/></div>`;
+      notifica += `<div class="col-2 col-md-2"><img src="./upload/webpageIcons/eye.svg"/></div>`;
     }else{
-      notifica += `<div class="col-md-2"></div>`;
+      notifica += `<div class="col-2 col-md-2"></div>`;
     }
     
   
