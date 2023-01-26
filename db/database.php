@@ -314,24 +314,13 @@ class DatabaseHelper{
 
     }
 
-    /**
-     * Restituisce tutte le chat di gruppo di un determinato utente
-     */
-    public function getUserGroupChat($username){
-      $query = "SELECT `chat`.`idChat`, `chat`.`nomeChat`, `chat`.`descrizioneChat`, `chat`.`immagineGruppo` FROM `chat`, `partecipazione`, `utente` WHERE `chat`.`idChat`=`partecipazione`.`codChat` AND `partecipazione`.`codUtente` = `utente`.`idUtente` AND `utente`.`username` = ? AND `chat`.`nomeChat` IS NOT NULL ";
-      $stmt = $this->db->prepare($query);
-      $stmt->bind_param('s',$username);
-      $stmt->execute();
-      $result = $stmt->get_result();
 
-      return $result->fetch_all(MYSQLI_ASSOC);
-    }
 
     /**
      * Restituisce tutte le chat singole di un determinato utente
      */
     public function getUserSingleChat($idUtente){
-      $query = "SELECT `partecipazione`.`codChat`, `utente`.`idUtente`, `utente`.`immagineProfilo`, `utente`.`username`  FROM `partecipazione`, `utente`, `chat` WHERE `partecipazione`.`codUtente`=`utente`.`idUtente` AND `utente`.`idUtente` != ? AND `partecipazione`.`codChat`=`chat`.`idChat` AND `partecipazione`.`codChat`= ANY (SELECT `partecipazione`.`codChat` FROM `partecipazione`, `chat` WHERE `chat`.`idChat`=`partecipazione`.`codChat` AND `chat`.`nomeChat` IS NULL AND `partecipazione`.`codUtente` = ?)";
+      $query = "SELECT `partecipazione`.`codChat`, `utente`.`idUtente`, `utente`.`immagineProfilo`, `utente`.`username`  FROM `partecipazione`, `utente`, `chat` WHERE `partecipazione`.`codUtente`=`utente`.`idUtente` AND `utente`.`idUtente` != ? AND `partecipazione`.`codChat`=`chat`.`idChat` AND `partecipazione`.`codChat`= ANY (SELECT `partecipazione`.`codChat` FROM `partecipazione`, `chat` WHERE `chat`.`idChat`=`partecipazione`.`codChat` AND `chat`.`nomeChat` IS NULL AND `partecipazione`.`codUtente` = ?) GROUP BY idUtente";
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('ii', $idUtente, $idUtente);
       $stmt->execute();

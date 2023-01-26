@@ -118,25 +118,14 @@ article {
   padding-top: 2%;
 }
 
-/*-------COMMENTI-------*/
-div ul {
-  width: 80%;
-  justify-content: center;
-  margin-left:15%
+.follow {
+  margin-left: 18%;
 }
-
-div ul li {
-  width: 80%;
-  list-style-type: none;
-  text-align: justify;
-}
-
-/*-------FINE-COMMENTI-------*/
 
 
 /*-------NOTIFICHE-----------*/
 .notification {
-  padding: 15px 26px;
+  padding: 15px 7px;
   position: relative;
   /*display: inline-block;*/
   border-radius: 2px;
@@ -153,112 +142,14 @@ div ul li {
 }
 /*-------FINE-NOTIFICHE-----------*/
 
-
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+.like{
+  margin-left: 8%;
 }
 
-/* Modal Content */
-.modal-content {
-  position: relative;
-  background-color: #fefefe;
-  margin: auto;
-  padding: 0;
-  border: 1px solid #888;
-  width: 80%;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-  -webkit-animation-name: animatetop;
-  -webkit-animation-duration: 0.4s;
-  animation-name: animatetop;
-  animation-duration: 0.4s
+.share{
+  margin-left:24%;
 }
 
-/* Add Animation */
-@-webkit-keyframes animatetop {
-  from {top:-300px; opacity:0}
-  to {top:0; opacity:1}
-}
-
-@keyframes animatetop {
-  from {top:-300px; opacity:0}
-  to {top:0; opacity:1}
-}
-
-/* The Close Button */
-.close {
-  color: white;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.modal-header {
-  padding: 2px 16px;
-  background-color: #5cb85c;
-  color: white;
-}
-
-.modal-body {padding: 2px 16px;}
-
-.modal-footer {
-  padding: 10px 16px;
-  background-color: #5cb85c;
-  color: white;
-}
-
-
-
-		.image_area {
-		  position: relative;
-		}
-
-
-		.preview {
-  			overflow: hidden;
-  			width: 160px;
-  			height: 160px;
-  			margin: 10px;
-  			border: 1px solid red;
-		}
-
-		.modal-lg{
-  			max-width: 1000px !important;
-		}
-
-		.overlay {
-		  position: absolute;
-		  bottom: 10px;
-		  left: 0;
-		  right: 0;
-		  background-color: rgba(255, 255, 255, 0.5);
-		  overflow: hidden;
-		  height: 0;
-		  transition: .5s ease;
-		  width: 100%;
-		}
-
-		.image_area:hover .overlay {
-		  height: 50%;
-		  cursor: pointer;
-		}
 
 @media screen and (min-width: 768px) {
 
@@ -311,6 +202,20 @@ div ul li {
     padding-top: 10%;
   }
 
+  article div ul {
+    justify-content: center;
+    margin-left:55%
+  }
+
+  article div form {
+    justify-content: center;
+    margin-left:55%
+  }
+
+  div ul li {
+    list-style-type: none;
+    text-align: justify;
+  }
 
 }
 
@@ -338,4 +243,22 @@ div ul li {
   footer ul {
     margin-left: 8%;
   }
+
+  .follow{
+    margin-left: 38%;
+  }
+
+  .follow > button > img{
+    width: 70%;
+  }
+  .like {
+    margin-left: 20%;
+    margin-top:2%;
+  }
+  .notification .badge {
+  
+    top: 13px;
+    right: -16px;
+
+}
 }

@@ -10,16 +10,16 @@ function sharePost(event){
 }
 
 function copyLink(event){
-  //console.log("ciao mondo");
+  
   event.preventDefault();
-  // Get the text field
+
   let element = event.target.parentElement;
   var copyText = element.querySelector("input");
 
-  // Select the text field
-  copyText.select();
-  copyText.setSelectionRange(0, 99999); // For mobile devices
 
-  // Copy the text inside the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999);
+
+
   navigator.clipboard.writeText(copyText.value);
 }

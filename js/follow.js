@@ -6,8 +6,10 @@ function follow(event){
     //console.log(response.data["followed"]);
     if(response.data["followed"]){
       event.target.setAttribute('src', 'upload/webpageIcons/user-check.svg');
+
     }else{
       event.target.setAttribute('src', 'upload/webpageIcons/user-plus.svg');
+    
     }
     window.location.reload();
   });

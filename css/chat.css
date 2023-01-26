@@ -2,7 +2,20 @@ article{
   padding-bottom: 5%;
 }
 
+input[type=image]{
+  width: 100%;
+  border-radius: 25px;
+}
 
-body > div > main > div > form > input:nth-last-child(0){<!-- NON FUNZIONA -->
-  width:90%;
+input[type=submit]{
+
+  text-align: center;
+  background-color: white;
+}
+
+article div form {
+    margin-left: 0%
+}
+.msg{
+  margin-bottom: 15%;
 }

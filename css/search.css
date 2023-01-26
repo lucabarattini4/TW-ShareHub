@@ -11,4 +11,5 @@ p {
 button.results {
   border: 1px solid black;
   height: 10%;
+  text-align: -webkit-center;
 }

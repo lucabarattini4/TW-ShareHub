@@ -27,6 +27,23 @@ div:nth-child(8) img {
   text-align: center;
 }
 
+
+
+article div div img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.share > div > button{
+  border: 1px solid black;
+}
+
+.trash > div > img{
+    width:5%;
+}
+
 @media screen and (max-width: 768px) {
 
   div:nth-child(8) img {

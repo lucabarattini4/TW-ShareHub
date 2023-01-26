@@ -56,7 +56,7 @@ function generaPosts(posts){
 
      post+=`
       <!--riga mi piace, commenti, save-->
-      <div class="row w-75 pb-3">
+      <div class="row w-75 pb-3 like">
 
         <!--colonna vuota-->
         <div class="col-md-3"></div>
@@ -104,19 +104,21 @@ function generaPosts(posts){
       </div>
 
       <!--riga condividi-->
-      <div class="row" style="display: none">
+      <div class="row share" style="display: none" class="">
         <div class="col">
           <label for="link${posts[i]['idPost']}" hidden>Link</label>
           <input type="text" id="link${posts[i]['idPost']}" value="localhost/TW-ShareHub/post.php?username=${posts[i]['username']}&idPost=${posts[i]['idPost']}" disabled>
           <button>Copia Link</button>
         </div>
       </div>
-      
+
+
+
       <!--riga sezione commenti + form-->
       <div class="row"></div>`;
 
       if(posts[i]["idUtente"] == posts[i]["sessionIdUtente"] && getPageName().startsWith("profilo.php")){
-        post+=`<div class="row">
+        post+=`<div class="row trash">
         <div class="col"><img src="./upload/webpageIcons/trash.svg" alt="elimina post"/>
         <input type="hidden" value="${posts[i]['idPost']}"/></div>
         </div>`;
@@ -165,7 +167,7 @@ function requestUserPost(){
   arr1.append('arr', JSON.stringify(arr));
   const user = urlParams.get('user');
   arr1.append('user', user);
-  
+
 
   axios.post('api-post.php', arr1).then(response => {
     console.log(response.data);
@@ -202,15 +204,15 @@ function createProfileHeader(param){
   if(!param[0]['isCurrentUser']){
     info += `<div class="row">
       <div class="col-md-3"></div>
-      <div class="col-3 d-flex align-items-center">
+      <div class="col-3 d-flex align-items-center follow">
       <button  id="follow" type="button">`;
       if(param[0]['isFollowed']){
-        info+= `<img src="./upload/webpageIcons/user-check.svg" alt="is followed"/>`;
+        info+= `<img   src="./upload/webpageIcons/user-check.svg" alt="is followed"/>`;
       }else{
-        info+= `<img src="./upload/webpageIcons/user-plus.svg" alt="Follow"/>`;
+        info+= `<img  src="./upload/webpageIcons/user-plus.svg" alt="Follow"/>`;
       }
       info+= `</button>
-      </div> 
+      </div>
       </div>`;
   }
 
@@ -263,7 +265,7 @@ if(getPageName().startsWith("profilo.php")){
 
 window.onscroll = function () {
   if(window.onscroll && ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)){
-    //console.log("fine pagina"); 
+    //console.log("fine pagina");
     if(getPageName().startsWith("profilo.php")){
       requestUserPost();
     }else{

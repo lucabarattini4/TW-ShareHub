@@ -1,4 +1,3 @@
-
 function generaBarraUtente(results, ){ //img profilo + nome
   const main = document.querySelector("main");
 
@@ -13,7 +12,7 @@ function generaBarraUtente(results, ){ //img profilo + nome
           <!--colonna immagine profilo-->
           <div class="col-2 d-flex justify-content-center">
 
-              <img src="${results[i]['immagineProfilo']}" alt="immagine profilo di ${results[i]['immagineProfilo']}"/>
+              <img src="./upload/profile/${results[i]['immagineProfilo']}" alt="immagine profilo di ${results[i]['immagineProfilo']}"/>
 
           </div>
           <!--colonna nome utente-->
@@ -44,9 +43,9 @@ function generaBarraScrittura(id, chat){
 
 
       let res = `
-      <form action="#" method="POST">
+      <form action="#" method="POST" class="msg">
         <label for="messaggio" hidden>Messaggio:</label>
-        <input type="text" placeholder="messaggio" id="messaggio" name="messaggio" required/>
+        <input type="text" placeholder="messaggio" id="messaggio" name="messaggio"  class="col-10 "required/>
         <label for="IdChat" hidden>IdChat:</label>
         <input type="hidden" id="idChat" name="idChat" value="${id}" />
         <label for="idUtente" hidden>idUtente:</label>
@@ -173,17 +172,17 @@ function messaggio(testo, id, username){
 const main = document.querySelector("main");
 const urlParams = new URLSearchParams(document.URL);
 const pippo = urlParams.get("idChat");
-
-//setInterval(refresh, 1000);
-
 refresh()
+//setInterval(refresh, 10000);
+
+
 
 function refresh(){
 
   document.querySelector("main").innerHTML = "";
-  var chat = 2;/*id della chat*/
-  var friend = getCookie("user");
-  var idUser =getCookie("id");
+  let chat = 2;/*id della chat*/
+  let friend = getCookie("user");
+  let idUser =getCookie("id");
 
 
   requestUser(friend)
