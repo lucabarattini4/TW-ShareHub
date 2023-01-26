@@ -112,13 +112,6 @@
           </a>
         </li>
 
-        <!--like e salvati-->
-        <li class="nav-item col-3 text-center">
-          <a href="./likes.php">
-            <img src="./upload/webpageIcons/heart.svg" alt="like e salvati">
-          </a>
-        </li>
-
         <!--cerca-->
         <li class="nav-item col-3 text-center">
           <a href="./search.php">
@@ -130,8 +123,7 @@
         <li class="nav-item col-3 text-center">
           <a href="./notifications.php" class="notification">
             <img src="./upload/webpageIcons/notifications.svg" alt="controlla notifiche">
-            <span class="badge"><?php /*if(isset($_SESSION["idUtente"])){              echo $dbh->getNewNotificationsNumber($_SESSION["idUtente"]);}
-            */?></span>
+            <span class="badge"></span>
           </a>
         </li>
 
