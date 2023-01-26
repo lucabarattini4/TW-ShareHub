@@ -6,7 +6,7 @@ $arr = json_decode($_POST["arr"]);
 if(isset($_POST["user"])){
     $posts = $dbh->getUserPosts($_POST["user"], $arr);
 }else{
-    $posts = $dbh->getPosts($arr);
+    $posts = $dbh->getPosts($arr, $_SESSION["idUtente"]);
 }
 
 for($i = 0; $i < count($posts); $i++){

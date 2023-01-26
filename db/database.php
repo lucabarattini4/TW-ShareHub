@@ -12,14 +12,24 @@ class DatabaseHelper{
     /**
      * Restituisce tutti i post
      */
-    public function getPosts($arr){
 
-      $in  = str_repeat('?,', count($arr) - 1) . '?';
-      $query = "SELECT idPost, idUtente, username, testo, immagine, immagineProfilo, descImmagine, dataPost FROM post, utente WHERE idUtente=codUtente AND idPost NOT IN ($in) ORDER BY RAND() LIMIT 3";
+    public function getPosts($arr, $idUtente){
+      $ids = $this->getFollowed($idUtente);
+      $idarr = array();
+      array_push($idarr, $idUtente);
+      for($i = 0; $i < count($ids); $i++){
+        array_push($idarr, $ids[$i]["codFollowed"]);
+      }
+
+      $in2  = str_repeat('?,', count($arr) - 1) . '?';
+      $in = str_repeat('?,', count($idarr) -1). '?';
+      $query = "SELECT idPost, idUtente, username, testo, immagine, immagineProfilo, descImmagine, dataPost FROM post, utente WHERE idUtente=codUtente AND idPost NOT IN ($in2) AND idUtente IN ($in) ORDER BY RAND() LIMIT 3";
+
 
       $stmt = $this->db->prepare($query);
       $types = str_repeat('i', count($arr));
-      $stmt->bind_param($types, ...$arr);
+      $types .= str_repeat('i', count($idarr));
+      $stmt->bind_param($types, ...$arr, ...$idarr);
 
       $stmt->execute();
       $result = $stmt->get_result();
@@ -683,6 +693,18 @@ class DatabaseHelper{
 
     public function countFollowed($idUtente){
       return count($this->getFollowed($idUtente));
+    }
+
+    public function getFollowedIds($idUtente){
+      $query = "SELECT `amicizia`.`codFollowed`
+      FROM `amicizia`, `utente`
+      WHERE `amicizia`.`codFollowed` = `utente`.`idUtente` AND `amicizia`.`codFollower` = ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $idUtente);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      $row = $result->fetch_assoc();
+      return $row['codFollowed'];
     }
 
     /**

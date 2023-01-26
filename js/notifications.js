@@ -74,7 +74,6 @@ function checkAsRead(event){
     pElem.setAttribute("style", "font-weight:normal;");
     event.target.style.display="none";
   });
-  richiediNotifiche();
 }
 
 let url = location.href;

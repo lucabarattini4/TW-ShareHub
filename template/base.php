@@ -53,7 +53,7 @@
       <!--colonna logo-->
       <div class="col">
         <a class="text-center d-flex justify-content-center align-items-center" href="index.php">
-          <h1>ShareHub</h1>
+          <h1 class="logo">ShareHub</h1>
         </a>
       </div>
 
