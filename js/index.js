@@ -170,7 +170,7 @@ function requestUserPost(){
 
 
   axios.post('api-post.php', arr1).then(response => {
-    console.log(response.data);
+    //console.log(response.data);
     generaPosts(response.data);
   });
 }
@@ -195,10 +195,10 @@ function createProfileHeader(param){
     </div>
     <div class="row friends">
     <div class="col-12">
-    <p>FOLLOWERS: ${param[0]['followers']}</p>
+    <p><a href="./followers.php?user=${param[0]['username']}&tipo=follower">FOLLOWERS: ${param[0]['followers']}</a></p>
     </div>
     <div class="col-12">
-    <p>FOLLOWED: ${param[0]['followed']}</p>
+    <p><a href="./followers.php?user=${param[0]['username']}&tipo=followed">FOLLOWED: ${param[0]['followed']}</a></p>
     </div>
     </div>`;
   if(!param[0]['isCurrentUser']){
@@ -218,10 +218,10 @@ function createProfileHeader(param){
 
   const f = document.createElement("section");
   f.innerHTML = info;
+
   if(!param[0]['isCurrentUser']){
     f.querySelector("div:nth-child(4) > div:nth-child(2) button").addEventListener("click", event => follow(event));
   }
-
   main.appendChild(f);
 }
 
@@ -235,7 +235,6 @@ function deletePost(event){
     //console.log(response.data);
     window.location.reload();
   });
-
 }
 
 function getPageName(){

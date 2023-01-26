@@ -163,18 +163,18 @@ function requestPost(){
 
 
 function showModal(){
-  var modal = document.getElementById("myModal");
+  let modal = document.getElementById("myModal");
   modal.style.display = "block";
 }
 
 function hideModal(){
-  var modal = document.getElementById("myModal");
+  let modal = document.getElementById("myModal");
    modal.style.display = "none";
 }
 
 function copyLink(){
   // Get the text field
-  var copyText = document.getElementById("myLink");
+  let copyText = document.getElementById("myLink");
 
   // Select the text field
   copyText.select();
