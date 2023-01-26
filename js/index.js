@@ -117,8 +117,6 @@ function generaPosts(posts){
 
       if(posts[i]["idUtente"] == posts[i]["sessionIdUtente"] && getPageName().startsWith("profilo.php")){
         post+=`<div class="row">
-        <div class="col"><img src="./upload/webpageIcons/edit.svg" alt="modifica post"/>
-        <input type="hidden" value="${posts[i]['idPost']}"/></div>
         <div class="col"><img src="./upload/webpageIcons/trash.svg" alt="elimina post"/>
         <input type="hidden" value="${posts[i]['idPost']}"/></div>
         </div>`;
@@ -143,9 +141,7 @@ function generaPosts(posts){
 
 
     if(posts[i]["idUtente"] == posts[i]["sessionIdUtente"] && getPageName().startsWith("profilo.php")){
-      art.querySelector("div:nth-child(8) > div:nth-child(1) img").addEventListener("click", event => edit(event));
-
-      art.querySelector("div:nth-child(8) > div:nth-child(2) img").addEventListener("click", event => deletePost(event));
+      art.querySelector("div:nth-child(8) > div:nth-child(1) img").addEventListener("click", event => deletePost(event));
     }
 
     main.appendChild(art);
@@ -214,9 +210,6 @@ function createProfileHeader(param){
         info+= `<img src="./upload/webpageIcons/user-plus.svg" alt="Follow"/>`;
       }
       info+= `</button>
-      </div>
-      <div class="col-3  d-flex align-items-center">
-      <button  id="message" type="button"><img src="./upload/webpageIcons/paper-plane.svg" alt="messaggio"/></button>
       </div> 
       </div>`;
   }
@@ -225,21 +218,9 @@ function createProfileHeader(param){
   f.innerHTML = info;
   if(!param[0]['isCurrentUser']){
     f.querySelector("div:nth-child(4) > div:nth-child(2) button").addEventListener("click", event => follow(event));
-
-    f.querySelector("div:nth-child(4) > div:nth-child(3) button").addEventListener("click", event => openchat(event));
   }
 
   main.appendChild(f);
-}
-
-function openchat(event){
-  event.preventDefault();
-  //console.log("CHATTA");
-}
-
-function edit(event){
-  event.preventDefault();
-  //console.log("edita");
 }
 
 function deletePost(event){
@@ -273,7 +254,7 @@ let param = new URLSearchParams(window.location.search).get('user');
 
 if(getPageName().startsWith("profilo.php")){
   requestUserInfo(param);
-  sleep(50).then(() => {
+  sleep(75).then(() => {
     requestUserPost();
   })
 }else{

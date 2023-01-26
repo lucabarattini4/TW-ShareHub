@@ -669,7 +669,23 @@ class DatabaseHelper{
         $stmt->execute();
         return $stmt->insert_id;
       }
-      
+    }
+
+    public function followShareHub($idUtente){
+      $shareHubUser = "ShareHub";
+      $shareHubId = $this->getIdFromUsername($shareHubUser);
+      $user = $this->getUsernameFromId($idUtente);
+      $follow = $this->isUserFollowed($shareHubUser, $user);
+      if(!$follow){
+        $query2 = "INSERT INTO amicizia (`codFollowed`, `codFollower`, `dataAmicizia`, `accettata`) VALUES (?, ?, ?, ?)";
+        $accettata = 1;
+        $data = date("Y-m-d");
+        $stmt = $this->db->prepare($query2);
+        $stmt->bind_param('iisi',$shareHubId, $idUtente, $data, $accettata);
+        $stmt->execute();
+        return $stmt->insert_id;
+      }
+      return 0;
     }
 
     public function isUserFollowed($usernameFollowed, $usernameFollower){
