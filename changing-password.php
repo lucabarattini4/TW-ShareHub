@@ -17,10 +17,10 @@ if(isset($_POST["psw1"]) AND isset($_POST["psw2"])){
 ?>
 <div class="row">
   <form method="POST" action="#">
-    <label for="ps1">Password:</label>
+    <label for="psw1">Password:</label>
     <input type="password" id="psw1" name="psw1" />
-    <label for="ps2">Ripeti Password:</label>
-    <input type="password" id="ps2" name="psw2" />
+    <label for="psw2">Ripeti Password:</label>
+    <input type="password" id="psw2" name="psw2" />
     <input type="submit" name="invia" value="invia"/>
     <?php if(isset($templateParams["errore"])){?>
 
