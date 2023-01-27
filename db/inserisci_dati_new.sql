@@ -33,11 +33,11 @@ INSERT INTO `amicizia` (`codFollowed`, `codFollower`, `dataAmicizia`, `accettata
 INSERT INTO `post` (`idPost`, `testo`, `immagine`, `descImmagine`, `codUtente`) VALUES
 (1, 'Benvenuto in ShareHub. Inizia a seguire i tuoi amici per non perderti il divertimento.
 Se risconti problemi non esitare a contattarci via mail all&#039;indirizzo sharehub@gmail.com', 'Logo_Nero.png', 'logo sharehub', 1),
-(2, 'Secondo post di topolino', 'image2.jpg', 'baby yoda', 2),
-(3, 'Primo post di ZioPaperone', 'image3.jpeg', 'gatto cowboy che va sullo skateboard', 3),
-(4, 'Questo gatto è un gatto', 'image4.jpg', 'immagine di un gatto', 3),
-(5, 'Wee bella gente', 'image5.jpg', 'battutona squallida', 3),
-(6, 'Ciao sono pluto', 'image6.jfif', 'immagine divertentissima', 4);
+(2, 'Primo post di Maria Ferrari', 'image2.jpg', 'baby yoda', 2),
+(3, 'Primo post di Alessandra Marino', 'image3.jpeg', 'gatto cowboy che va sullo skateboard', 3),
+(4, 'Immagine di un gatto', 'image4.jpg', 'immagine di un gatto', 3),
+(5, 'Buongiorno a tutti', 'image5.jpg', 'battutona squallida', 3),
+(6, 'Ciao sono Giulia Rizzo', 'image6.jfif', 'immagine divertentissima', 4);
 
 /* -----------------------------------------------------
 -- Insert into `sharehub`.`likeSave`
@@ -51,10 +51,10 @@ INSERT INTO `likeSave` (`codUtente`, `codPost`, `like`, `save`) VALUES
 -- Insert into `sharehub`.`commento`
 -- ---------------------------------------------------*/
 INSERT INTO `commento` (`idCommento`, `testo`, `dataCommento`, `codUtente`, `codPost`) VALUES
-(1, 'wow, bella foto topolino, pippo.', '2022-11-18', 1, 1),
-(2, 'wow, bella foto topolino, zioPaperone.', '2022-11-18', 3, 1),
-(3, 'wow, bella la tua seconda foto topolino, pippo.', '2022-11-18', 1, 2),
-(4, 'wow, bella la tua seconda foto topolino, zioPaperone.', '2022-11-18', 3, 2);
+(1, 'Commento1', '2022-11-18', 1, 1),
+(2, 'Commento2', '2022-11-18', 3, 1),
+(3, 'Commento3', '2022-11-18', 1, 2),
+(4, 'Commento4', '2022-11-18', 3, 2);
 
 /* -----------------------------------------------------
 -- Insert into `sharehub`.`impostazione`
@@ -67,7 +67,7 @@ INSERT INTO `impostazione` (`idImpostazione`, `privato`, `tema`, `codUtente`) VA
 -- Insert into `sharehub`.`chat`
 -- ---------------------------------------------------*/
 INSERT INTO `chat` (`idChat`, `nomeChat`, `descrizioneChat`, `immagineGruppo`) VALUES
-(1, 'PiPaTo', 'Gruppo di Pippo, Zio Paperone, Topolino', 'chat1.webp'),
+(1, '', '', ''),
 (2, '', '', ''),
 (3, '', '', '');
 
@@ -87,7 +87,7 @@ INSERT INTO `partecipazione` (`codChat`, `codUtente`) VALUES
 -- Insert into `sharehub`.`messaggio`
 -- ---------------------------------------------------*/
 INSERT INTO `messaggio` (`idMessaggio`, `testo`, `codChat`, `codUtente`) VALUES
-(1, 'ciao gruppo, sono pippo', 1, 1),
-(2, 'ciao gruppo, sono topolino', 1, 2),
-(3, 'ciao gruppo, sono zio paperone', 1, 3),
-(4, 'Ciao zio paperone, sono pippo', 2, 1)
+(1, 'messaggio1', 1, 1),
+(2, 'messaggio2', 1, 2),
+(3, 'messaggio3', 1, 3),
+(4, 'messaggio4', 2, 1)
