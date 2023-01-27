@@ -26,7 +26,7 @@ function generaNotifiche(notifications){
 
   
     if(notifications[i].presaVisione == 0){
-      notifica += `<div class="col-2 col-md-2"><img src="./upload/webpageIcons/eye.svg"/></div>`;
+      notifica += `<div class="col-2 col-md-2"><img src="./upload/webpageIcons/eye.svg" alt="segna come letto"/></div>`;
     }else{
       notifica += `<div class="col-2 col-md-2"></div>`;
     }
@@ -34,7 +34,7 @@ function generaNotifiche(notifications){
   
     notifica += `</div>`;
 
-    const sec = document.createElement("section");
+    const sec = document.createElement("div");
     sec.innerHTML = notifica;
 
     if(sec.querySelector("div:nth-child(1) > div:nth-child(4) img") != null){

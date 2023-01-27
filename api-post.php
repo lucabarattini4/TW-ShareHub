@@ -3,8 +3,12 @@ require_once 'bootstrap.php';
 //var_dump($_POST);
 $arr = json_decode($_POST["arr"]);
 
-if($_SESSION["idUtente"] != $dbh->getIdFromUsername("ShareHub")){
+$idShareHub = $dbh->getIdFromUsername("ShareHub");
+if($_SESSION["idUtente"] != $idShareHub){
     $dbh->followShareHub($_SESSION["idUtente"]);
+    $idChat = $dbh->createChat();
+    $dbh->LinkChat($idChat, $_SESSION["idUtente"]);
+    $dbh->LinkChat($idChat, $idShareHub);
 }
 
 if(isset($_POST["user"])){

@@ -46,9 +46,7 @@ function generaBarraScrittura(id, chat){
       <form action="#" method="POST" class="msg">
         <label for="messaggio" hidden>Messaggio:</label>
         <input type="text" placeholder="messaggio" id="messaggio" name="messaggio"  class="col-10 "required/>
-        <label for="IdChat" hidden>IdChat:</label>
         <input type="hidden" id="idChat" name="idChat" value="${id}" />
-        <label for="idUtente" hidden>idUtente:</label>
         <input type="hidden" id="idUtente" name="idUtente" value="${chat}" />
         <input type="submit" name="submit" value="Invia"/>
       </form>`;

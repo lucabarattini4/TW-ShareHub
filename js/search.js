@@ -1,5 +1,6 @@
 function generaBarraDiRicerca(){
   let bar = `<h2 class="text-center">Cerca</h2>
+  <label for="search" hidden>Barra di ricerca</label>
   <input type="search" class="form-control" name="search" id="search" placeholder="Search Users">`;
 
   const searchBar = document.createElement("form");
