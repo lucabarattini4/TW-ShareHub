@@ -882,10 +882,18 @@ class DatabaseHelper{
     /**
      * cCambia nome Profilo
      */
-    public function changeNome($idUtente, $name){
+    public function changeName($idUtente, $name){
       $query = "UPDATE utente SET username= ? WHERE idUtente=?";
       $stmt = $this->db->prepare($query);
       $stmt->bind_param('si', $name, $idUtente);
+      $stmt->execute();
+      return 0;
+    }
+
+    public function DeleteAccount($idUtente){
+      $query = "DELETE FROM utente WHERE idUtente=?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('i', $idUtente);
       $stmt->execute();
       return 0;
     }

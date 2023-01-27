@@ -30,11 +30,12 @@ CREATE TABLE IF NOT EXISTS `sharehub`.`amicizia` (
   `codFollowed` INT NOT NULL,
   `codFollower` INT NOT NULL,
   `dataAmicizia` DATETIME NOT NULL DEFAULT current_timestamp(),
-  `accettata` INT NOT NULL DEFAULT 0,
+`  accettata` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`codFollowed`, `codFollower`),
-  CONSTRAINT `fk_amicizia_followed` FOREIGN KEY (`codFollowed`) 
-  REFERENCES `sharehub`.`utente` (`idUtente`),
-  CONSTRAINT `fk_amicizia_follower` FOREIGN KEY (`codFollower`) 
+  CONSTRAINT `fk_amicizia_followed` FOREIGN KEY (`codFollowed`)
+  REFERENCES `sharehub`.`utente` (`idUtente`)
+  ON DELETE CASCADE,
+  CONSTRAINT `fk_amicizia_follower` FOREIGN KEY (`codFollower`)
   REFERENCES `sharehub`.`utente` (`idUtente`)
 )
 ENGINE = InnoDB;
@@ -46,11 +47,11 @@ CREATE TABLE IF NOT EXISTS `sharehub`.`post` (
   `idPost` INT NOT NULL AUTO_INCREMENT,
   `testo` VARCHAR(2000) NOT NULL,
   `immagine` VARCHAR(500),
-  `descImmagine` VARCHAR(200), 
+  `descImmagine` VARCHAR(200),
   `dataPost` DATETIME NOT NULL DEFAULT current_timestamp(),
   `codUtente` INT NOT NULL,
   PRIMARY KEY (`idPost`),
-  CONSTRAINT `fk_post_utente` FOREIGN KEY (`codUtente`) 
+  CONSTRAINT `fk_post_utente` FOREIGN KEY (`codUtente`)
   REFERENCES `sharehub`.`utente` (`idUtente`)
 )
 ENGINE = InnoDB;
@@ -162,9 +163,9 @@ CREATE TABLE IF NOT EXISTS `sharehub`.`notifica` (
   `codUtenteDestinatario` INT NOT NULL,
   `codUtenteMittente` INT DEFAULT 0,
   PRIMARY KEY (`idNotifica`),
-  CONSTRAINT `fk_notifica_utente_dest` FOREIGN KEY (`codUtenteDestinatario`) 
+  CONSTRAINT `fk_notifica_utente_dest` FOREIGN KEY (`codUtenteDestinatario`)
   REFERENCES `sharehub`.`utente` (`idUtente`),
-  CONSTRAINT `fk_notifica_utente_mitt` FOREIGN KEY (`codUtenteMittente`) 
+  CONSTRAINT `fk_notifica_utente_mitt` FOREIGN KEY (`codUtenteMittente`)
   REFERENCES `sharehub`.`utente` (`idUtente`)
 )
 ENGINE = InnoDB;
