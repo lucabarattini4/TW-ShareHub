@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `sharehub`.`amicizia` (
   ON DELETE CASCADE,
   CONSTRAINT `fk_amicizia_follower` FOREIGN KEY (`codFollower`) 
   REFERENCES `sharehub`.`utente` (`idUtente`)
+  ON DELETE CASCADE
 )
 ENGINE = InnoDB;
 
