@@ -1,14 +1,14 @@
 <?php require_once 'bootstrap.php'; ?>
-  
+
   <?php
-  
+
   if(isUserLoggedIn()){
       $templateParams["nome"] = "index.php";
       header("location: index.php");
   }
 
   if(isset($_POST["username"])){
-  
+
     if($dbh->isUsernameUnique($_POST["username"])){
 
     if($dbh->isEmailUnique($_POST["email"])){
@@ -20,16 +20,33 @@
               if(isPhoneCorrect($_POST["numero"])){
 
                 if($_POST["psw"] == $_POST["psw2"]){
+                  list($result, $msg) = uploadImage(UPLOAD_DIR_PROFILE, $_FILES["fileToUpload"]);
+                  if($result != 0){
+                      $imgPost = $msg;
+                      $id = $dbh->registerUser($_POST["nome"], $_POST["cognome"], $_POST["datanascita"], $_POST["sesso"], $_POST["prefix"], $_POST["numero"], $_POST["email"], $_POST["username"], $_POST["psw"], $imgPost);
+                      if($id!=false){
+                        header("location: login.php");
+                      }
 
-                  $imgPost = end(explode('/', $_POST["profilepic"]));
-                  $id = $dbh->registerUser($_POST["nome"], $_POST["cognome"], $_POST["datanascita"], $_POST["sesso"], "+".$_POST["prefix"], $_POST["numero"], $_POST["email"], $_POST["username"], $_POST["psw"], $imgPost);
-                  if($id!=false){
-                    header("location: login.php");
                   }
                   else{
-                    $templateParams["erroreRegistrazione"] = "ERRORE: Errore in inserimento!";
+
+                    $templateParams["erroreRegistrazione"] = "ERRORE:Errore in inserimento!";
                   }
-      
+                  /*
+
+
+
+
+
+
+          else{
+            echo "Errore in inserimento!";
+                /*  $imgPost = end(explode('/', $_POST["profilepic"]));
+                  $id = $dbh->registerUser($_POST["nome"], $_POST["cognome"], $_POST["datanascita"], $_POST["sesso"], "+".$_POST["prefix"], $_POST["numero"], $_POST["email"], $_POST["username"], $_POST["psw"], $_FILES["fileToUpload"]);
+                */
+
+
                 }else{
                   $templateParams["erroreRegistrazione"] = "ERRORE: Le password non coincidono";
                 }
@@ -113,13 +130,21 @@
 
         <label for="psw2">Conferma password:</label>
         <input type="password" placeholder="conferma password" id="psw2" name="psw2" required/>
-        <input type="hidden" id="profilepic" name="profilepic" value="<?php echo UPLOAD_DIR_ICONS."user.svg"?>"/>
+
+        <label for="fileToUpload">Immagine del profilo:</label>
+        <input type="file" id="fileToUpload" name="fileToUpload" required/>
+
+
+        <button id="rmv" type="button">Remove file</button>
+
+
+        <div id="img-preview" class="d-flex justify-content-center pt-5"></div>
     </fieldset>
 
     <input type="submit" name="submit" value="Invia"/>
 </form>
 <p>
-<?php 
+<?php
 if(isset($templateParams["erroreRegistrazione"])){
   echo $templateParams["erroreRegistrazione"];
 }

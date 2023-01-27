@@ -54,8 +54,8 @@ function showHide(event){
 }
 
 function createChangeUserForm(event){
-  let userForm = `<form method="post">
-    <input type="text" name="user" id="name" required/>
+  let userForm = `<form method="post" action="change-name.php">
+    <input type="text" name="user" id="user" required/>
     <input type="submit" name="submit" value="Cambia"/>
   </form>`;
   event.target.nextElementSibling.innerHTML += userForm;
@@ -128,4 +128,3 @@ let execPass = false;
 let execPD = false;
 const main = document.querySelector("main");
 generaImpostazioni();
-

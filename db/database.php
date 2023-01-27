@@ -879,6 +879,17 @@ class DatabaseHelper{
       return $stmt->insert_id;
     }
 
+    /**
+     * cCambia nome Profilo
+     */
+    public function changeNome($idUtente, $name){
+      $query = "UPDATE utente SET username= ? WHERE idUtente=?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('si', $name, $idUtente);
+      $stmt->execute();
+      return 0;
+    }
+
 
 
 }

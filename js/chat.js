@@ -173,7 +173,7 @@ const main = document.querySelector("main");
 const urlParams = new URLSearchParams(document.URL);
 const pippo = urlParams.get("idChat");
 refresh()
-//setInterval(refresh, 10000);
+setInterval(refresh, 10000);
 
 
 
