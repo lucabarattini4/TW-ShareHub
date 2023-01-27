@@ -10,7 +10,7 @@
   </div>
   <hr>
   <div class="row">
-    <a href="changing-password.php">Cambia Password</a>
+    <a href="change-password.php">Cambia Password</a>
   </div>
   <hr>
   <div class="row">
@@ -19,7 +19,7 @@
   <hr>
   <div class="row">
     <form method="POST">
-      <input type="submit" name="logout" value="LOGOUT"/>
+      <input type="submit" name="logout" value="Log Out"/>
     </form>
   </div>
   <hr>

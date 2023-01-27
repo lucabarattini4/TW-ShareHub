@@ -6,7 +6,7 @@ if(!isset($_SESSION["username"])){
 
 $templateParams["nome"] = "inserisci-post.php";
 $templateParams["js"] = array("js/anteprima-img.js");
-$templateParams["css"] = array("css/style.css");
+$templateParams["css"] = array("css/style.css","css/new-post.css");
 
 require 'template/base.php';
 ?>

@@ -30,13 +30,14 @@ CREATE TABLE IF NOT EXISTS `sharehub`.`amicizia` (
   `codFollowed` INT NOT NULL,
   `codFollower` INT NOT NULL,
   `dataAmicizia` DATETIME NOT NULL DEFAULT current_timestamp(),
-`  accettata` INT NOT NULL DEFAULT 0,
+  `accettata` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`codFollowed`, `codFollower`),
   CONSTRAINT `fk_amicizia_followed` FOREIGN KEY (`codFollowed`)
   REFERENCES `sharehub`.`utente` (`idUtente`)
   ON DELETE CASCADE,
   CONSTRAINT `fk_amicizia_follower` FOREIGN KEY (`codFollower`)
   REFERENCES `sharehub`.`utente` (`idUtente`)
+  ON DELETE CASCADE
 )
 ENGINE = InnoDB;
 
@@ -53,6 +54,7 @@ CREATE TABLE IF NOT EXISTS `sharehub`.`post` (
   PRIMARY KEY (`idPost`),
   CONSTRAINT `fk_post_utente` FOREIGN KEY (`codUtente`)
   REFERENCES `sharehub`.`utente` (`idUtente`)
+  ON DELETE CASCADE
 )
 ENGINE = InnoDB;
 
@@ -85,6 +87,7 @@ CREATE TABLE IF NOT EXISTS `sharehub`.`impostazione` (
   PRIMARY KEY (`idImpostazione`),
   CONSTRAINT `fk_impostazione_utente` FOREIGN KEY (`codUtente`)
   REFERENCES `sharehub`.`utente` (`idUtente`)
+  ON DELETE CASCADE
 )
 ENGINE = InnoDB;
 
@@ -108,7 +111,8 @@ CREATE TABLE IF NOT EXISTS `sharehub`.`partecipazione` (
   `codChat` INT NOT NULL,
   PRIMARY KEY (`codUtente`, `codChat`),
   CONSTRAINT `fk_partecipazione_utente` FOREIGN KEY (`codUtente`)
-  REFERENCES `sharehub`.`utente` (`idUtente`),
+  REFERENCES `sharehub`.`utente` (`idUtente`)
+  ON DELETE CASCADE,
   CONSTRAINT `fk_partecipazione_chat` FOREIGN KEY (`codChat`)
   REFERENCES `sharehub`.`chat` (`idChat`)
 )
@@ -130,6 +134,7 @@ CREATE TABLE IF NOT EXISTS `sharehub`.`messaggio` (
   REFERENCES `sharehub`.`chat` (`idChat`),
   CONSTRAINT `fk_messaggio_utente` FOREIGN KEY (`codUtente`)
   REFERENCES `sharehub`.`utente` (`idUtente`)
+  ON DELETE CASCADE
 )
 ENGINE = InnoDB;
 

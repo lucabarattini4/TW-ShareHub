@@ -898,7 +898,14 @@ class DatabaseHelper{
       return 0;
     }
 
-
+    public function changePsw($idUtente, $psw){
+      $query = "UPDATE utente SET password= ? WHERE idUtente=?";
+      $password = password_hash($psw, PASSWORD_DEFAULT);
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('si', $password, $idUtente);
+      $stmt->execute();
+      return 0;
+    }
 
 }
 ?>
