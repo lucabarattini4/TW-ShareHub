@@ -13,3 +13,8 @@ button.results {
   height: 10%;
   text-align: -webkit-center;
 }
+
+main{
+  width: 85%;
+  float: right;
+}

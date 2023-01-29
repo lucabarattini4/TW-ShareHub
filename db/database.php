@@ -283,6 +283,16 @@ class DatabaseHelper{
       return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getIdOtherChatComponent($idChat, $idUtente){
+      $query = "SELECT codUtente FROM `partecipazione` WHERE codChat = ? AND codUtente <> ?";
+      $stmt = $this->db->prepare($query);
+      $stmt->bind_param('ii', $idChat, $idUtente);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      $row = $result->fetch_assoc();
+      return $row['codUtente'];
+    }
+
     /**
      * Restituisce tutti i messaggi di una determinata chat
      */

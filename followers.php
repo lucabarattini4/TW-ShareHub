@@ -18,7 +18,7 @@ if(isset($_GET["user"]) && isset($_GET["tipo"])){
   }
 
 $templateParams["nome"] = "follower.php";
-$templateParams["css"] = array("css/style.css");
+$templateParams["css"] = array("css/style.css", "css/followers.css");
 require 'template/base.php';
 }
 

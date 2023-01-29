@@ -7,6 +7,7 @@ if(!isset($_SESSION["username"])){
 $templateParams["nome"] = "lista-chat.php";
 $templateParams["single"] = $dbh->getUserSingleChat($_SESSION["idUtente"]);
 $templateParams["css"] = array("css/style.css","css/chat.css");
+$templateParams["js"] = array("js/notifications.js");
 
 
 require 'template/base.php';

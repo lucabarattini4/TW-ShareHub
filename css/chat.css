@@ -16,6 +16,12 @@ input[type=submit]{
 article div form {
     margin-left: 0%
 }
+
 .msg{
   margin-bottom: 15%;
+}
+
+main {
+  width: 85%;
+  float: right;
 }

@@ -6,7 +6,7 @@ if(!isset($_SESSION["username"])){
 }
 
 $templateParams["css"] = array("css/style.css");
-$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/like.js", "js/save.js", "js/comment.js", "js/index.js", "js/modal.js");
+$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js","js/like.js", "js/save.js", "js/comment.js", "js/index.js", "js/modal.js", "js/notifications.js");
 
 require 'template/base.php';
 ?>

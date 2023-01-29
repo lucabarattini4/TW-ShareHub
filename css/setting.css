@@ -4,3 +4,8 @@ input[type=submit]{
   background-color: white;
   border: none;
 }
+
+main {
+  width: 90%;
+  float: right;
+}

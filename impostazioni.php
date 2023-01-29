@@ -6,6 +6,7 @@ if(!isset($_SESSION["username"])){
 }
 $templateParams["nome"] = "lista-impostazioni.php";
 $templateParams["css"] = array("css/style.css","css/setting.css");
+$templateParams["js"] = array("js/notifications.js");
 
 require 'template/base.php';
 ?>

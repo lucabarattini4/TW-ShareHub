@@ -2,7 +2,10 @@
 require_once "bootstrap.php";
 if(isset($_POST['idUtente']) && isset($_POST['idChat'])&& isset($_POST['testo'])){
   $dbh->writeMessage($_POST["idUtente"], $_POST["idChat"], $_POST["testo"]);
-  
+
+  $idDest = $dbh->getIdOtherChatComponent($_POST["idChat"], $_POST['idUtente']);
+  $testo = "hai ricevuto un nuovo messaggio";
+  $dbh->sendNotification($idDest, $testo, $_SESSION["idUtente"]);
 }
 
 

@@ -5,7 +5,8 @@ if(!isset($_SESSION["username"])){
   header("location: login-opt.php");
 }
 $templateParams["nome"] = "changing-password.php";
-$templateParams["css"] = array("css/style.css");
+$templateParams["css"] = array("css/style.css", "css/setting.css");
+$templateParams["js"] = array("js/notifications.js");
 
 require 'template/base.php';
 ?>
